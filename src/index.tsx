@@ -7,7 +7,6 @@ import LoginPage from './Login/loginpage.tsx'
 import ProfilePage from './Profile/profilepage.tsx';
 import TheaterPage from './Theater/theaterpage.tsx';
 import SeatPage from './Seat/seatpage.tsx';
-import FoodPage from './Food/foodpage.tsx';
 import PaymentPage from './Payment/paymentpage.tsx';
 import AdminPage from './Admin/adminpage.tsx';
 
@@ -31,10 +30,6 @@ const router = createBrowserRouter([
   {
     path: "Seat",
     element: <SeatPage/>
-  },
-  {
-    path: "Food",
-    element: <FoodPage/>
   },
   {
     path: "Payment",
