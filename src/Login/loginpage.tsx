@@ -8,7 +8,7 @@ const LoginPage: React.FC = () => {
     return(
         <div className="min-h-screen bg-[#4C3A51] flex items-center justify-center">
             <div className="min-w-80 min-h-80 w-3/12 h-4/12 bg-[#D9D9D9] flex flex-col items-center justify-center rounded-2xl gap-3">
-                <img src={Logo} className="size-32"/>
+                <img src={Logo} alt="" className="size-32"/>
                 <div className="flex flex-col items-center justify-center gap-3">
                     <div className="relative w-full">
                         <BsPersonCircle className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black-500" size={25} />
