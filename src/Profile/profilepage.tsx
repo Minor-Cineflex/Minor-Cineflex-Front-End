@@ -12,7 +12,7 @@ function ShowMoviesHistory(testData){
                     className="h-80 w-56 flex-shrink-0 rounded-2xl overflow-hidden hover:border hover:border-black"
                 >
                     <img 
-                        className="h-full w-full object-cover cursor-pointer hover:blur-md hover:opacity-50 hover:duration-300" 
+                        className="h-full w-full object-cover cursor-pointer hover:blur-md hover:brightness-50 hover:duration-300" 
                         src={movie.pic} 
                         alt="Movie poster"
                     />
