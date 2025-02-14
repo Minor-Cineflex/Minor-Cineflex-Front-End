@@ -15,3 +15,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.custom-scrollbar {
+  scrollbar-width: thin; 
+  scrollbar-color: #774360 #4C3A51;
+}
