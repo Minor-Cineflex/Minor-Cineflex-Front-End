@@ -1,0 +1,124 @@
+{
+    "MinorCineflex": {
+      "cinema_list": [
+        {
+          "cinema_id": "C001",
+          "name": "Grand Cineplex",
+          "location": "Downtown Mall",
+          "opentime": "2025-02-11T10:00:00",
+          "closetime": "2025-02-11T23:00:00",
+          "cinema_management": {
+            "theater_list": [
+              {
+                "theater_id": "T001",
+                "theater_type": "IMAX",
+                "seat_amount": 100,
+                "status": true,
+                "audio_type": "Dolby Atmos",
+                "video_type": "4K",
+                "maintainance_list": []
+              }
+            ],
+            "showtime_list": [
+              {
+                "start_date": "2025-02-11T15:30:00",
+                "cinema": "C001",
+                "theater": "T001",
+                "movie": "M001",
+                "dub": true,
+                "sub": false,
+                "available_seat": ["S001", "S002"],
+                "reserved_seat": []
+              }
+            ],
+            "booking_list": [],
+            "movie_list": [
+              {
+                "name": "Avengers: Endgame",
+                "pic": "https://preview.redd.it/1sdabp4nt2m21.jpg?auto=webp&s=1d3793ac4d16c6dfc457da2dc65cff869221cc80",
+                "type": "Action",
+                "movie_id": "M001",
+                "detail": "Superhero movie",
+                "duration": 180
+              },
+              {
+                "name": "Avengers: Endgame",
+                "pic": "https://preview.redd.it/1sdabp4nt2m21.jpg?auto=webp&s=1d3793ac4d16c6dfc457da2dc65cff869221cc80",
+                "type": "Action",
+                "movie_id": "M001",
+                "detail": "Superhero movie",
+                "duration": 180
+              },
+              {
+                "name": "Avengers: Endgame",
+                "pic": "https://preview.redd.it/1sdabp4nt2m21.jpg?auto=webp&s=1d3793ac4d16c6dfc457da2dc65cff869221cc80",
+                "type": "Action",
+                "movie_id": "M001",
+                "detail": "Superhero movie",
+                "duration": 180
+              },
+              {
+                "name": "Avengers: Endgame",
+                "pic": "https://preview.redd.it/1sdabp4nt2m21.jpg?auto=webp&s=1d3793ac4d16c6dfc457da2dc65cff869221cc80",
+                "type": "Action",
+                "movie_id": "M001",
+                "detail": "Superhero movie",
+                "duration": 180
+              },
+              {
+                "name": "Avengers: Endgame",
+                "pic": "https://preview.redd.it/1sdabp4nt2m21.jpg?auto=webp&s=1d3793ac4d16c6dfc457da2dc65cff869221cc80",
+                "type": "Action",
+                "movie_id": "M001",
+                "detail": "Superhero movie",
+                "duration": 180
+              },
+              {
+                "name": "Avengers: Endgame",
+                "pic": "https://preview.redd.it/1sdabp4nt2m21.jpg?auto=webp&s=1d3793ac4d16c6dfc457da2dc65cff869221cc80",
+                "type": "Action",
+                "movie_id": "M001",
+                "detail": "Superhero movie",
+                "duration": 180
+              },
+              {
+                "name": "Avengers: Endgame",
+                "pic": "https://preview.redd.it/1sdabp4nt2m21.jpg?auto=webp&s=1d3793ac4d16c6dfc457da2dc65cff869221cc80",
+                "type": "Action",
+                "movie_id": "M001",
+                "detail": "Superhero movie",
+                "duration": 180
+              },
+              {
+                "name": "Avengers: Endgame",
+                "pic": "https://preview.redd.it/1sdabp4nt2m21.jpg?auto=webp&s=1d3793ac4d16c6dfc457da2dc65cff869221cc80",
+                "type": "Action",
+                "movie_id": "M001",
+                "detail": "Superhero movie",
+                "duration": 180
+              }
+            ]
+          }
+        }
+      ],
+      "person_list": [
+        {
+          "name": "John Doe",
+          "tel_no": "123-456-7890",
+          "email": "johndoe@example.com",
+          "birthday": "1990-06-15",
+          "gender": "Male",
+          "account": {
+            "username": "johndoe90",
+            "password": "hashedpassword",
+            "account_id": "A001",
+            "point": 120,
+            "registered_date": "2024-01-10",
+            "expiration_date": "2026-01-10",
+            "history": [],
+            "document_list": []
+          }
+        }
+      ]
+    }
+  }
