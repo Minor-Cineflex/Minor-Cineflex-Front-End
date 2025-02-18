@@ -4,8 +4,9 @@ import { FaCircleChevronLeft } from "react-icons/fa6";
 
 const testData = Data
 
-function ShowMoviesHistory(testData: typeof Data){
+const ShowMoviesHistory = (testData: typeof Data) => {
   const [hoverIndex, setHoverIndex] = useState(null)
+  const [containnerWidth, setcontainerWidth] = useState(Number)
   function ShowInfo(){
     console.log(hoverIndex)
     if(hoverIndex !== null){
@@ -20,6 +21,13 @@ function ShowMoviesHistory(testData: typeof Data){
   }
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const DisableScroll = () => {
+    if (containnerWidth == window.innerWidth){
+      return 0
+    }
+  }
+
   const scroll = (direction: 'left' | 'right') => {
     if (scrollContainerRef.current) {
       const scrollAmount = 300;
@@ -27,6 +35,7 @@ function ShowMoviesHistory(testData: typeof Data){
         left: direction === 'left' ? -scrollAmount : scrollAmount,
         behavior: 'smooth',
       });
+      direction === 'left'?setcontainerWidth(-scrollAmount) : setcontainerWidth(+scrollAmount)
     }
   };
 
@@ -41,15 +50,15 @@ function ShowMoviesHistory(testData: typeof Data){
                   className="h-100 w-56 flex-shrink-0 rounded-2xl"
               >
                 <div className='w-full h-80 overflow-hidden rounded-2xl hover:z-10 hover:border hover:border-black snap-start'
-                  onMouseEnter={() => setHoverIndex(index)}
+                  onMouseEnter={() => setHoverIndex(index+1)}
                   onMouseLeave={() => setHoverIndex(null)}
                 >
                   <div className='relative w-full h-full'>
-                      {hoverIndex !== null && hoverIndex === index && ShowInfo()}
+                      {hoverIndex !== null && hoverIndex === index+1 && ShowInfo()}
                       <img 
                           src={movie.pic} 
                           alt="Movie poster"
-                          className={hoverIndex === index? temp:"min-h-full max-h-full w-full object-cover cursor-pointer"}
+                          className={hoverIndex === index+1? temp:"min-h-full max-h-full w-full object-cover cursor-pointer"}
                       />
                     </div>
                 </div>
@@ -67,7 +76,7 @@ function ShowMoviesHistory(testData: typeof Data){
 
 const HomePage: React.FC = () => {
   return (
-    <div className='bg-[#4C3A51] w-screen max-w-screen h-screen flex flex-col gap-10 overflow-y-auto'>
+    <div className='bg-[#4C3A51] w-screen max-w-screen h-screen flex flex-col gap-10 overflow-y-auto pb-24'>
       <nav className='w-full h-20 bg-[#D9D9D9] fixed text-center font-semibold	text-xl  z-50'>//For nav bar</nav>
       <div className='pt-24 w-full flex pl-16 gap-10 font-semibold text-[#E7AB79] underline text-base'>
         <button>หน้าหลัก</button>
@@ -86,6 +95,7 @@ const HomePage: React.FC = () => {
         <h1 className='text-2xl text-[#E7AB79] font-semibold pl-10'>เร็วๆนี้</h1>
         {ShowMoviesHistory(testData)}
       </div>
+      <nav className='w-full min-h-20 max-h-20 fixed absolute bottom-0 bg-[#D9D9D9] text-center font-semibold	text-xl  z-50'>//For bottom nav bar</nav>
     </div>
   );
 }
