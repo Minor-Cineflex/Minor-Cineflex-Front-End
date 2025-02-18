@@ -96,6 +96,22 @@
                 "movie_id": "M001",
                 "detail": "Superhero movie",
                 "duration": 180
+              },
+              {
+                "name": "Avengers: Endgame",
+                "pic": "https://preview.redd.it/1sdabp4nt2m21.jpg?auto=webp&s=1d3793ac4d16c6dfc457da2dc65cff869221cc80",
+                "type": "Action",
+                "movie_id": "M001",
+                "detail": "Superhero movie",
+                "duration": 180
+              },
+              {
+                "name": "Avengers: Endgame",
+                "pic": "https://preview.redd.it/1sdabp4nt2m21.jpg?auto=webp&s=1d3793ac4d16c6dfc457da2dc65cff869221cc80",
+                "type": "Action",
+                "movie_id": "M001",
+                "detail": "Superhero movie",
+                "duration": 180
               }
             ]
           }
