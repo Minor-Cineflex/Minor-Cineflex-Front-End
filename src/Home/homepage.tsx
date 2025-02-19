@@ -14,8 +14,8 @@ const ShowMoviesHistory = (testData: typeof Data) => {
   const checkScroll = () => {
     if (scrollContainerRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
-      setCanScrollLeft(scrollLeft > 0); 
-      setCanScrollRight(scrollLeft + clientWidth < scrollWidth); 
+      setCanScrollLeft(scrollLeft > 100); 
+      setCanScrollRight((scrollLeft + clientWidth) < (scrollWidth - 100)); 
     }
   };
 
