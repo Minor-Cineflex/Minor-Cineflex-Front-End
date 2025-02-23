@@ -14,13 +14,44 @@ const Create:React.FC = () => {
     const [password, setPassword] = useState(String)
     const [confirmPassword, setConfirmPassword] = useState(String)
 
-    const signUp = () => {
+    const signUp = async() => {
         !email ? alert("Please set your email"):
         !email.includes("@") || !email.includes(".com") ? alert("Please enter a valid email address"):
         !username ? alert("Please set your username"):
         !password ? alert("Please set your password"):
-        password !== confirmPassword ? alert("Passwords don't match"):
-        alert("ok")
+        password !== confirmPassword ? alert("Passwords don't match"):console.log("User input data ok")
+        
+        const userData = {
+            name: "",
+            tel_no: "",
+            email: email,
+            birthday: new Date().toISOString(),
+            gender: "",
+            account: {
+                username: username,
+                password: password,
+                account_id: Math.random().toString(36).substr(2, 9),
+                point: 0,
+                registered_date: new Date().toISOString(),
+                expiration_date: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString()
+            }
+        };
+
+        try {
+            const response = await fetch("http://localhost:8000/minorcineflex/add_person", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(userData)
+            });
+            const data = await response.json();
+            alert(data.message);
+            navigate("/Login");
+        }catch(error) {
+            console.error("Error signing up:", error);
+            alert("Failed to create account. Please try again.");
+        }
     }
 
     return(
