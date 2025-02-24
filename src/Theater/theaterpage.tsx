@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./responsive.css";
-import "./image/arrow.png";
+import "./test.js";
 
 let list_day = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
