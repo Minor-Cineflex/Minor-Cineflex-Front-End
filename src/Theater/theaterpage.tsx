@@ -1,22 +1,21 @@
 import React, { useState, useEffect } from "react";
 import "./responsive.css";
+import "./image/arrow.png";
 
 let list_day = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
 const TheaterPage: React.FC = () => {
     const [isNavbarVisible, setIsNavbarVisible] = useState(true);
-    const [isFooterVisible, setIsFooterVisible] = useState(true);
     const [prevScroll, setPrevScroll] = useState(0);
+    const [isFooterVisible, setIsFooterVisible] = useState(true);
 
     useEffect(() => {
         const handleScroll = () => {
             const currentScroll = window.scrollY;
             if (currentScroll > prevScroll) {
                 setIsNavbarVisible(false);
-                setIsFooterVisible(false); // เลื่อนลง -> ซ่อน Footer
             } else {
                 setIsNavbarVisible(true);
-                setIsFooterVisible(true);  // เลื่อนขึ้น -> แสดง Footer
             }
             setPrevScroll(currentScroll);
         };
@@ -53,6 +52,9 @@ const TheaterPage: React.FC = () => {
                     </div>
                 ))}
             </section>
+            <button onClick={() => setIsFooterVisible(!isFooterVisible)} className={`fixed right-5 bg-[#774360] text-white px-4 py-2 rounded-lg shadow-lg z-20 transition-all duration-500 ${isFooterVisible ? "bottom-24" : "bottom-5"}`}>
+                {isFooterVisible ? "Hide" : "Show"}
+            </button>
             <footer id="footerNav" className={`bg-[#B25068] text-white h-20 fixed bottom-0 w-full flex items-center justify-center transition-transform duration-500 ${isFooterVisible ? "translate-y-0" : "translate-y-full"}`}>
                 <div className="container mx-auto text-center">
                     <div className="text-black text-3xl font-semibold flex translate-x-10">BUY TICKET</div>
