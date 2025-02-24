@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./responsive.css";
 import movieData from "./test.json";
-import Calendar from "react-calendar"; // นำเข้า react-calendar
+import Calendar from "react-calendar"; 
 
 const TheaterPage: React.FC = () => {
     const [isNavbarVisible, setIsNavbarVisible] = useState(true);
@@ -9,7 +9,7 @@ const TheaterPage: React.FC = () => {
     const [isFooterVisible, setIsFooterVisible] = useState(true);
     const [movieList, setMovieList] = useState(movieData.movie_list);
     const [selectedDay, setSelectedDay] = useState(new Date());
-    const [isCalendarVisible, setIsCalendarVisible] = useState(true);
+    const [isCalendarVisible, setIsCalendarVisible] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -39,22 +39,22 @@ const TheaterPage: React.FC = () => {
                     This is header Nav
                 </nav>
             </header>
-            <section id="chooseDay" className="mt-24 w-full px-4 flex flex-wrap items-start gap-2 pl-4">
+            <section id="chooseDay" className="pt-3 mt-24 w-full px-4 flex flex-wrap items-start gap-2 pl-4">
                 <div id="Today" className="h-16 border-2 border-orange-300 p-2 shadow-lg rounded-2xl bg-[#B25068] w-full md:w-auto text-center flex items-center justify-between">
-                    <p className="text-yellow-400 text-2xl p-1">You choose : {selectedDay.toLocaleDateString()}</p>
-                    <button onClick={() => setIsCalendarVisible(!isCalendarVisible)} className="ml-2 text-yellow-400 p-2 rounded-lg bg-[#774360] hover:bg-[#FF9F00] transition-all">
+                    <p className="text-yellow-400 text-2xl p-1 font-semibold">You choose : {selectedDay.toLocaleDateString()}</p>
+                    <button onClick={() => setIsCalendarVisible(!isCalendarVisible)} className="ml-2 text-white p-2 rounded-lg bg-[#774360] hover:bg-[#FF9F00] transition-all">
                         {isCalendarVisible ? "Hide Calendar" : "Show Calendar"}
                     </button>
                 </div>
-                {isCalendarVisible && (
-                    <div id="calendar" className="border-2 border-orange-300 p-4 shadow-lg rounded-2xl bg-[#4C3A51]">
+                <div id="calendar" className={`border-2 border-orange-300 p-4 shadow-lg rounded-2xl bg-[#4C3A51] transition-all duration-500 ease-in-out transform ${isCalendarVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+                    {isCalendarVisible && (
                         <Calendar
                             onChange={handleDayClick}
                             value={selectedDay}
                             className="custom-calendar"
                         />
-                    </div>
-                )}
+                    )}
+                </div>
             </section>
             <section id="showtime" className="mt-8 mb-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full px-4 justify-items-center">
                 {movieList.map((movie, index) => (
@@ -70,10 +70,10 @@ const TheaterPage: React.FC = () => {
                 ))}
             </section>
 
-            <button onClick={() => setIsFooterVisible(!isFooterVisible)} className={`fixed right-5 bg-[#774360] text-white px-4 py-2 rounded-lg shadow-lg z-20 transition-all duration-500 ${isFooterVisible ? "bottom-24" : "bottom-5"}`}>
+            <button onClick={() => setIsFooterVisible(!isFooterVisible)} className={`fixed right-5 bg-[#774360] hover:bg-[#FF9F00] text-white px-4 py-2 rounded-lg shadow-lg z-20 transition-all duration-500 ${isFooterVisible ? "bottom-24" : "bottom-5"}`}>
                 {isFooterVisible ? "Hide" : "Show"}
             </button>
-            <footer id="footerNav" className={`bg-[#B25068] text-white h-20 fixed bottom-0 w-full flex items-center justify-center transition-transform duration-500 ${isFooterVisible ? "translate-y-0" : "translate-y-full"}`}>
+            <footer id="footerNav" className={`bg-[#B25068]  text-white h-20 fixed bottom-0 w-full flex items-center justify-center transition-transform duration-500 ${isFooterVisible ? "translate-y-0" : "translate-y-full"}`}>
                 <div className="container mx-auto text-center">
                     <div className="text-black text-3xl font-semibold flex translate-x-10">BUY TICKET</div>
                 </div>
