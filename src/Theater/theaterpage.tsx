@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import "./responsive.css";
 import movieData from "./test.json";
-
-let list_day = movieData.list_day;
+import Calendar from "react-calendar"; // นำเข้า react-calendar
 
 const TheaterPage: React.FC = () => {
     const [isNavbarVisible, setIsNavbarVisible] = useState(true);
     const [prevScroll, setPrevScroll] = useState(0);
     const [isFooterVisible, setIsFooterVisible] = useState(true);
     const [movieList, setMovieList] = useState(movieData.movie_list);
-    const [selectedDay, setSelectedDay] = useState(list_day[0]);
+    const [selectedDay, setSelectedDay] = useState(new Date());
+    const [isCalendarVisible, setIsCalendarVisible] = useState(true);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -28,8 +28,8 @@ const TheaterPage: React.FC = () => {
         };
     }, [prevScroll]);
 
-    const handleDayClick = (day: string) => {
-        setSelectedDay(day);
+    const handleDayClick = (date: Date) => {
+        setSelectedDay(date);
     };
 
     return (
@@ -40,19 +40,21 @@ const TheaterPage: React.FC = () => {
                 </nav>
             </header>
             <section id="chooseDay" className="mt-24 w-full px-4 flex flex-wrap items-start gap-2 pl-4">
-                <div id="Today" className="h-16 border-2 border-orange-300 p-2 shadow-lg rounded-2xl bg-[#B25068] w-full md:w-auto text-center">
-                    <p className="text-yellow-400 text-2xl p-1">You choose : {selectedDay}</p>
+                <div id="Today" className="h-16 border-2 border-orange-300 p-2 shadow-lg rounded-2xl bg-[#B25068] w-full md:w-auto text-center flex items-center justify-between">
+                    <p className="text-yellow-400 text-2xl p-1">You choose : {selectedDay.toLocaleDateString()}</p>
+                    <button onClick={() => setIsCalendarVisible(!isCalendarVisible)} className="ml-2 text-yellow-400 p-2 rounded-lg bg-[#774360] hover:bg-[#FF9F00] transition-all">
+                        {isCalendarVisible ? "Hide Calendar" : "Show Calendar"}
+                    </button>
                 </div>
-                <div id="schedule" className="flex flex-wrap justify-center gap-2 border-2 border-orange-300 p-2 shadow-lg rounded-2xl">
-                    {list_day.map((day, index) => (
-                        <button 
-                            key={index} 
-                            onClick={() => handleDayClick(day)} 
-                            className="border-2 border-orange-300 p-2 shadow-lg rounded-2xl bg-[#B25068] text-center">
-                            <p className="text-yellow-400 text-lg">{day}</p>
-                        </button>
-                    ))}
-                </div>
+                {isCalendarVisible && (
+                    <div id="calendar" className="border-2 border-orange-300 p-4 shadow-lg rounded-2xl bg-[#4C3A51]">
+                        <Calendar
+                            onChange={handleDayClick}
+                            value={selectedDay}
+                            className="custom-calendar"
+                        />
+                    </div>
+                )}
             </section>
             <section id="showtime" className="mt-8 mb-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full px-4 justify-items-center">
                 {movieList.map((movie, index) => (

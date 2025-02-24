@@ -1,5 +1,4 @@
 {
-  "list_day": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
   "movie_list": [
     {
       "movie_title": "Avengers: Endgame",
@@ -128,6 +127,22 @@
       "subtitles_language": "Chinese",
       "theater": "Theater 4",
       "theater_type": "Standard"
+    },
+    {
+      "movie_title": "Toy Story 4",
+      "start_time": "2025-02-20T15:30:00",
+      "dubbed_language": "Thai",
+      "subtitles_language": "English",
+      "theater": "Theater 5",
+      "theater_type": "Deluxe"
+    },
+    {
+      "movie_title": "Aladdin",
+      "start_time": "2025-02-20T18:00:00",
+      "dubbed_language": "Thai",
+      "subtitles_language": "Chinese",
+      "theater": "Theater 6",
+      "theater_type": "Luxury"
     },
     {
       "movie_title": "Toy Story 4",
