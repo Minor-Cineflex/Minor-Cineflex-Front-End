@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./responsive.css";
 import movieData from "./test.json";
-import Calendar from "react-calendar"; 
+import Calendar from "react-calendar";
 
 const TheaterPage: React.FC = () => {
     const [isNavbarVisible, setIsNavbarVisible] = useState(true);
@@ -56,20 +56,21 @@ const TheaterPage: React.FC = () => {
                     )}
                 </div>
             </section>
-            <section id="showtime" className="mt-8 mb-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full px-4 justify-items-center">
-                {movieList.map((movie, index) => (
-                    <div key={index} className="w-full max-w-xs bg-[#774360] border-2 border-orange-300 shadow-lg rounded-2xl flex flex-col items-center p-4 mb-6">
-                        <div className="text-center text-white flex flex-col justify-between flex-grow">
-                            <p className="text-yellow-400 text-xl font-semibold">{movie.movie_title}</p>
-                            <div className="mt-auto">
-                                <p className="text-yellow-300 text-sm">{movie.dubbed_language}/{movie.subtitles_language} | Theater {movie.theater} | {movie.theater_type}</p>
-                                <p className="text-yellow-300 text-sm">{new Date(movie.start_time).toLocaleString()}</p>
+            <section id="showtime">
+                <div className="mt-12 mb-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-16 gap-y-20 w-full px-4 justify-items-center">
+                    {movieList.map((movie, index) => (
+                        <div key={index} className="w-full max-w-xs bg-[#774360] border-2 border-orange-300 shadow-lg rounded-2xl flex flex-col items-center p-4 mb-6">
+                            <div className="text-center text-white flex flex-col justify-between flex-grow">
+                                <p className="text-yellow-400 text-xl font-semibold">{movie.movie_title}</p>
+                                <div className="mt-auto">
+                                    <p className="text-yellow-300 text-sm">{movie.dubbed_language}/{movie.subtitles_language} | Theater {movie.theater} | {movie.theater_type}</p>
+                                    <p className="text-yellow-300 text-sm">{new Date(movie.start_time).toLocaleString()}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </section>
-
             <button onClick={() => setIsFooterVisible(!isFooterVisible)} className={`fixed right-5 bg-[#774360] hover:bg-[#FF9F00] text-white px-4 py-2 rounded-lg shadow-lg z-20 transition-all duration-500 ${isFooterVisible ? "bottom-24" : "bottom-5"}`}>
                 {isFooterVisible ? "Hide" : "Show"}
             </button>
