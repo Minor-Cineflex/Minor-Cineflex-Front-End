@@ -24,7 +24,7 @@ const Create:React.FC = () => {
         const userData = {
             name: "",
             tel_no: "",
-            email: email,
+            email: email.toLowerCase(),
             birthday: new Date().toISOString(),
             gender: "",
             account: {
@@ -38,6 +38,27 @@ const Create:React.FC = () => {
         };
 
         try {
+            const person_list_response = await fetch("http://localhost:8000/minorcineflex/person", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+
+            if(!person_list_response.ok){
+                console.log("Fail to fetch person_list")
+            }
+            const person_list = await person_list_response.json()
+            console.log("Ok to fetched person_list", person_list);
+            const emailExists = person_list.some(p => p.email === email);
+            if(emailExists){
+                return alert("Already used this email")
+            }
+            const usernameExists = person_list.some(p => p.account.username === username)
+            if(usernameExists){
+                return alert("This username is already in use")
+            }
+
             const response = await fetch("http://localhost:8000/minorcineflex/add_person", {
                 method: "POST",
                 headers: {
