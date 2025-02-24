@@ -5,91 +5,97 @@ let movie_list = [
       "movie_title": "Avengers: Endgame",
       "start_time": "2025-02-19T18:00:00",
       "dubbed_language": "Thai",
-      "subtitles_language": "English"
+      "subtitles_language": "English",
+      "theater": "Theater 1",
+      "theater_type": "Standard"
     },
     {
       "movie_title": "Spider-Man: No Way Home",
       "start_time": "2025-02-19T20:30:00",
       "dubbed_language": "Thai",
-      "subtitles_language": "Chinese"
+      "subtitles_language": "Chinese",
+      "theater": "Theater 2",
+      "theater_type": "Deluxe"
     },
     {
       "movie_title": "Frozen II",
       "start_time": "2025-02-20T10:30:00",
       "dubbed_language": "Thai",
-      "subtitles_language": "English"
+      "subtitles_language": "English",
+      "theater": "Theater 3",
+      "theater_type": "Luxury"
+    },
+    {
+      "movie_title": "The Lion King",
+      "start_time": "2025-02-20T13:00:00",
+      "dubbed_language": "Thai",
+      "subtitles_language": "Chinese",
+      "theater": "Theater 4",
+      "theater_type": "Standard"
+    },
+    {
+      "movie_title": "Toy Story 4",
+      "start_time": "2025-02-20T15:30:00",
+      "dubbed_language": "Thai",
+      "subtitles_language": "English",
+      "theater": "Theater 5",
+      "theater_type": "Deluxe"
+    },
+    {
+      "movie_title": "Aladdin",
+      "start_time": "2025-02-20T18:00:00",
+      "dubbed_language": "Thai",
+      "subtitles_language": "Chinese",
+      "theater": "Theater 6",
+      "theater_type": "Luxury"
     },
     {
       "movie_title": "Avengers: Endgame",
       "start_time": "2025-02-19T18:00:00",
       "dubbed_language": "Thai",
-      "subtitles_language": "English"
+      "subtitles_language": "English",
+      "theater": "Theater 1",
+      "theater_type": "Standard"
     },
     {
       "movie_title": "Spider-Man: No Way Home",
       "start_time": "2025-02-19T20:30:00",
       "dubbed_language": "Thai",
-      "subtitles_language": "Chinese"
+      "subtitles_language": "Chinese",
+      "theater": "Theater 2",
+      "theater_type": "Deluxe"
     },
     {
       "movie_title": "Frozen II",
       "start_time": "2025-02-20T10:30:00",
       "dubbed_language": "Thai",
-      "subtitles_language": "English"
+      "subtitles_language": "English",
+      "theater": "Theater 3",
+      "theater_type": "Luxury"
     },
     {
-      "movie_title": "Avengers: Endgame",
-      "start_time": "2025-02-19T18:00:00",
+      "movie_title": "The Lion King",
+      "start_time": "2025-02-20T13:00:00",
       "dubbed_language": "Thai",
-      "subtitles_language": "English"
+      "subtitles_language": "Chinese",
+      "theater": "Theater 4",
+      "theater_type": "Standard"
     },
     {
-      "movie_title": "Spider-Man: No Way Home",
-      "start_time": "2025-02-19T20:30:00",
+      "movie_title": "Toy Story 4",
+      "start_time": "2025-02-20T15:30:00",
       "dubbed_language": "Thai",
-      "subtitles_language": "Chinese"
+      "subtitles_language": "English",
+      "theater": "Theater 5",
+      "theater_type": "Deluxe"
     },
     {
-      "movie_title": "Frozen II",
-      "start_time": "2025-02-20T10:30:00",
+      "movie_title": "Aladdin",
+      "start_time": "2025-02-20T18:00:00",
       "dubbed_language": "Thai",
-      "subtitles_language": "English"
-    },
-    {
-      "movie_title": "Avengers: Endgame",
-      "start_time": "2025-02-19T18:00:00",
-      "dubbed_language": "Thai",
-      "subtitles_language": "English"
-    },
-    {
-      "movie_title": "Spider-Man: No Way Home",
-      "start_time": "2025-02-19T20:30:00",
-      "dubbed_language": "Thai",
-      "subtitles_language": "Chinese"
-    },
-    {
-      "movie_title": "Frozen II",
-      "start_time": "2025-02-20T10:30:00",
-      "dubbed_language": "Thai",
-      "subtitles_language": "English"
-    },
-    {
-      "movie_title": "Avengers: Endgame",
-      "start_time": "2025-02-19T18:00:00",
-      "dubbed_language": "Thai",
-      "subtitles_language": "English"
-    },
-    {
-      "movie_title": "Spider-Man: No Way Home",
-      "start_time": "2025-02-19T20:30:00",
-      "dubbed_language": "Thai",
-      "subtitles_language": "Chinese"
-    },
-    {
-      "movie_title": "Frozen II",
-      "start_time": "2025-02-20T10:30:00",
-      "dubbed_language": "Thai",
-      "subtitles_language": "English"
+      "subtitles_language": "Chinese",
+      "theater": "Theater 6",
+      "theater_type": "Luxury"
     }
   ]
   
