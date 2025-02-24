@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./responsive.css";
-import "./test.js";
+import "./test.json";
 
 let list_day = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
@@ -46,7 +46,7 @@ const TheaterPage: React.FC = () => {
                 </div>
             </section>
             <section id="showtime" className="mt-8 mb-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full px-4 justify-items-center">
-                {Array.from({ length: 24 }).map((_, index) => (
+                {Array.from({ length: 18 }).map((_, index) => (
                     <div key={index} className="w-80 h-32 bg-[#774360] border-2 border-orange-300 shadow-lg rounded-2xl flex items-center justify-center mb-20">
                         <p className="text-yellow-400 text-xl">Showtime {index + 1}</p>
                     </div>
