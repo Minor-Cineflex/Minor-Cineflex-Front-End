@@ -11,8 +11,8 @@ import data from "./test.json"
 
 
 const SeatPage: React.FC = () => {
-    const fullrow = 4
-    const fullcol=8
+    const fullrow = Object.keys(data).length;
+    const fullcol=Object.keys(data["1"]).length;
 
     const [selectedSeats, setSelectedSeats] = useState<Set<string>>(new Set());
 
@@ -34,7 +34,7 @@ const SeatPage: React.FC = () => {
     }
     
     const Seat_table = () => {
-        return <div className="grid grid-cols-8 gap-8 px-8">
+        return <div className={`grid grid-cols-${fullcol} gap-8 px-8`}>
             {Array.from({length:fullrow}).map((_,i) =>
                 Array.from({length: fullcol}).map((_,j) => (
                     Seat(i,j)
