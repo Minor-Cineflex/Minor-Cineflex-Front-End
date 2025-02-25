@@ -1,9 +1,12 @@
 import React, { useRef, useState , useEffect } from "react";
-import Logo from "./logo/MinorCineflexLogo.jpg"
+import Logo from "../Logo/MinorCineflexLogo.jpg"
 import Data from "../test.json"
 import { FaCircleChevronLeft } from "react-icons/fa6";
+import { FaChevronLeft } from "react-icons/fa";
+import { useNavigate, useLocation } from "react-router";
 
-const testData = Data
+const ProfilePage: React.FC = () => {
+    const testData = Data
 
 const ShowMoviesHistory = () => {
     const [hoverIndex, setHoverIndex] = useState(null)
@@ -65,8 +68,7 @@ const ShowMoviesHistory = () => {
     };
 
     const showScrollButton = () => {
-        const orientation = UseOrientation();
-        console.log(orientation)
+        UseOrientation();
         if(window.innerWidth > 500){
             return(
                 <div className='w-fit min-h-full flex flex-col justify-center items-center gap-16'>
@@ -118,17 +120,71 @@ const ShowMoviesHistory = () => {
             </div>
             {showScrollButton()}
         </div>
-    )
-}
+    )}
 
-const ProfilePage: React.FC = () => {
+    const navigate = useNavigate()
+    const { state }  = useLocation();
+    const [currentUser, setCurrentUser] = useState<any>(null)
+
+    useEffect(() => {
+        if (!state) {
+            navigate('/Login');
+            return;
+        }
+
+        const searchUser = async () => {
+            try {
+                const response = await fetch("http://localhost:8000/minorcineflex/person", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                });
+
+                if (!response.ok) {
+                    console.log("Failed to fetch person_list");
+                    return;
+                }
+
+                const person_list = await response.json();
+                const foundUser = person_list.find((p: any) => p.email === state.email);
+                if (foundUser) {
+                    setCurrentUser(foundUser);
+                } else {
+                    navigate('/Login');
+                }
+            } catch (error) {
+                console.error("Cannot fetch person:", error);
+            }
+        };
+
+        searchUser();
+    }, [state, navigate]);
+
+    const showUsername = () => {
+        if(currentUser){
+            return currentUser.account.username
+        }
+    }
+
+    const showEmail = () => {
+        if(currentUser){
+            return currentUser.email
+        }
+    }
+
     return(
         <div className="min-w-full min-h-screen bg-[#4C3A51] flex flex-col justify-evenly overflow-hidden">
-            <div className="min-w-fit w-2/5 min-h-fit bg-[#D9D9D9] flex flex-col justify-items-center items-center self-center mt-8 gap-6 rounded-2xl">
+            <nav onClick={() => navigate("/", {state: currentUser})}><FaChevronLeft className="cursor-pointer text-[#E7AB79] mt-4 ml-5" size={30}/></nav>
+            <div className="min-w-fit w-2/5 min-h-fit bg-[#D9D9D9] flex flex-col justify-items-center items-center self-center mt-4 gap-6 rounded-2xl">
                 <img src={Logo} alt="" className="size-28"/>
-                <div className="flex flex-col w-full max-w-80 self-start items-center gap-6 mb-12 pl-6 pr-6">
-                    <h1 className="text-xl w-full font-semibold truncate ...">Username: </h1>
-                    <h1 className="text-xl w-full font-semibold truncate ...">Email: </h1> 
+                <div className="flex flex-col w-full self-start items-center gap-6 mb-12 pl-6 pr-6">
+                    <h1 className="text-xl w-full font-semibold flex gap-3">Username: 
+                        <p className="truncate font-normal">{showUsername()}</p>
+                    </h1>
+                    <h1 className="text-xl w-full font-semibold truncate flex gap-3">Email: 
+                        <p className="truncate font-normal">{showEmail()}</p>
+                    </h1> 
                 </div>
             </div>
             <div className="min-h-fit w-screen flex flex-col justify-center mt-12 gap-3">

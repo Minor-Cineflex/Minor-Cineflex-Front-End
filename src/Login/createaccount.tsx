@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Logo from "./logo/MinorCineflexLogo.jpg"
+import Logo from "../Logo/MinorCineflexLogo.jpg"
 import { MdEmail } from "react-icons/md";
 import { BsPersonCircle } from "react-icons/bs";
 import { RiKey2Fill } from "react-icons/ri";
@@ -94,6 +94,7 @@ const Create:React.FC = () => {
                     });
                     const update_data = await update_password_response.json();
                     alert(update_data.message);
+                    navigate('/Login')
                     return
                 }
                 return alert("Already used this email")

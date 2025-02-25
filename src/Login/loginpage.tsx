@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Logo from "./logo/MinorCineflexLogo.jpg";
+import Logo from "../Logo/MinorCineflexLogo.jpg";
 import { RiKey2Fill } from "react-icons/ri";
 import { MdEmail } from "react-icons/md";
 import { useNavigate } from "react-router";
@@ -34,7 +34,7 @@ const LoginPage: React.FC = () => {
                 alert("Incorrect password")
                 return
             }
-            alert("You can login");
+            navigate('/Profile', {state: user})
         }catch(error){
             console.error("Error to Login:", error);
             alert("Failed to Login. Please try again.");
@@ -60,8 +60,6 @@ const LoginPage: React.FC = () => {
                 expiration_date: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString()
             } 
         };
-    
-        console.log("Google Login Success:", userInfo);
         localStorage.setItem("user", JSON.stringify(userInfo));
         
         try {
@@ -76,11 +74,10 @@ const LoginPage: React.FC = () => {
                 console.log("Fail to fetch person_list")
             }
             const person_list = await person_list_response.json()
-            console.log("Ok to fetched person_list", person_list);
             const emailExists = person_list.some((p: any) => p.email === userInfo.email);
             if(emailExists){
                 alert(`Welcome back, ${userInfo.name}!`);
-                navigate("/", {state: userInfo});
+                navigate("/Profile", {state: userInfo});
                 return
             }
 
@@ -94,7 +91,7 @@ const LoginPage: React.FC = () => {
             const data = await response.json();
             console.log(data.message)
             alert(`Welcome, ${userInfo.name}!`);
-            navigate("/", {state: userInfo});
+            navigate("/Profile", {state: userInfo});
             return
         }catch(error) {
             console.error("Error signing up:", error);
