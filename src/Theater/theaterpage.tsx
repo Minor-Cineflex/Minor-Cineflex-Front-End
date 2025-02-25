@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "./responsive.css";
 import movieData from "./test.json";
 import Calendar from "react-calendar";
 
