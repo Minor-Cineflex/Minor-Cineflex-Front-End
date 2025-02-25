@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "./responsive.css";
-import movieData from "./test.json";
-import Calendar from "react-calendar";
+import movieData from "./test.json"
+import Data from "./test2.json";
+import logo from "./MinorCineflexLogo.jpg"
 
 const CinemaPage: React.FC = () => {
     const [isNavbarVisible, setIsNavbarVisible] = useState(true);
     const [prevScroll, setPrevScroll] = useState(0);
     const [isFooterVisible, setIsFooterVisible] = useState(true);
-    const [movieList, setMovieList] = useState(movieData.movie_list);
-    const [selectedDay, setSelectedDay] = useState(new Date());
-    const [isCalendarVisible, setIsCalendarVisible] = useState(false);
-    const [selectedShowtime, setSelectedShowtime] = useState<string | null>(null);
+ 
 
     useEffect(() => {
         const handleScroll = () => {
@@ -29,34 +27,34 @@ const CinemaPage: React.FC = () => {
         };
     }, [prevScroll]);
 
-    const handleDayClick = (date: Date) => {
-        setSelectedDay(date);
-    };
+    const region = (name) => {
+        const filteredData = {
+            "Cinema_list": Data.Cinema_list.filter(cinema => cinema.region === name)
+        };
+        
+        const n = Object.keys(filteredData["Cinema_list"]).length
 
-    // ฟังก์ชันแปลง Date เป็น YYYY-MM-DD
-    const formatDate = (date: Date) => {
-        return date.toLocaleDateString();
-    };
 
-    // ฟังก์ชันแปลงเวลาเป็นแบบ 12 ชั่วโมง (ไม่แสดงวินาที)
-    const formatTime = (date: Date) => {
-        return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    };
-
-    // กรองเฉพาะรายการที่ตรงกับวันที่เลือก
-    const filteredMovies = movieList.filter(movie =>
-        formatDate(new Date(movie.start_time)) === formatDate(selectedDay)
-    );
-
-    // จัดกลุ่มหนังที่มีชื่อเรื่องเดียวกันและฉายในวันเดียวกัน
-    const groupedMovies = filteredMovies.reduce((groups: any, movie) => {
-        const movieKey = `${movie.movie_title}_${formatDate(new Date(movie.start_time))}`;
-        if (!groups[movieKey]) {
-            groups[movieKey] = { movie, times: [] };
-        }
-        groups[movieKey].times.push(new Date(movie.start_time));
-        return groups;
-    }, {});
+        return <div id="region">
+            <div id="regionName">
+                <p className="text-[#E7AB79] text-3xl p-4">{name}</p>
+            </div>
+            <div id="grid" className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-4 gap-4">
+                {Array.from({length:n}).map((_,i) => (
+                    <div key={i} id="cinema" className="flex bg-pink-700 bg-opacity-70 border-2 border-[#E7AB79] p-4 rounded-2xl gap-2">
+                        <img src={logo} alt="" className="rounded-full w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16" />
+                        <div className= "flex flex-col">
+                            <p className="p-1 text-[#E7AB79] text-xl">{filteredData['Cinema_list'][i]["name"]}</p>
+                            <p className="p-1 text-[#E7AB79]">{filteredData['Cinema_list'][i]["location"]}</p>
+                        </div>
+                    </div>
+                ))}
+            
+            
+            </div>
+        </div>
+    }
+   
 
     return (
         <div id="headerNav" className="min-h-screen bg-[#4C3A51] flex flex-col items-center">
@@ -65,59 +63,29 @@ const CinemaPage: React.FC = () => {
                     This is header Nav
                 </nav>
             </header>
-            <section id="chooseDay" className="pt-3 mt-24 w-full px-4 flex flex-wrap items-start gap-2 pl-4">
-                <div id="Today" className="h-16 border-2 border-orange-300 p-2 shadow-lg rounded-2xl bg-[#B25068] w-full md:w-auto text-center flex items-center justify-between">
-                    <p className="text-yellow-400 text-2xl p-1 font-semibold">You choose : {selectedDay.toLocaleDateString()}</p>
-                    <button onClick={() => setIsCalendarVisible(!isCalendarVisible)} className="ml-2 text-white p-2 rounded-lg bg-[#774360] hover:bg-[#FF9F00] transition-all">
-                        {isCalendarVisible ? "Hide Calendar" : "Show Calendar"}
-                    </button>
+            <div className="flex flex-col w-full justify-center">
+                <div id="่easteregg" className="p-7 whitespace-nowrap justify-center">
+                    Hello there :)
                 </div>
-                <div id="calendar" className={`border-2 border-orange-300 p-4 shadow-lg rounded-2xl bg-[#4C3A51] transition-all duration-500 ease-in-out transform ${isCalendarVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-                    {isCalendarVisible && (
-                        <Calendar
-                            onChange={handleDayClick}
-                            value={selectedDay}
-                            className="custom-calendar"
-                        />
-                    )}
+                <div id="head" className="flex w-full overflow-x-auto whitespace-nowrap scrollbar-thin">
+                    <p className="p-4 text-[#E7AB79]">กรุงเทพ</p>
+                    <p className="p-4 text-[#E7AB79]">ภาคกลาง</p>
+                    <p className="p-4 text-[#E7AB79]">ภาคเหนือ</p>
+                    <p className="p-4 text-[#E7AB79]">ภาคใต้</p>
+                    <p className="p-4 text-[#E7AB79]">ภาคตะวันออกเฉียงเหนือ</p>
+                    <p className="p-4 text-[#E7AB79]">ภาคตะวันออก</p>
+                    <p className="p-4 text-[#E7AB79]">ภาคตะวันตก</p>
                 </div>
-            </section>
-            <section id="showtime">
-                <div className="mt-10 mb-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-12 gap-y-12 w-full px-4 justify-items-center">
-                    {Object.keys(groupedMovies).length > 0 ? (
-                        Object.keys(groupedMovies).map((key, index) => {
-                            const movieGroup = groupedMovies[key];
-                            return (
-                                <div key={index} className="bg-black/20 rounded-2xl text-center w-full max-w-xs flex flex-col h-full p-4">
-                                    <div className="bg-[#774360] border-2 border-orange-300 shadow-lg rounded-2xl flex flex-col items-center h-full gap-y-4 hover:shadow-xl hover:scale-105 transition-all duration-300">
-                                        <div className="w-full h-full bg-gray-500 rounded-2xl overflow-hidden relative group">
-                                            <img src={movieGroup.movie.pic} alt={movieGroup.movie.movie_title} className="w-full h-full object-cover object-center" />
-                                        </div>
-                                    </div>
-                                    <div className="mt-auto mt-5">
-                                        <p className="text-yellow-300 text-xl font-semibold pb-2">{movieGroup.movie.movie_title}</p>
-                                        <p className="text-yellow-300 text-m">{movieGroup.movie.dubbed_language}/{movieGroup.movie.subtitles_language} | {movieGroup.movie.theater} | {movieGroup.movie.theater_type}</p>
-                                        <p className="text-yellow-300 text-m">{formatDate(new Date(movieGroup.movie.start_time))}</p>
-                                        <div className="flex flex-wrap gap-2 mt-4 w-full justify-center">
-                                            {movieGroup.times.map((time, timeIndex) => (
-                                                <button
-                                                    key={timeIndex}
-                                                    className={`px-4 py-2 rounded-lg bg-[#774360] text-white hover:bg-[#FF9F00] transition-all`}
-                                                    onClick={() => setSelectedShowtime(formatTime(time))}
-                                                >
-                                                    {formatTime(time)}
-                                                </button>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </div>
-                            );
-                        })
-                    ) : (
-                        <p className="text-yellow-400 text-2xl font-semibold text-center w-full">No movies available for this day</p>
-                    )}
+                {region("กรุงเทพและปริมณฑล")}
+                {region("ภาคกลาง")}
+                {region("ภาคเหนือ")}
+                {region("ภาคใต้")}
+                {region("ภาคตะวันออกเฉียงเหนือ")}
+                {region("ภาคตะวันออก")}
+                {region("ภาคตะวันตก")}
+                <div id="justAblocck" className="w-full h-20">
                 </div>
-            </section>
+            </div>
             <button onClick={() => setIsFooterVisible(!isFooterVisible)} className={`fixed right-5 bg-[#774360] hover:bg-[#FF9F00] text-white px-4 py-2 rounded-lg shadow-lg z-20 transition-all duration-500 ${isFooterVisible ? "bottom-24" : "bottom-5"}`}>
                 {isFooterVisible ? "Hide" : "Show"}
             </button>
