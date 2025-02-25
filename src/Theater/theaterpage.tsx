@@ -57,15 +57,26 @@ const TheaterPage: React.FC = () => {
                 </div>
             </section>
             <section id="showtime">
-                <div className="mt-12 mb-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-16 gap-y-20 w-full px-4 justify-items-center">
+                <div className="mt-12 mb-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-12 w-full px-4 justify-items-center">
                     {movieList.map((movie, index) => (
-                        <div key={index} className="w-full max-w-xs bg-[#774360] border-2 border-orange-300 shadow-lg rounded-2xl flex flex-col items-center p-4 mb-6">
-                            <div className="text-center text-white flex flex-col justify-between flex-grow">
-                                <p className="text-yellow-400 text-xl font-semibold">{movie.movie_title}</p>
-                                <div className="mt-auto">
-                                    <p className="text-yellow-300 text-sm">{movie.dubbed_language}/{movie.subtitles_language} | Theater {movie.theater} | {movie.theater_type}</p>
-                                    <p className="text-yellow-300 text-sm">{new Date(movie.start_time).toLocaleString()}</p>
+                        <div key={index} className="bg-black/20 rounded-2xl text-center w-full max-w-xs flex flex-col h-full p-4">
+                            <div className="w-full bg-[#774360] border-2 border-orange-300 shadow-lg rounded-2xl flex flex-col items-center h-full gap-y-4 hover:shadow-xl hover:scale-105 transition-all duration-300">
+                                <div className="w-full bg-[#774360] border-2 border-orange-300 shadow-lg rounded-2xl flex flex-col items-center h-full gap-y-4 hover:shadow-xl hover:scale-105 transition-all duration-300">
+                                    <div className="w-full max-w-[260px] aspect-[2.5/3.5] bg-gray-500 rounded-2xl overflow-hidden relative group">
+                                        <img src={movie.pic}
+                                            alt={movie.movie_title}
+                                            className="w-full h-full object-cover object-center" />
+                                        <div className="absolute inset-0 bg-black/70 flex flex-col justify-start items-start text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4">
+                                            <p className="text-lg font-semibold text-yellow-400 text-left pb-2">{movie.movie_title}</p>
+                                            <p className="text-m text-yellow-400 text-left">Type : {movie.type}</p>
+                                        </div>
+                                    </div>
                                 </div>
+                            </div>
+                            <div className="mt-auto mt-4">
+                                <p className="text-yellow-300 text-xl font-semibold pb-2">{movie.movie_title}</p>
+                                <p className="text-yellow-300 text-m">{movie.dubbed_language}/{movie.subtitles_language} | {movie.theater} | {movie.theater_type}</p>
+                                <p className="text-yellow-300 text-m">{new Date(movie.start_time).toLocaleString()}</p>
                             </div>
                         </div>
                     ))}
