@@ -9,7 +9,7 @@ const CinemaPage: React.FC = () => {
     const [prevScroll, setPrevScroll] = useState(0);
     const [isFooterVisible, setIsFooterVisible] = useState(true);
  
-
+    const region_list = ["กรุงเทพและปริมณฑล","ภาคกลาง","ภาคเหนือ","ภาคใต้","ภาคตะวันออกเฉียงเหนือ","ภาคตะวันออก","ภาคตะวันตก"]
     useEffect(() => {
         const handleScroll = () => {
             const currentScroll = window.scrollY;
@@ -35,7 +35,7 @@ const CinemaPage: React.FC = () => {
         const n = Object.keys(filteredData["Cinema_list"]).length
 
 
-        return <div id="region">
+        return <div id={name} key={name}>
             <div id="regionName">
                 <p className="text-[#E7AB79] text-3xl p-4">{name}</p>
             </div>
@@ -59,30 +59,29 @@ const CinemaPage: React.FC = () => {
     return (
         <div id="headerNav" className="min-h-screen bg-[#4C3A51] flex flex-col items-center">
             <header className={`bg-white text-black h-20 fixed top-0 w-full flex items-center justify-center shadow-md z-10 transition-transform duration-500 ${isNavbarVisible ? "translate-y-0" : "-translate-y-full"}`}>
-                <nav className="container mx-auto text-center text-lg font-semibold">
+                <nav className="container mx-auto text-center text-lg font-semibold ">
                     This is header Nav
                 </nav>
             </header>
-            <div className="flex flex-col w-full justify-center">
-                <div id="่easteregg" className="p-7 whitespace-nowrap justify-center">
-                    Hello there :)
+            <div id = "body" className="flex flex-col w-full justify-center">
+                <div id="่easteregg" className="p-7 whitespace-nowrap justify-center text-[#4C3A51]">
+                    Hello there :) you found me  
                 </div>
                 <div id="head" className="flex w-full overflow-x-auto whitespace-nowrap scrollbar-thin">
-                    <p className="p-4 text-[#E7AB79]">กรุงเทพ</p>
-                    <p className="p-4 text-[#E7AB79]">ภาคกลาง</p>
-                    <p className="p-4 text-[#E7AB79]">ภาคเหนือ</p>
-                    <p className="p-4 text-[#E7AB79]">ภาคใต้</p>
-                    <p className="p-4 text-[#E7AB79]">ภาคตะวันออกเฉียงเหนือ</p>
-                    <p className="p-4 text-[#E7AB79]">ภาคตะวันออก</p>
-                    <p className="p-4 text-[#E7AB79]">ภาคตะวันตก</p>
+                    {region_list.map((regionname) => (
+                        <p 
+                            onClick={() => { 
+                             document.getElementById(regionname)?.scrollIntoView({
+                                 behavior: "smooth", 
+                                 block: "start" 
+                                })
+                            }}
+                            key={regionname} className="p-4 text-[#E7AB79]" >{regionname}</p>
+                    ))}
                 </div>
-                {region("กรุงเทพและปริมณฑล")}
-                {region("ภาคกลาง")}
-                {region("ภาคเหนือ")}
-                {region("ภาคใต้")}
-                {region("ภาคตะวันออกเฉียงเหนือ")}
-                {region("ภาคตะวันออก")}
-                {region("ภาคตะวันตก")}
+                {region_list.map((regionname) => (
+                    region(regionname)
+                ))}
                 <div id="justAblocck" className="w-full h-20">
                 </div>
             </div>
