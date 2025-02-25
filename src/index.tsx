@@ -9,6 +9,7 @@ import TheaterPage from './Theater/theaterpage.tsx';
 import SeatPage from './Seat/seatpage.tsx';
 import PaymentPage from './Payment/paymentpage.tsx';
 import AdminPage from './Admin/adminpage.tsx';
+import CinemaPage from './Cinema/Cinema.tsx';
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
   {
     path: "Admin",
     element: <AdminPage/>
+  },
+  {
+    path: "Cinema",
+    element: <CinemaPage/>
   }
 ])
 
