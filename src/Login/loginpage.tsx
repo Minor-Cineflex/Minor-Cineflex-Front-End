@@ -80,7 +80,7 @@ const LoginPage: React.FC = () => {
             const emailExists = person_list.some((p: any) => p.email === userInfo.email);
             if(emailExists){
                 alert(`Welcome back, ${userInfo.name}!`);
-                navigate("/");
+                navigate("/", {state: userInfo});
                 return
             }
 
@@ -94,11 +94,11 @@ const LoginPage: React.FC = () => {
             const data = await response.json();
             console.log(data.message)
             alert(`Welcome, ${userInfo.name}!`);
-            navigate("/");
+            navigate("/", {state: userInfo});
             return
         }catch(error) {
             console.error("Error signing up:", error);
-            alert("Failed to create account. Please try again.");
+            alert("Failed to signing up. Please try again.");
         }
     };
 

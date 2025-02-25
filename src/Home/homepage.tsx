@@ -1,6 +1,7 @@
 import React, { useRef , useState , useEffect} from 'react';
 import Data from '../test.json';
 import { FaCircleChevronLeft } from "react-icons/fa6";
+import { useLocation } from "react-router";
 
 const testData = Data
 
@@ -122,6 +123,14 @@ const ShowMoviesHistory = (testData: typeof Data) => {
 }
 
 const HomePage: React.FC = () => {
+  const { state }  = useLocation();
+  try{
+    const userInfo = state
+    console.log(userInfo.account.username)
+  }catch{
+    console.log("Guest")
+  }
+
   return (
     <div className='bg-[#4C3A51] w-screen max-w-screen h-screen flex flex-col gap-10 overflow-y-auto pb-24'>
       <nav className='w-full h-20 bg-[#D9D9D9] fixed text-center font-semibold	text-xl  z-50'>For nav bar</nav>
