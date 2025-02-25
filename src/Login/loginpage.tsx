@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import Logo from "./logo/MinorCineflexLogo.jpg";
 import { RiKey2Fill } from "react-icons/ri";
-import { FaGoogle } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { useNavigate } from "react-router";
+import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 
 const LoginPage: React.FC = () => {
     const navigate = useNavigate()
     const [email, setEmail] = useState(String)
     const [password, setPassword] = useState(String)
+
+    const clientID = "118402147221-rhjtqa5gmmkjktbnqq1d170plm0tcspr.apps.googleusercontent.com"
 
     const Login = async() => {
         try{
@@ -23,7 +25,7 @@ const LoginPage: React.FC = () => {
             }
             const lowercase_email = email.toLocaleLowerCase()
             const person_list = await person_list_response.json()
-            const user = person_list.find(p => p.email === lowercase_email);
+            const user = person_list.find((p: any) => p.email === lowercase_email);
             if (!user) {
                 alert("This account does not exist")
                 return
@@ -38,6 +40,67 @@ const LoginPage: React.FC = () => {
             alert("Failed to Login. Please try again.");
         }
     }
+
+    const handleGoogleLoginSuccess = async(response: any) => {
+        const credentialResponse = response.credential;
+        const userData = JSON.parse(atob(credentialResponse.split(".")[1]));
+    
+        const userInfo = {
+            name: userData.name || "",
+            tel_no: userData.phone_number || "",
+            email: userData.email || "",
+            birthday: userData.birthday ? new Date(userData.birthday).toISOString() : new Date().toISOString(), 
+            gender: userData.gender || "", 
+            account: {
+                username: userData.name || "",
+                password: "",
+                account_id: Math.random().toString(36).substr(2, 9),
+                point: 0,
+                registered_date: new Date().toISOString(),
+                expiration_date: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString()
+            } 
+        };
+    
+        console.log("Google Login Success:", userInfo);
+        localStorage.setItem("user", JSON.stringify(userInfo));
+        
+        try {
+            const person_list_response = await fetch("http://localhost:8000/minorcineflex/person", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+
+            if(!person_list_response.ok){
+                console.log("Fail to fetch person_list")
+            }
+            const person_list = await person_list_response.json()
+            console.log("Ok to fetched person_list", person_list);
+            const emailExists = person_list.some((p: any) => p.email === userInfo.email);
+            if(emailExists){
+                alert(`Welcome back, ${userInfo.name}!`);
+                navigate("/");
+                return
+            }
+
+            const response = await fetch("http://localhost:8000/minorcineflex/add_person", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(userInfo)
+            });
+            const data = await response.json();
+            console.log(data.message)
+            alert(`Welcome, ${userInfo.name}!`);
+            navigate("/");
+            return
+        }catch(error) {
+            console.error("Error signing up:", error);
+            alert("Failed to create account. Please try again.");
+        }
+    };
 
     return(
         <div className="min-h-screen bg-[#4C3A51] flex items-center justify-center">
@@ -74,10 +137,16 @@ const LoginPage: React.FC = () => {
                     </button>
                     <p className="text-xl">or</p>
                     <div className="flex items-center justify-center w-full">
-                        <button className="relative flex items-center justify-center p-3 pl-12 pr-3 bg-gray-100 rounded-3xl border border-black 
-                                           text-xl font-semibold w-fitcontent hover:bg-gray-200">
-                            <FaGoogle className="absolute left-4 top-1/2 transform -translate-y-1/2 text-black-600" size={25} />Sign in with Google
-                        </button>
+                        <GoogleOAuthProvider clientId={clientID}>
+                            <GoogleLogin
+                                onSuccess={handleGoogleLoginSuccess}
+                                onError={() => console.log("Login Failed")}
+                                text="signin_with"
+                                size="large"
+                                theme="outline"
+                                shape="pill"
+                            />
+                        </GoogleOAuthProvider>
                     </div>
                     <div className="flex flex-row w-full justify-center mb-3 gap-12">
                         <nav className="text-md underline hover:text-gray-600 cursor-pointer" onClick={() => navigate("/Create")}>Create Account</nav>
