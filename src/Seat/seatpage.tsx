@@ -34,7 +34,7 @@ const SeatPage: React.FC = () => {
     }
     
     const Seat_table = () => {
-        return <div className={`grid grid-cols-${fullcol} gap-8 px-8`}>
+        return <div style={{ gridTemplateColumns: `repeat(${fullcol}, 1fr)` }} className={`grid gap-8 px-8`}>
             {Array.from({length:fullrow}).map((_,i) =>
                 Array.from({length: fullcol}).map((_,j) => (
                     Seat(i,j)
