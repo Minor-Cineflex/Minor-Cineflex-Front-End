@@ -1,6 +1,8 @@
 import React, { useRef, useState } from "react";
 import Data from "../test.json";
 import { FaCircleChevronLeft } from "react-icons/fa6";
+import Footerbar from "../component/footerbar/footerbar.tsx";
+import Headerbar from "../component/header/headerbar.tsx";
 
 const testData = Data;
 
@@ -108,11 +110,9 @@ function ShowMoviesHistory(testData: typeof Data) {
 const MoivePage: React.FC = () => {
   return (
     <div className="bg-[#4C3A51] w-screen max-w-screen h-screen flex flex-col gap-10 overflow-y-auto">
-      <nav className="w-full h-20 bg-[#D9D9D9] fixed text-center font-semibold	text-xl  z-50">
-        //For nav bar
-      </nav>
+      <Headerbar />
 
-      <div className="pt-24 w-full flex flex-col gap-4">
+      <div className=" w-full flex flex-col gap-4">
         <h1 className="text-2xl text-[#E7AB79] font-semibold pl-10">
           ภาพยนตร์แนะนำ
         </h1>
@@ -124,6 +124,7 @@ const MoivePage: React.FC = () => {
         </h1>
         {ShowMoviesHistory(testData)}
       </div>
+      <Footerbar />
     </div>
   );
 };

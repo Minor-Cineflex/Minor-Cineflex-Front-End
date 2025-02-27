@@ -1,5 +1,5 @@
 import React from "react";
-import myqr from "../compont/myqr.jpg";
+import myqr from "../component/myqr.jpg";
 
 const PaymentPage: React.FC = () => {
   return (

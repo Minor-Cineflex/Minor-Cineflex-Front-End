@@ -1,140 +1,140 @@
 {
-    "MinorCineflex": {
-      "cinema_list": [
-        {
-          "cinema_id": "C001",
-          "name": "Grand Cineplex",
-          "location": "Downtown Mall",
-          "opentime": "2025-02-11T10:00:00",
-          "closetime": "2025-02-11T23:00:00",
-          "cinema_management": {
-            "theater_list": [
-              {
-                "theater_id": "T001",
-                "theater_type": "IMAX",
-                "seat_amount": 100,
-                "status": true,
-                "audio_type": "Dolby Atmos",
-                "video_type": "4K",
-                "maintainance_list": []
-              }
-            ],
-            "showtime_list": [
-              {
-                "start_date": "2025-02-11T15:30:00",
-                "cinema": "C001",
-                "theater": "T001",
-                "movie": "M001",
-                "dub": true,
-                "sub": false,
-                "available_seat": ["S001", "S002"],
-                "reserved_seat": []
-              }
-            ],
-            "booking_list": [],
-            "movie_list": [
-              {
-                "name": "Avengers: Endgame",
-                "pic": "https://preview.redd.it/1sdabp4nt2m21.jpg?auto=webp&s=1d3793ac4d16c6dfc457da2dc65cff869221cc80",
-                "type": "Action",
-                "movie_id": "M001",
-                "detail": "Superhero movie",
-                "duration": 180
-              },
-              {
-                "name": "Avengers: Endgame",
-                "pic": "https://preview.redd.it/1sdabp4nt2m21.jpg?auto=webp&s=1d3793ac4d16c6dfc457da2dc65cff869221cc80",
-                "type": "Action",
-                "movie_id": "M001",
-                "detail": "Superhero movie",
-                "duration": 180
-              },
-              {
-                "name": "Avengers: Endgame",
-                "pic": "https://preview.redd.it/1sdabp4nt2m21.jpg?auto=webp&s=1d3793ac4d16c6dfc457da2dc65cff869221cc80",
-                "type": "Action",
-                "movie_id": "M001",
-                "detail": "Superhero movie",
-                "duration": 180
-              },
-              {
-                "name": "Avengers: Endgame",
-                "pic": "https://preview.redd.it/1sdabp4nt2m21.jpg?auto=webp&s=1d3793ac4d16c6dfc457da2dc65cff869221cc80",
-                "type": "Action",
-                "movie_id": "M001",
-                "detail": "Superhero movie",
-                "duration": 180
-              },
-              {
-                "name": "Avengers: Endgame",
-                "pic": "https://preview.redd.it/1sdabp4nt2m21.jpg?auto=webp&s=1d3793ac4d16c6dfc457da2dc65cff869221cc80",
-                "type": "Action",
-                "movie_id": "M001",
-                "detail": "Superhero movie",
-                "duration": 180
-              },
-              {
-                "name": "Avengers: Endgame",
-                "pic": "https://preview.redd.it/1sdabp4nt2m21.jpg?auto=webp&s=1d3793ac4d16c6dfc457da2dc65cff869221cc80",
-                "type": "Action",
-                "movie_id": "M001",
-                "detail": "Superhero movie",
-                "duration": 180
-              },
-              {
-                "name": "Avengers: Endgame",
-                "pic": "https://preview.redd.it/1sdabp4nt2m21.jpg?auto=webp&s=1d3793ac4d16c6dfc457da2dc65cff869221cc80",
-                "type": "Action",
-                "movie_id": "M001",
-                "detail": "Superhero movie",
-                "duration": 180
-              },
-              {
-                "name": "Avengers: Endgame",
-                "pic": "https://preview.redd.it/1sdabp4nt2m21.jpg?auto=webp&s=1d3793ac4d16c6dfc457da2dc65cff869221cc80",
-                "type": "Action",
-                "movie_id": "M001",
-                "detail": "Superhero movie",
-                "duration": 180
-              },
-              {
-                "name": "Avengers: Endgame",
-                "pic": "https://preview.redd.it/1sdabp4nt2m21.jpg?auto=webp&s=1d3793ac4d16c6dfc457da2dc65cff869221cc80",
-                "type": "Action",
-                "movie_id": "M001",
-                "detail": "Superhero movie",
-                "duration": 180
-              },
-              {
-                "name": "Avengers: Endgame",
-                "pic": "https://preview.redd.it/1sdabp4nt2m21.jpg?auto=webp&s=1d3793ac4d16c6dfc457da2dc65cff869221cc80",
-                "type": "Action",
-                "movie_id": "M001",
-                "detail": "Superhero movie",
-                "duration": 180
-              }
-            ]
-          }
+  "MinorCineflex": {
+    "cinema_list": [
+      {
+        "cinema_id": "C001",
+        "name": "Grand Cineplex",
+        "location": "Downtown Mall",
+        "opentime": "2025-02-11T10:00:00",
+        "closetime": "2025-02-11T23:00:00",
+        "cinema_management": {
+          "theater_list": [
+            {
+              "theater_id": "T001",
+              "theater_type": "IMAX",
+              "seat_amount": 100,
+              "status": true,
+              "audio_type": "Dolby Atmos",
+              "video_type": "4K",
+              "maintainance_list": []
+            }
+          ],
+          "showtime_list": [
+            {
+              "start_date": "2025-02-11T15:30:00",
+              "cinema": "C001",
+              "theater": "T001",
+              "movie": "M001",
+              "dub": true,
+              "sub": false,
+              "available_seat": ["S001", "S002"],
+              "reserved_seat": []
+            }
+          ],
+          "booking_list": [],
+          "movie_list": [
+            {
+              "name": "Avengers: Endgame",
+              "pic": "https://preview.redd.it/1sdabp4nt2m21.jpg?auto=webp&s=1d3793ac4d16c6dfc457da2dc65cff869221cc80",
+              "type": "Action",
+              "movie_id": "M001",
+              "detail": "Superhero movie",
+              "duration": 180
+            },
+            {
+              "name": "The Boy And The Heron",
+              "pic": "https://img.wongnai.com/p/800x0/2024/04/11/9097ea9099114cf1b23220652c2bf864.jpg",
+              "type": "Fantasy",
+              "movie_id": "M001",
+              "detail": "Fantasy movie",
+              "duration": 124
+            },
+            {
+              "name": "Blue Giant",
+              "pic": "https://img.wongnai.com/p/800x0/2024/04/11/3062bae886c1445dbe99bd09f836fd19.jpg",
+              "type": "Drama",
+              "movie_id": "M001",
+              "detail": "Drama movie",
+              "duration": 120
+            },
+            {
+              "name": "The Hold Over",
+              "pic": "https://img.wongnai.com/p/800x0/2024/04/11/c65abd7d1b3e40ad90397076af1f26cc.jpg",
+              "type": "Comedy",
+              "movie_id": "M001",
+              "detail": "Comedy movie",
+              "duration": 133
+            },
+            {
+              "name": "Tarot",
+              "pic": "https://img.wongnai.com/p/800x0/2024/04/11/9d9b5e56980a4d15a05e93126db845a8.jpg",
+              "type": "Horror",
+              "movie_id": "M001",
+              "detail": "Horror movie",
+              "duration": 90
+            },
+            {
+              "name": "Kung Fu Panda 4",
+              "pic": "https://img.wongnai.com/p/800x0/2024/04/11/b5dffc5adfb74a0fb6b40c33a87fb52e.jpg",
+              "type": "Comedy",
+              "movie_id": "M001",
+              "detail": "Comedy movie",
+              "duration": 105
+            },
+            {
+              "name": "หลานม่า",
+              "pic": "https://img.wongnai.com/p/800x0/2024/04/11/6b318efc5ca74b5c952ee4ed98ee388b.jpg",
+              "type": "Drama",
+              "movie_id": "M001",
+              "detail": "Drama movie",
+              "duration": 125
+            },
+            {
+              "name": "The First Omen",
+              "pic": "https://img.wongnai.com/p/800x0/2024/04/11/075827a4cf9a45958fc70fd4ddeb8a9a.jpg",
+              "type": "Horror",
+              "movie_id": "M001",
+              "detail": "Horror movie",
+              "duration": 120
+            },
+            {
+              "name": "Mother's Instinct",
+              "pic": "https://img.wongnai.com/p/800x0/2024/04/11/3db8c14861e84988ac45bd3d96cc5c25.jpg",
+              "type": "Thriller",
+              "movie_id": "M001",
+              "detail": "Thriller movie",
+              "duration": 94
+            },
+            {
+              "name": "Fall Guy",
+              "pic": "https://img.wongnai.com/p/800x0/2024/04/11/95b0ce3451af47f3b5f7e24f847209b1.jpg",
+              "type": "Action",
+              "movie_id": "M001",
+              "detail": "Action movie",
+              "duration": 125
+            }
+          ]
         }
-      ],
-      "person_list": [
-        {
-          "name": "John Doe",
-          "tel_no": "123-456-7890",
-          "email": "johndoe@example.com",
-          "birthday": "1990-06-15",
-          "gender": "Male",
-          "account": {
-            "username": "johndoe90",
-            "password": "hashedpassword",
-            "account_id": "A001",
-            "point": 120,
-            "registered_date": "2024-01-10",
-            "expiration_date": "2026-01-10",
-            "history": [],
-            "document_list": []
-          }
+      }
+    ],
+    "person_list": [
+      {
+        "name": "John Doe",
+        "tel_no": "123-456-7890",
+        "email": "johndoe@example.com",
+        "birthday": "1990-06-15",
+        "gender": "Male",
+        "account": {
+          "username": "johndoe90",
+          "password": "hashedpassword",
+          "account_id": "A001",
+          "point": 120,
+          "registered_date": "2024-01-10",
+          "expiration_date": "2026-01-10",
+          "history": [],
+          "document_list": []
         }
-      ]
-    }
+      }
+    ]
   }
+}
