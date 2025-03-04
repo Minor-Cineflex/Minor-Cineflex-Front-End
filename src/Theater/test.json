@@ -1,244 +1,172 @@
 {
-  "movie_list": [
-    {
-      "movie_title": "Avengers: Endgame",
-      "type": "Action, Sci-Fi",
-      "start_time": "2025-02-19T18:00:00",
-      "dubbed_language": "Thai",
-      "subtitles_language": "English",
-      "theater": "Theater 1",
-      "theater_type": "Standard",
-      "pic": "https://preview.redd.it/1sdabp4nt2m21.jpg?auto=webp&s=1d3793ac4d16c6dfc457da2dc65cff869221cc80"
-    },
-    {
-      "movie_title": "Avengers: Endgame",
-      "type": "Action, Sci-Fi",
-      "start_time": "2025-02-19T20:30:00",
-      "dubbed_language": "Thai",
-      "subtitles_language": "English",
-      "theater": "Theater 1",
-      "theater_type": "Standard",
-      "pic": "https://preview.redd.it/1sdabp4nt2m21.jpg?auto=webp&s=1d3793ac4d16c6dfc457da2dc65cff869221cc80"
-    },
-    {
-      "movie_title": "Avengers: Endgame",
-      "type": "Action, Sci-Fi",
-      "start_time": "2025-02-19T23:00:00",
-      "dubbed_language": "Thai",
-      "subtitles_language": "English",
-      "theater": "Theater 1",
-      "theater_type": "Standard",
-      "pic": "https://preview.redd.it/1sdabp4nt2m21.jpg?auto=webp&s=1d3793ac4d16c6dfc457da2dc65cff869221cc80"
-    },
-    {
-      "movie_title": "Avengers: Endgame",
-      "type": "Action, Sci-Fi",
-      "start_time": "2025-02-19T15:30:00",
-      "dubbed_language": "Thai",
-      "subtitles_language": "English",
-      "theater": "Theater 1",
-      "theater_type": "Standard",
-      "pic": "https://preview.redd.it/1sdabp4nt2m21.jpg?auto=webp&s=1d3793ac4d16c6dfc457da2dc65cff869221cc80"
-    },
-    {
-      "movie_title": "Spider-Man: No Way Home",
-      "type": "Action, Adventure, Sci-Fi",
-      "start_time": "2025-02-19T18:00:00",
-      "dubbed_language": "Thai",
-      "subtitles_language": "Chinese",
-      "theater": "Theater 2",
-      "theater_type": "Deluxe",
-      "pic": "https://cdn.marvel.com/content/1x/snh_online_6072x9000_posed_01.jpg"
-    },
-    {
-      "movie_title": "Spider-Man: No Way Home",
-      "type": "Action, Adventure, Sci-Fi",
-      "start_time": "2025-02-19T20:30:00",
-      "dubbed_language": "Thai",
-      "subtitles_language": "Chinese",
-      "theater": "Theater 2",
-      "theater_type": "Deluxe",
-      "pic": "https://cdn.marvel.com/content/1x/snh_online_6072x9000_posed_01.jpg"
-    },
-    {
-      "movie_title": "Spider-Man: No Way Home",
-      "type": "Action, Adventure, Sci-Fi",
-      "start_time": "2025-02-19T23:00:00",
-      "dubbed_language": "Thai",
-      "subtitles_language": "Chinese",
-      "theater": "Theater 2",
-      "theater_type": "Deluxe",
-      "pic": "https://cdn.marvel.com/content/1x/snh_online_6072x9000_posed_01.jpg"
-    },
-    {
-      "movie_title": "Spider-Man: No Way Home",
-      "type": "Action, Adventure, Sci-Fi",
-      "start_time": "2025-02-19T15:30:00",
-      "dubbed_language": "Thai",
-      "subtitles_language": "Chinese",
-      "theater": "Theater 2",
-      "theater_type": "Deluxe",
-      "pic": "https://cdn.marvel.com/content/1x/snh_online_6072x9000_posed_01.jpg"
-    },
-    {
-      "movie_title": "Frozen II",
-      "type": "Animation, Adventure, Fantasy",
-      "start_time": "2025-02-20T10:30:00",
-      "dubbed_language": "Thai",
-      "subtitles_language": "English",
-      "theater": "Theater 3",
-      "theater_type": "Luxury",
-      "pic": "https://i.ebayimg.com/images/g/4PoAAOSwf2li4dk8/s-l1200.jpg"
-    },
-    {
-      "movie_title": "Frozen II",
-      "type": "Animation, Adventure, Fantasy",
-      "start_time": "2025-02-20T13:00:00",
-      "dubbed_language": "Thai",
-      "subtitles_language": "English",
-      "theater": "Theater 3",
-      "theater_type": "Luxury",
-      "pic": "https://i.ebayimg.com/images/g/4PoAAOSwf2li4dk8/s-l1200.jpg"
-    },
-    {
-      "movie_title": "Frozen II",
-      "type": "Animation, Adventure, Fantasy",
-      "start_time": "2025-02-20T15:30:00",
-      "dubbed_language": "Thai",
-      "subtitles_language": "English",
-      "theater": "Theater 3",
-      "theater_type": "Luxury",
-      "pic": "https://i.ebayimg.com/images/g/4PoAAOSwf2li4dk8/s-l1200.jpg"
-    },
-    {
-      "movie_title": "Frozen II",
-      "type": "Animation, Adventure, Fantasy",
-      "start_time": "2025-02-20T18:00:00",
-      "dubbed_language": "Thai",
-      "subtitles_language": "English",
-      "theater": "Theater 3",
-      "theater_type": "Luxury",
-      "pic": "https://i.ebayimg.com/images/g/4PoAAOSwf2li4dk8/s-l1200.jpg"
-    },
-    {
-      "movie_title": "The Lion King",
-      "type": "Animation, Drama, Musical",
-      "start_time": "2025-02-20T10:30:00",
-      "dubbed_language": "Thai",
-      "subtitles_language": "Chinese",
-      "theater": "Theater 4",
-      "theater_type": "Standard",
-      "pic": "https://cinemalightboxes.com/cdn/shop/products/TheLionKingv3.jpg?v=1621775648"
-    },
-    {
-      "movie_title": "The Lion King",
-      "type": "Animation, Drama, Musical",
-      "start_time": "2025-02-20T13:00:00",
-      "dubbed_language": "Thai",
-      "subtitles_language": "Chinese",
-      "theater": "Theater 4",
-      "theater_type": "Standard",
-      "pic": "https://cinemalightboxes.com/cdn/shop/products/TheLionKingv3.jpg?v=1621775648"
-    },
-    {
-      "movie_title": "The Lion King",
-      "type": "Animation, Drama, Musical",
-      "start_time": "2025-02-20T15:30:00",
-      "dubbed_language": "Thai",
-      "subtitles_language": "Chinese",
-      "theater": "Theater 4",
-      "theater_type": "Standard",
-      "pic": "https://cinemalightboxes.com/cdn/shop/products/TheLionKingv3.jpg?v=1621775648"
-    },
-    {
-      "movie_title": "The Lion King",
-      "type": "Animation, Drama, Musical",
-      "start_time": "2025-02-20T18:00:00",
-      "dubbed_language": "Thai",
-      "subtitles_language": "Chinese",
-      "theater": "Theater 4",
-      "theater_type": "Standard",
-      "pic": "https://cinemalightboxes.com/cdn/shop/products/TheLionKingv3.jpg?v=1621775648"
-    },
-    {
-      "movie_title": "Toy Story 4",
-      "type": "Animation, Adventure, Comedy",
-      "start_time": "2025-02-21T10:30:00",
-      "dubbed_language": "Thai",
-      "subtitles_language": "English",
-      "theater": "Theater 5",
-      "theater_type": "Standard",
-      "pic": "https://m.media-amazon.com/images/I/81bNtJ5JODL.jpg"
-    },
-    {
-      "movie_title": "Toy Story 4",
-      "type": "Animation, Adventure, Comedy",
-      "start_time": "2025-02-21T13:00:00",
-      "dubbed_language": "Thai",
-      "subtitles_language": "English",
-      "theater": "Theater 5",
-      "theater_type": "Standard",
-      "pic": "https://m.media-amazon.com/images/I/81bNtJ5JODL.jpg"
-    },
-    {
-      "movie_title": "Toy Story 4",
-      "type": "Animation, Adventure, Comedy",
-      "start_time": "2025-02-21T15:30:00",
-      "dubbed_language": "Thai",
-      "subtitles_language": "English",
-      "theater": "Theater 5",
-      "theater_type": "Standard",
-      "pic": "https://m.media-amazon.com/images/I/81bNtJ5JODL.jpg"
-    },
-    {
-      "movie_title": "Toy Story 4",
-      "type": "Animation, Adventure, Comedy",
-      "start_time": "2025-02-21T18:00:00",
-      "dubbed_language": "Thai",
-      "subtitles_language": "English",
-      "theater": "Theater 5",
-      "theater_type": "Standard",
-      "pic": "https://m.media-amazon.com/images/I/81bNtJ5JODL.jpg"
-    },
-    {
-      "movie_title": "The Incredibles 2",
-      "type": "Animation, Action, Adventure",
-      "start_time": "2025-02-21T10:30:00",
-      "dubbed_language": "Thai",
-      "subtitles_language": "Chinese",
-      "theater": "Theater 6",
-      "theater_type": "Standard",
-      "pic": "https://m.media-amazon.com/images/I/71wuWglXJrS._AC_UF894,1000_QL80_.jpg"
-    },
-    {
-      "movie_title": "The Incredibles 2",
-      "type": "Animation, Action, Adventure",
-      "start_time": "2025-02-21T13:00:00",
-      "dubbed_language": "Thai",
-      "subtitles_language": "Chinese",
-      "theater": "Theater 6",
-      "theater_type": "Standard",
-      "pic": "https://m.media-amazon.com/images/I/71wuWglXJrS._AC_UF894,1000_QL80_.jpg"
-    },
-    {
-      "movie_title": "The Incredibles 2",
-      "type": "Animation, Action, Adventure",
-      "start_time": "2025-02-21T15:30:00",
-      "dubbed_language": "Thai",
-      "subtitles_language": "Chinese",
-      "theater": "Theater 6",
-      "theater_type": "Standard",
-      "pic": "https://m.media-amazon.com/images/I/71wuWglXJrS._AC_UF894,1000_QL80_.jpg"
-    },
-    {
-      "movie_title": "The Incredibles 2",
-      "type": "Animation, Action, Adventure",
-      "start_time": "2025-02-21T18:00:00",
-      "dubbed_language": "Thai",
-      "subtitles_language": "Chinese",
-      "theater": "Theater 6",
-      "theater_type": "Standard",
-      "pic": "https://m.media-amazon.com/images/I/71wuWglXJrS._AC_UF894,1000_QL80_.jpg"
-    }
+  "showtime_list": [
+      {
+          "showtime_id": "S001",
+          "start_date": "2025-3-3 10:00:00",
+          "cinema": "minor_1",
+          "theater": "theater_1",
+          "movie": "Avengers: Endgame",
+          "dub": true,
+          "sub": false,
+          "available_seat": [
+              {
+                  "seat_id": "A1",
+                  "seat_type": "VIP",
+                  "size": 1,
+                  "price": 500
+              },
+              {
+                  "seat_id": "A2",
+                  "seat_type": "VIP",
+                  "size": 1,
+                  "price": 500
+              },
+              {
+                  "seat_id": "A3",
+                  "seat_type": "VIP",
+                  "size": 1,
+                  "price": 500
+              },
+              {
+                  "seat_id": "A4",
+                  "seat_type": "VIP",
+                  "size": 1,
+                  "price": 500
+              },
+              {
+                  "seat_id": "A5",
+                  "seat_type": "VIP",
+                  "size": 1,
+                  "price": 500
+              }
+          ],
+          "reserved_seat": []
+      },
+      {
+          "showtime_id": "S002",
+          "start_date": "2025-3-4 13:00:00",
+          "cinema": "minor_1",
+          "theater": "theater_2",
+          "movie": "The Boy And The Heron",
+          "dub": true,
+          "sub": false,
+          "available_seat": [
+              {
+                  "seat_id": "B1",
+                  "seat_type": "VIP",
+                  "size": 1,
+                  "price": 500
+              },
+              {
+                  "seat_id": "B2",
+                  "seat_type": "VIP",
+                  "size": 1,
+                  "price": 500
+              },
+              {
+                  "seat_id": "B3",
+                  "seat_type": "VIP",
+                  "size": 1,
+                  "price": 500
+              },
+              {
+                  "seat_id": "B4",
+                  "seat_type": "VIP",
+                  "size": 1,
+                  "price": 500
+              },
+              {
+                  "seat_id": "B5",
+                  "seat_type": "VIP",
+                  "size": 1,
+                  "price": 500
+              }
+          ],
+          "reserved_seat": []
+      },
+      {
+          "showtime_id": "S003",
+          "start_date": "2025-3-4 16:00:00",
+          "cinema": "minor_1",
+          "theater": "theater_3",
+          "movie": "Blue Giant",
+          "dub": true,
+          "sub": false,
+          "available_seat": [
+              {
+                  "seat_id": "C1",
+                  "seat_type": "VIP",
+                  "size": 1,
+                  "price": 500
+              },
+              {
+                  "seat_id": "C2",
+                  "seat_type": "VIP",
+                  "size": 1,
+                  "price": 500
+              },
+              {
+                  "seat_id": "C3",
+                  "seat_type": "VIP",
+                  "size": 1,
+                  "price": 500
+              },
+              {
+                  "seat_id": "C4",
+                  "seat_type": "VIP",
+                  "size": 1,
+                  "price": 500
+              },
+              {
+                  "seat_id": "C5",
+                  "seat_type": "VIP",
+                  "size": 1,
+                  "price": 500
+              }
+          ],
+          "reserved_seat": []
+      },
+      {
+          "showtime_id": "S004",
+          "start_date": "2025-3-5 19:00:00",
+          "cinema": "minor_1",
+          "theater": "theater_4",
+          "movie": "The Hold Over",
+          "dub": true,
+          "sub": false,
+          "available_seat": [
+              {
+                  "seat_id": "D1",
+                  "seat_type": "VIP",
+                  "size": 1,
+                  "price": 500
+              },
+              {
+                  "seat_id": "D2",
+                  "seat_type": "VIP",
+                  "size": 1,
+                  "price": 500
+              },
+              {
+                  "seat_id": "D3",
+                  "seat_type": "VIP",
+                  "size": 1,
+                  "price": 500
+              },
+              {
+                  "seat_id": "D4",
+                  "seat_type": "VIP",
+                  "size": 1,
+                  "price": 500
+              },
+              {
+                  "seat_id": "D5",
+                  "seat_type": "VIP",
+                  "size": 1,
+                  "price": 500
+              }
+          ],
+          "reserved_seat": []
+      }
   ]
 }
