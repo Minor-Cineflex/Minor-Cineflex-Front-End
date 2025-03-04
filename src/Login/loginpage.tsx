@@ -14,7 +14,7 @@ const LoginPage: React.FC = () => {
 
     const Login = async() => {
         try{
-            const person_list_response = await fetch("http://localhost:8000/minorcineflex/person", {
+            const person_list_response = await fetch(`http://localhost:8000/minorcineflex/person/email/${email.toLocaleLowerCase()}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"
@@ -23,9 +23,7 @@ const LoginPage: React.FC = () => {
             if(!person_list_response.ok){
                 console.log("Fail to fetch person_list")
             }
-            const lowercase_email = email.toLocaleLowerCase()
-            const person_list = await person_list_response.json()
-            const user = person_list.find((p: any) => p.email === lowercase_email);
+            const user = await person_list_response.json()
             if (!user) {
                 alert("This account does not exist")
                 return
@@ -63,7 +61,7 @@ const LoginPage: React.FC = () => {
         localStorage.setItem("user", JSON.stringify(userInfo));
         
         try {
-            const person_list_response = await fetch("http://localhost:8000/minorcineflex/person", {
+            const person_list_response = await fetch(`http://localhost:8000/minorcineflex/person/email/${userInfo.email}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"
@@ -73,11 +71,10 @@ const LoginPage: React.FC = () => {
             if(!person_list_response.ok){
                 console.log("Fail to fetch person_list")
             }
-            const person_list = await person_list_response.json()
-            const emailExists = person_list.some((p: any) => p.email === userInfo.email);
+            const emailExists = await person_list_response.json()
             if(emailExists){
                 alert(`Welcome back, ${userInfo.name}!`);
-                navigate("/Profile", {state: userInfo});
+                navigate("/Profile", {state: emailExists});
                 return
             }
 

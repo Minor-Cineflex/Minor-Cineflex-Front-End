@@ -82,7 +82,10 @@ const Create:React.FC = () => {
                             account_id: not_have_password_person.account.account_id,
                             point: not_have_password_person.account.point,
                             registered_date: not_have_password_person.account.registered_date,
-                            expiration_date: not_have_password_person.account.expiration_date
+                            expiration_date: not_have_password_person.account.expiration_date,
+                            history: not_have_password_person.account.history,
+                            document_list: not_have_password_person.account.document_list,
+                            reserved_list: not_have_password_person.account.reserve_list
                         }
                     }
                     const update_password_response = await fetch("http://localhost:8000/minorcineflex/update_person", {
