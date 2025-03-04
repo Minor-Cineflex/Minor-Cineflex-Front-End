@@ -1,59 +1,86 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import "./responsive.css";
 import movieData from "./test.json"
-import Data from "./test2.json";
+import tmpData from "./test2.json";
 import logo from "./MinorCineflexLogo.jpg"
+
+const Region: React.FC<{ name: string }> = ({ name }) => {
+    const [cinemaList, setCinemaList] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    useEffect(() => {
+        const fetchCinemas = async () => {
+            try {
+                const response = await fetch("http://localhost:8000/minorcineflex/cinema", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error("Failed to fetch cinema list");
+                }
+
+                const data = await response.json();
+                const filteredData = data.Cinema_list?.filter(cinema => cinema.region === name) || [];
+                
+                setCinemaList(filteredData);
+            } catch (error) {
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchCinemas();
+    }, [name]);
+
+    const n = Object.keys(cinemaList).length
+
+    if (loading) return <p>Loading cinemas...</p>;
+    if (error) return <p>Error: {error}</p>;
+
+    return <div id={name} key={name}>
+        <div id="regionName">
+            <p className="text-[#E7AB79] text-3xl p-4">{name}</p>
+        </div>
+        <div id="grid" className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-4 gap-4">
+            {Array.from({length:n}).map((_,i) => (
+                <div key={i} id="cinema" className="flex bg-pink-700 bg-opacity-70 border-2 border-[#E7AB79] p-4 rounded-2xl gap-2">
+                    <img src={logo} alt="" className="rounded-full w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16" />
+                    <div className= "flex flex-col">
+                        <p className="p-1 text-[#E7AB79] text-xl">{cinemaList[i]["name"]}</p>
+                        <p className="p-1 text-[#E7AB79]">{cinemaList[i]["location"]}</p>
+                    </div>
+                </div>
+            ))}
+        
+        
+        </div>
+    </div>
+}
 
 const CinemaPage: React.FC = () => {
     const [isNavbarVisible, setIsNavbarVisible] = useState(true);
-    const [prevScroll, setPrevScroll] = useState(0);
+    const prevScroll = useRef(0);
     const [isFooterVisible, setIsFooterVisible] = useState(true);
  
     const region_list = ["กรุงเทพและปริมณฑล","ภาคกลาง","ภาคเหนือ","ภาคใต้","ภาคตะวันออกเฉียงเหนือ","ภาคตะวันออก","ภาคตะวันตก"]
     useEffect(() => {
         const handleScroll = () => {
             const currentScroll = window.scrollY;
-            if (currentScroll > prevScroll) {
-                setIsNavbarVisible(false);
-            } else {
-                setIsNavbarVisible(true);
-            }
-            setPrevScroll(currentScroll);
+            setIsNavbarVisible(currentScroll <= prevScroll.current);
+            prevScroll.current = currentScroll; 
         };
 
         window.addEventListener("scroll", handleScroll);
         return () => {
             window.removeEventListener("scroll", handleScroll);
         };
-    }, [prevScroll]);
+    }, []);
 
-    const region = (name) => {
-        const filteredData = {
-            "Cinema_list": Data.Cinema_list.filter(cinema => cinema.region === name)
-        };
-        
-        const n = Object.keys(filteredData["Cinema_list"]).length
-
-
-        return <div id={name} key={name}>
-            <div id="regionName">
-                <p className="text-[#E7AB79] text-3xl p-4">{name}</p>
-            </div>
-            <div id="grid" className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-4 gap-4">
-                {Array.from({length:n}).map((_,i) => (
-                    <div key={i} id="cinema" className="flex bg-pink-700 bg-opacity-70 border-2 border-[#E7AB79] p-4 rounded-2xl gap-2">
-                        <img src={logo} alt="" className="rounded-full w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16" />
-                        <div className= "flex flex-col">
-                            <p className="p-1 text-[#E7AB79] text-xl">{filteredData['Cinema_list'][i]["name"]}</p>
-                            <p className="p-1 text-[#E7AB79]">{filteredData['Cinema_list'][i]["location"]}</p>
-                        </div>
-                    </div>
-                ))}
-            
-            
-            </div>
-        </div>
-    }
+   
    
 
     return (
@@ -80,7 +107,7 @@ const CinemaPage: React.FC = () => {
                     ))}
                 </div>
                 {region_list.map((regionname) => (
-                    region(regionname)
+                    <Region key={regionname} name={regionname} />
                 ))}
                 <div id="justAblocck" className="w-full h-20">
                 </div>
