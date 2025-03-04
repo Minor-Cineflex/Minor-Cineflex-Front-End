@@ -124,14 +124,31 @@ const HomePage: React.FC = () => {
     )
   }
 
-  const { state }  = useLocation();
-  try{
-    const currentUser = state
-    console.log(currentUser.account.username)
-  }catch{
-    console.log("Guest")
-  }
+const { state }  = useLocation();
+useEffect(() => {
+  const searchUser = async () => {
+    try {
+      const response = await fetch(`http://localhost:8000/minorcineflex/person/${state.account.account_id}`, {
+          method: "GET",
+          headers: {
+              "Content-Type": "application/json"
+          }
+      });
 
+      if (!response.ok) {
+          console.log("Failed to fetch person_list");
+          return;
+      }
+      const person = await response.json();
+      const foundUser = person;
+      console.log(foundUser.account.username)
+    } catch (error) {
+      console.log("Guest")
+    }
+  };
+  searchUser();
+}, [allMovie])
+ 
   
   useEffect(() => {
     const fetchMovies = async() => {

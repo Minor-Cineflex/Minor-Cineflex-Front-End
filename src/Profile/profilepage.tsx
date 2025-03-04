@@ -75,14 +75,14 @@ const ShowMovies = (allMovie) => {
           <div className='w-fit min-h-full flex flex-col justify-center items-center gap-16'>
             <button 
               onClick={() => scroll('right')} 
-              className={`rotate-180 rounded-2xl ${!canScrollRight ? 'opacity-25' : ''}`}
+              className={`rotate-180 rounded-2xl ${!canScrollRight && !canScrollLeft ? 'opacity-0' : !canScrollRight ? 'opacity-25' : ''}`}
               disabled={!canScrollRight}
             >
               <FaCircleChevronLeft size={40} className='text-[#E7AB79]'/>
             </button>
             <button  
               onClick={() => scroll('left')} 
-              className={`rounded-2xl ${!canScrollLeft ? 'opacity-25' : ''}`}
+              className={`rounded-2xl ${!canScrollRight && !canScrollLeft ? 'opacity-0' : !canScrollLeft ? 'opacity-25' : ''}`}
               disabled={!canScrollLeft}
             >
               <FaCircleChevronLeft size={40} className='text-[#E7AB79]'/>
@@ -91,33 +91,43 @@ const ShowMovies = (allMovie) => {
         )
       }
     }
-  
+
+    const renderMovies = () => {
+      try {
+        return (
+          allMovie.movie_list.map((movie, index) => (
+            <div  key={index} 
+                className="h-100 w-72 flex-shrink-0 rounded-2xl"
+            >
+              <div className='w-full h-4/5 overflow-hidden rounded-2xl hover:z-10 hover:border hover:border-black snap-start'
+                onMouseEnter={() => setHoverIndex(index)}
+                onMouseLeave={() => setHoverIndex(null)}
+              >
+                <div className='relative w-full h-full'>
+                    {hoverIndex === index && ShowInfo()}
+                    <img 
+                        src={movie.img} 
+                        alt="Movie poster"
+                        className={hoverIndex === index? "min-h-full max-h-full w-full object-cover cursor-pointer z-10 blur-md brightness-50 duration-300 "
+                                                        : "min-h-full max-h-full w-full object-cover cursor-pointer"}
+                    />
+                  </div>
+              </div>
+              <h1 className="text-start text-white text-xl mt-2 font-semibold truncate text-[#D9D9D9]">{movie.name}</h1>
+            </div>
+          ))
+        )
+      } catch (error) {
+          return;
+      }
+  };
+
     return(
       <div className='flex max-w-full pr-6 pl-6 gap-6'>
         <div className={`max-w-full max-h-full flex ${window.innerWidth < 1000 ? 'overflow-x-auto':'overflow-x-hidden'} gap-4 custom-scrollbar pb-3 pr-6 snap-x snap-mandatory`}
              ref={scrollContainerRef}
             >
-            {allMovie.movie_list.map((movie, index) => (
-                <div  key={index} 
-                    className="h-100 w-72 flex-shrink-0 rounded-2xl"
-                >
-                  <div className='w-full h-4/5 overflow-hidden rounded-2xl hover:z-10 hover:border hover:border-black snap-start'
-                    onMouseEnter={() => setHoverIndex(index)}
-                    onMouseLeave={() => setHoverIndex(null)}
-                  >
-                    <div className='relative w-full h-full'>
-                        {hoverIndex === index && ShowInfo()}
-                        <img 
-                            src={movie.img} 
-                            alt="Movie poster"
-                            className={hoverIndex === index? "min-h-full max-h-full w-full object-cover cursor-pointer z-10 blur-md brightness-50 duration-300 "
-                                                             : "min-h-full max-h-full w-full object-cover cursor-pointer"}
-                        />
-                      </div>
-                  </div>
-                  <h1 className="text-start text-white text-xl mt-2 font-semibold truncate text-[#D9D9D9]">{movie.name}</h1>
-                </div>
-            ))}
+            {renderMovies()}
         </div>
         {showScrollButton()}
       </div>
@@ -136,7 +146,7 @@ const ShowMovies = (allMovie) => {
 
         const searchUser = async () => {
             try {
-                const response = await fetch("http://localhost:8000/minorcineflex/person", {
+                const response = await fetch(`http://localhost:8000/minorcineflex/person/${state.account.account_id}`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json"
@@ -148,8 +158,8 @@ const ShowMovies = (allMovie) => {
                     return;
                 }
 
-                const person_list = await response.json();
-                const foundUser = person_list.find((p: any) => p.email === state.email);
+                const person = await response.json();
+                const foundUser = person;
                 if (foundUser) {
                     setCurrentUser(foundUser);
                 } else {
@@ -163,6 +173,12 @@ const ShowMovies = (allMovie) => {
         searchUser();
     }, [state, navigate]);
 
+    useEffect(() => {
+        if (currentUser) {
+            setAllmovie(currentUser.account.history);
+        }
+    }, [currentUser]);
+
     const showUsername = () => {
         if(currentUser){
             return currentUser.account.username
@@ -174,30 +190,6 @@ const ShowMovies = (allMovie) => {
             return currentUser.email
         }
     }
-
-    useEffect(() => {
-    const fetchMovies = async() => {
-        try{
-        const movie_response = await fetch("http://localhost:8000/minorcineflex/movie", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json"
-            },
-        });
-
-        if(!movie_response){
-            console.log("Error to fetch movie_list")
-            return
-        }
-
-        const movie_json = await movie_response.json()
-        setAllmovie(movie_json)
-        }catch(error){
-        console.error("Can not fetch movie_list:", error)
-        }
-    }
-    fetchMovies();
-    }, [])
 
     return(
         <div className="min-w-full min-h-screen bg-[#4C3A51] flex flex-col justify-evenly overflow-hidden">

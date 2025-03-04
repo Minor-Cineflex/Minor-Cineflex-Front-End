@@ -146,8 +146,9 @@ const LoginPage: React.FC = () => {
                         </GoogleOAuthProvider>
                     </div>
                     <div className="flex flex-row w-full justify-center mb-3 gap-12">
-                        <nav className="text-md underline hover:text-gray-600 cursor-pointer" onClick={() => navigate("/Create")}>Create Account</nav>
-                        <nav className="text-md underline hover:text-gray-600">Forget Password</nav>
+                        <nav className="text-md underline hover:text-gray-600 cursor-pointer" onClick={() => navigate("/Create")}>
+                            Create Account
+                        </nav>
                     </div>
                 </div>
             </div>
