@@ -3,16 +3,51 @@ import Chair from "./chair.png"
 import Ocp from "./occupied.png"
 import choose from "./choose.png"
 import { constants } from "buffer";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-import data from "./test.json"
+import tmpdata from "./test.json"
 
 
 
 
 const SeatPage: React.FC = () => {
-    const fullrow = Object.keys(data).length;
-    const fullcol=Object.keys(data["1"]).length;
+
+    const [SeatList, setSeatList] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    const showtime_id = "S001";
+
+    useEffect(() => {
+        const fetchCinemas = async () => {
+            try {
+                const response = await fetch(`http://localhost:8000/minorcineflex/seat/${showtime_id}`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error("Failed to fetch Seat list");
+                }
+
+                const data = await response.json();
+                const list = data["Seat"];
+                
+                setSeatList(list);
+            } catch (error) {
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchCinemas();
+    }, []);
+
+    const fullrow = 4
+    const fullcol=8
 
     const [selectedSeats, setSelectedSeats] = useState<Set<string>>(new Set());
 
@@ -30,7 +65,12 @@ const SeatPage: React.FC = () => {
     }
 
     const Seat = (row, col) => {
-        return data[row + 1][col + 1] ? <img src={selectedSeats.has(encoded(row,col)) ? choose : Chair} alt="" onClick={() => handleClick(row, col)}  /> : <img src={Ocp} alt="" />
+        const seat = SeatList.find(seat => seat["row"] === String.fromCharCode(64+(fullrow-row)) && seat["col"] === col+1);
+        if(!seat){
+            
+            return <img src={Ocp} alt="" />
+        }
+        return seat["status"] ? <img src={selectedSeats.has(encoded(row,col)) ? choose : Chair} alt="" onClick={() => handleClick(row, col)}  /> : <img src={Ocp} alt="" />
     }
     
     const Seat_table = () => {
