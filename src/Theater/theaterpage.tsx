@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
+import { useNavigate } from "react-router-dom";
 
-// Define interfaces to improve type safety
 interface Movie {
     movie_id: string;
     name: string;
@@ -15,9 +15,17 @@ interface Theater {
 }
 
 interface Showtime {
+    showtime_id: string;
     movie_id: string;
     theater_id: string;
     start_date: string;
+}
+
+interface TimeInfo {
+    time: Date;
+    showtimeId: string;
+    movieId: string;
+    theaterId: string;
 }
 
 const TheaterPage: React.FC = () => {
@@ -32,6 +40,8 @@ const TheaterPage: React.FC = () => {
     const [theaterList, setTheaterList] = useState<Theater[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -100,10 +110,46 @@ const TheaterPage: React.FC = () => {
         fetchShowtime();
     }, []);
 
+    const handleShowtimeSelect = (showtime: {
+        showtimeId: string,
+        movieId: string,
+        theaterId: string,
+        movieName: string,
+        startDateTime: {
+            date: string,
+            time: string,
+            isoString: string
+        }
+    }) => {
+        console.log('Selected Showtime Details:', {
+            showtimeId: showtime.showtimeId,
+            movieId: showtime.movieId,
+            theaterId: showtime.theaterId,
+            movieName: showtime.movieName,
+            date: showtime.startDateTime.date,
+            startTime: showtime.startDateTime.time
+        });
+
+        navigate('/Seat', {
+            state: {
+                showtimeId: showtime.showtimeId,
+                movieId: showtime.movieId,
+                theaterId: showtime.theaterId,
+                movieName: showtime.movieName,
+                startDateTime: showtime.startDateTime
+            }
+        });
+    };
+
     const handleDayClick = (date: Date) => setSelectedDay(date);
 
     const formatDate = (date: Date) => date.toLocaleDateString();
     const formatTime = (date: Date) => date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    const formatFullDateTime = (date: Date) => ({
+        date: formatDate(date),
+        time: formatTime(date),
+        isoString: date.toISOString()
+    });
 
     const filteredMovies = showtimeList.filter(movie => formatDate(new Date(movie.start_date)) === formatDate(selectedDay));
 
@@ -141,7 +187,13 @@ const TheaterPage: React.FC = () => {
                 times: []
             };
         }
-        groups[movieKey].times.push(new Date(showtime.start_date));
+        groups[movieKey].times.push({
+            time: new Date(showtime.start_date),
+            showtimeId: showtime.showtime_id,
+            movieId: showtime.movie_id,
+            theaterId: showtime.theater_id
+        });
+
         return groups;
     }, {});
 
@@ -156,7 +208,7 @@ const TheaterPage: React.FC = () => {
                         <p className="text-yellow-400 text-2xl">You choose: {formatDate(selectedDay)}</p>
                         <button
                             onClick={() => setIsCalendarVisible(!isCalendarVisible)}
-                            className="bg-[#774360] text-white p-2 rounded-lg"
+                            className="bg-[#774360] text-white p-2 rounded-lg hover:bg-[#B25068]"
                         >
                             {isCalendarVisible ? "Hide Calendar" : "Show Calendar"}
                         </button>
@@ -187,13 +239,19 @@ const TheaterPage: React.FC = () => {
                                     Video Type: {theater ? theater.video_type : 'Unknown'}
                                 </p>
                                 <div className="flex flex-wrap justify-center gap-2">
-                                    {times.map((time, i) => (
+                                    {times.map((timeInfo, i) => (
                                         <button
                                             key={i}
-                                            onClick={() => setSelectedShowtime(formatTime(time))}
-                                            className="bg-[#774360] text-white p-2 rounded-lg"
+                                            onClick={() => handleShowtimeSelect({
+                                                showtimeId: timeInfo.showtimeId,
+                                                movieId: timeInfo.movieId,
+                                                theaterId: timeInfo.theaterId,
+                                                movieName: movie.name,
+                                                startDateTime: formatFullDateTime(timeInfo.time)
+                                            })}
+                                            className="bg-[#774360] text-white p-2 rounded-lg hover:bg-[#B25068]"
                                         >
-                                            {formatTime(time)}
+                                            {formatTime(timeInfo.time)}
                                         </button>
                                     ))}
                                 </div>
