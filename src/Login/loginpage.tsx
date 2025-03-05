@@ -14,25 +14,27 @@ const LoginPage: React.FC = () => {
 
     const Login = async() => {
         try{
-            const person_list_response = await fetch(`http://localhost:8000/minorcineflex/person/email/${email.toLocaleLowerCase()}`, {
-                method: "GET",
+            const person_response = await fetch("http://localhost:8000/minorcineflex/login", {
+                method: "POST",
                 headers: {
                     "Content-Type": "application/json"
-                }
+                },
+                body: JSON.stringify({
+                    email: email.toLowerCase(),
+                    password: password
+                })
             })
-            if(!person_list_response.ok){
-                console.log("Fail to fetch person_list")
+            if(!person_response.ok){
+                const errorData = await person_response.json();
+                alert(errorData.detail);
+                return;
             }
-            const user = await person_list_response.json()
-            if (!user) {
-                alert("This account does not exist")
+            const user = await person_response.json()
+            if (user) {
+                alert("Login successful")
+                navigate('/Profile', {state: user})
                 return
             }
-            if(user.account.password !== password){
-                alert("Incorrect password")
-                return
-            }
-            navigate('/Profile', {state: user})
         }catch(error){
             console.error("Error to Login:", error);
             alert("Failed to Login. Please try again.");
@@ -61,7 +63,7 @@ const LoginPage: React.FC = () => {
         localStorage.setItem("user", JSON.stringify(userInfo));
         
         try {
-            const person_list_response = await fetch(`http://localhost:8000/minorcineflex/person/email/${userInfo.email}`, {
+            const person_list_response = await fetch(`http://localhost:8000/minorcineflex/person/${userInfo.email}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"
@@ -73,7 +75,7 @@ const LoginPage: React.FC = () => {
             }
             const emailExists = await person_list_response.json()
             if(emailExists){
-                alert(`Welcome back, ${userInfo.name}!`);
+                alert(`Welcome back, ${emailExists.name}!`);
                 navigate("/Profile", {state: emailExists});
                 return
             }

@@ -54,38 +54,35 @@ const Create:React.FC = () => {
         };
 
         try {
-            const person_list_response = await fetch("http://localhost:8000/minorcineflex/person", {
+            const person_response = await fetch(`http://localhost:8000/minorcineflex/person/${email}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"
-                }
+                },
             });
 
-            if(!person_list_response.ok){
-                console.log("Fail to fetch person_list")
+            if(!person_response.ok){
+                console.log("Fail to fetch person")
             }
-            const person_list = await person_list_response.json()
-            console.log("Ok to fetched person_list", person_list);
-            const emailExists = person_list.some((p: any) => p.email === email);
-            if(emailExists){
-                const not_have_password_person = person_list.find((p:any) => p.email === email && p.account.password === "")
-                if(not_have_password_person){
+            const person = await person_response.json()
+            if(person !== null){
+                if(person.account.password === ""){
                     const new_user_data = {
-                        name: not_have_password_person.name,
-                        tel_no: not_have_password_person.tel_no,
-                        email: not_have_password_person.email,
-                        birthday: not_have_password_person.birthday,
-                        gender: not_have_password_person.gender,
+                        name: person.name,
+                        tel_no: person.tel_no,
+                        email: person.email,
+                        birthday: person.birthday,
+                        gender: person.gender,
                         account: {
                             username: username,
                             password: password,
-                            account_id: not_have_password_person.account.account_id,
-                            point: not_have_password_person.account.point,
-                            registered_date: not_have_password_person.account.registered_date,
-                            expiration_date: not_have_password_person.account.expiration_date,
-                            history: not_have_password_person.account.history,
-                            document_list: not_have_password_person.account.document_list,
-                            reserved_list: not_have_password_person.account.reserve_list
+                            account_id: person.account.account_id,
+                            point: person.account.point,
+                            registered_date: person.account.registered_date,
+                            expiration_date: person.account.expiration_date,
+                            history: person.account.history,
+                            document_list: person.account.document_list,
+                            reserved_list: person.account.reserve_list
                         }
                     }
                     const update_password_response = await fetch("http://localhost:8000/minorcineflex/update_person", {
@@ -99,14 +96,10 @@ const Create:React.FC = () => {
                     alert(update_data.message);
                     navigate('/Login')
                     return
+                }else{
+                    return alert("This email has already been taken")
                 }
-                return alert("Already used this email")
             }
-            const usernameExists = person_list.some((p: any) => p.account.username === username)
-            if(usernameExists){
-                return alert("This username is already in use")
-            }
-
             const response = await fetch("http://localhost:8000/minorcineflex/add_person", {
                 method: "POST",
                 headers: {
@@ -142,12 +135,10 @@ const Create:React.FC = () => {
                 expiration_date: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString()
             } 
         };
-    
-        console.log("Google Login Success:", userInfo);
         localStorage.setItem("user", JSON.stringify(userInfo));
         
         try {
-            const person_list_response = await fetch("http://localhost:8000/minorcineflex/person", {
+            const person_list_response = await fetch(`http://localhost:8000/minorcineflex/person/${userInfo.email}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"
@@ -157,12 +148,10 @@ const Create:React.FC = () => {
             if(!person_list_response.ok){
                 console.log("Fail to fetch person_list")
             }
-            const person_list = await person_list_response.json()
-            console.log("Ok to fetched person_list", person_list);
-            const emailExists = person_list.some((p: any) => p.email === userInfo.email);
+            const emailExists = await person_list_response.json()
             if(emailExists){
-                alert(`Welcome back, ${userInfo.name}!`);
-                navigate("/");
+                alert(`Welcome back, ${emailExists.name}!`);
+                navigate("/Profile", {state: emailExists});
                 return
             }
 
@@ -176,11 +165,11 @@ const Create:React.FC = () => {
             const data = await response.json();
             console.log(data.message)
             alert(`Welcome, ${userInfo.name}!`);
-            navigate("/");
+            navigate("/Profile", {state: userInfo});
             return
         }catch(error) {
             console.error("Error signing up:", error);
-            alert("Failed to create account. Please try again.");
+            alert("Failed to signing up. Please try again.");
         }
     };
 

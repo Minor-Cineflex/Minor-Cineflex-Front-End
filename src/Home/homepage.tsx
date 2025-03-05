@@ -128,7 +128,7 @@ const { state }  = useLocation();
 useEffect(() => {
   const searchUser = async () => {
     try {
-      const response = await fetch(`http://localhost:8000/minorcineflex/person/${state.account.account_id}`, {
+      const response = await fetch(`http://localhost:8000/minorcineflex/person/email/${state.account.account_id}`, {
           method: "GET",
           headers: {
               "Content-Type": "application/json"
@@ -147,7 +147,7 @@ useEffect(() => {
     }
   };
   searchUser();
-}, [allMovie])
+}, [allMovie, state])
  
   
   useEffect(() => {
