@@ -121,11 +121,11 @@ const HomePage: React.FC = () => {
     if (user_account_id) {
       setSearchParams(prev => ({ ...Object.fromEntries(prev), account_id: user_account_id }));
     }
-}, [user_account_id, setSearchParams]);
+  }, [user_account_id, setSearchParams]);
 
   useEffect(() => {
     if (state) {
-        user_account_id = state?.account_id;
+      user_account_id = state?.account_id;
     }
   }, [state]);
 
