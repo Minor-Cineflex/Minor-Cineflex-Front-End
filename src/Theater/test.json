@@ -8,38 +8,7 @@
           "movie": "Avengers: Endgame",
           "dub": true,
           "sub": false,
-          "available_seat": [
-              {
-                  "seat_id": "A1",
-                  "seat_type": "VIP",
-                  "size": 1,
-                  "price": 500
-              },
-              {
-                  "seat_id": "A2",
-                  "seat_type": "VIP",
-                  "size": 1,
-                  "price": 500
-              },
-              {
-                  "seat_id": "A3",
-                  "seat_type": "VIP",
-                  "size": 1,
-                  "price": 500
-              },
-              {
-                  "seat_id": "A4",
-                  "seat_type": "VIP",
-                  "size": 1,
-                  "price": 500
-              },
-              {
-                  "seat_id": "A5",
-                  "seat_type": "VIP",
-                  "size": 1,
-                  "price": 500
-              }
-          ],
+          "available_seat": [],
           "reserved_seat": []
       },
       {
@@ -50,38 +19,7 @@
           "movie": "The Boy And The Heron",
           "dub": true,
           "sub": false,
-          "available_seat": [
-              {
-                  "seat_id": "B1",
-                  "seat_type": "VIP",
-                  "size": 1,
-                  "price": 500
-              },
-              {
-                  "seat_id": "B2",
-                  "seat_type": "VIP",
-                  "size": 1,
-                  "price": 500
-              },
-              {
-                  "seat_id": "B3",
-                  "seat_type": "VIP",
-                  "size": 1,
-                  "price": 500
-              },
-              {
-                  "seat_id": "B4",
-                  "seat_type": "VIP",
-                  "size": 1,
-                  "price": 500
-              },
-              {
-                  "seat_id": "B5",
-                  "seat_type": "VIP",
-                  "size": 1,
-                  "price": 500
-              }
-          ],
+          "available_seat": [],
           "reserved_seat": []
       },
       {
@@ -92,38 +30,7 @@
           "movie": "Blue Giant",
           "dub": true,
           "sub": false,
-          "available_seat": [
-              {
-                  "seat_id": "C1",
-                  "seat_type": "VIP",
-                  "size": 1,
-                  "price": 500
-              },
-              {
-                  "seat_id": "C2",
-                  "seat_type": "VIP",
-                  "size": 1,
-                  "price": 500
-              },
-              {
-                  "seat_id": "C3",
-                  "seat_type": "VIP",
-                  "size": 1,
-                  "price": 500
-              },
-              {
-                  "seat_id": "C4",
-                  "seat_type": "VIP",
-                  "size": 1,
-                  "price": 500
-              },
-              {
-                  "seat_id": "C5",
-                  "seat_type": "VIP",
-                  "size": 1,
-                  "price": 500
-              }
-          ],
+          "available_seat": [],
           "reserved_seat": []
       },
       {
@@ -134,38 +41,7 @@
           "movie": "The Hold Over",
           "dub": true,
           "sub": false,
-          "available_seat": [
-              {
-                  "seat_id": "D1",
-                  "seat_type": "VIP",
-                  "size": 1,
-                  "price": 500
-              },
-              {
-                  "seat_id": "D2",
-                  "seat_type": "VIP",
-                  "size": 1,
-                  "price": 500
-              },
-              {
-                  "seat_id": "D3",
-                  "seat_type": "VIP",
-                  "size": 1,
-                  "price": 500
-              },
-              {
-                  "seat_id": "D4",
-                  "seat_type": "VIP",
-                  "size": 1,
-                  "price": 500
-              },
-              {
-                  "seat_id": "D5",
-                  "seat_type": "VIP",
-                  "size": 1,
-                  "price": 500
-              }
-          ],
+          "available_seat": [],
           "reserved_seat": []
       }
   ]
