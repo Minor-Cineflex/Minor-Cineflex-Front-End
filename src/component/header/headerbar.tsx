@@ -1,15 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MinorCineflexLogo from "../MinorCineflexLogo.jpg";
-import Data from "../../test.json";
 import { FaUserCircle } from "react-icons/fa";
 
-const testData = Data;
 
 export default function Footerbar() {
     const [search, setSearch] = useState('');
-    const filteredMovie = testData.MinorCineflex.cinema_list[0].cinema_management.movie_list.filter((moive) =>
+    const [allMovie, setAllMovie] = useState([]);
+    const filteredMovie = allMovie.filter((moive) =>
         moive.name.toLowerCase().includes(search.toLowerCase())
     );
+
+    useEffect(() => {
+        const fetchMovies = async () => {
+            try {
+                const response = await fetch("http://0.0.0.0:8000/minorcineflex/movie");
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const data = await response.json();
+
+                // Ensure we correctly access the movie_list array
+                if (data.movie_list && Array.isArray(data.movie_list)) {
+                    setAllMovie(data.movie_list.filter(movie => movie.role === "on showing"));
+                } else {
+                    console.error("Unexpected movie data format:", data);
+                }
+            } catch (error) {
+                console.error("Cannot fetch movie list:", error);
+            }
+        };
+        fetchMovies();
+    }, []);
+
     return (
         <>
             <nav className="w-full p-3 px-16 items-center text-3xl text-bt-main place-content-between font-semibold bg-bt-sec absolute spaceb flex uppercase gap-3 z-50 content-center">
