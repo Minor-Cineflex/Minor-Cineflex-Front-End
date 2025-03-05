@@ -4,10 +4,13 @@ import movieData from "./test.json"
 import tmpData from "./test2.json";
 import logo from "./MinorCineflexLogo.jpg"
 
-const Region: React.FC<{ name: string }> = ({ name }) => {
+const region_list = ["กรุงเทพและปริมณฑล","ภาคกลาง","ภาคเหนือ","ภาคใต้","ภาคตะวันออกเฉียงเหนือ","ภาคตะวันออก","ภาคตะวันตก"];
+
+const Region: React.FC = () => {
     const [cinemaList, setCinemaList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
     useEffect(() => {
         const fetchCinemas = async () => {
             try {
@@ -23,9 +26,8 @@ const Region: React.FC<{ name: string }> = ({ name }) => {
                 }
 
                 const data = await response.json();
-                const filteredData = data.Cinema_list?.filter(cinema => cinema.region === name) || [];
                 
-                setCinemaList(filteredData);
+                setCinemaList(data.Cinema_list || []);
             } catch (error) {
                 setError(error.message);
             } finally {
@@ -34,31 +36,40 @@ const Region: React.FC<{ name: string }> = ({ name }) => {
         };
 
         fetchCinemas();
-    }, [name]);
-
-    const n = Object.keys(cinemaList).length
+    }, []);
 
     if (loading) return <p>Loading cinemas...</p>;
     if (error) return <p>Error: {error}</p>;
 
-    return <div id={name} key={name}>
-        <div id="regionName">
-            <p className="text-[#E7AB79] text-3xl p-4">{name}</p>
-        </div>
-        <div id="grid" className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-4 gap-4">
-            {Array.from({length:n}).map((_,i) => (
-                <div key={i} id="cinema" className="flex bg-pink-700 bg-opacity-70 border-2 border-[#E7AB79] p-4 rounded-2xl gap-2">
-                    <img src={logo} alt="" className="rounded-full w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16" />
-                    <div className= "flex flex-col">
-                        <p className="p-1 text-[#E7AB79] text-xl">{cinemaList[i]["name"]}</p>
-                        <p className="p-1 text-[#E7AB79]">{cinemaList[i]["location"]}</p>
+    const each = (name) => {
+        const filterdata = cinemaList.filter((cinema) => cinema["region"] === name);
+        
+        return (
+            <div id={name} key={name}>
+            <div id="regionName">
+                <p className="text-[#E7AB79] text-3xl p-4">{name}</p>
+            </div>
+            <div id="grid" className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-4 gap-4">
+                {filterdata.map((cinema,i) => (
+                    <div key={i} id="cinema" className="flex bg-pink-700 bg-opacity-70 border-2 border-[#E7AB79] p-4 rounded-2xl gap-2">
+                        <img src={logo} alt="" className="rounded-full w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16" />
+                        <div className= "flex flex-col">
+                            <p className="p-1 text-[#E7AB79] text-xl">{cinema["name"]}</p>
+                            <p className="p-1 text-[#E7AB79]">{cinema["location"]}</p>
+                        </div>
                     </div>
-                </div>
-            ))}
+                ))}
         
         
-        </div>
-    </div>
+            </div>
+            </div>
+        )
+    }
+
+    return <div>
+        {region_list.map((regionname) => each(regionname))}
+    </div>;
+
 }
 
 const CinemaPage: React.FC = () => {
@@ -66,7 +77,7 @@ const CinemaPage: React.FC = () => {
     const prevScroll = useRef(0);
     const [isFooterVisible, setIsFooterVisible] = useState(true);
  
-    const region_list = ["กรุงเทพและปริมณฑล","ภาคกลาง","ภาคเหนือ","ภาคใต้","ภาคตะวันออกเฉียงเหนือ","ภาคตะวันออก","ภาคตะวันตก"]
+    
     useEffect(() => {
         const handleScroll = () => {
             const currentScroll = window.scrollY;
@@ -106,9 +117,7 @@ const CinemaPage: React.FC = () => {
                             key={regionname} className="p-4 text-[#E7AB79]" >{regionname}</p>
                     ))}
                 </div>
-                {region_list.map((regionname) => (
-                    <Region key={regionname} name={regionname} />
-                ))}
+                <Region/>
                 <div id="justAblocck" className="w-full h-20">
                 </div>
             </div>

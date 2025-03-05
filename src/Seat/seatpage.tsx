@@ -50,15 +50,22 @@ const SeatPage: React.FC = () => {
     const fullcol=8
 
     const [selectedSeats, setSelectedSeats] = useState<Set<string>>(new Set());
+    const [outputSeat,  setOutputSeat] = useState<Set<string>>(new Set());
 
     const encoded = (row,col) => {
         return `${String.fromCharCode(65 + (fullrow-row-1))}${col+1}`
     }
 
-    const handleClick = (row,col) => {
+    const handleClick = (row,col,seat_id) => {
         setSelectedSeats((prev) => {
             const newSeat = new Set(prev)
             const seatKey = encoded(row,col)
+            newSeat.has(seatKey) ? newSeat.delete(seatKey) : newSeat.add(seatKey)
+            return newSeat
+        })
+        setOutputSeat((prev) => {
+            const newSeat = new Set(prev)
+            const seatKey = seat_id
             newSeat.has(seatKey) ? newSeat.delete(seatKey) : newSeat.add(seatKey)
             return newSeat
         })
@@ -67,10 +74,9 @@ const SeatPage: React.FC = () => {
     const Seat = (row, col) => {
         const seat = SeatList.find(seat => seat["row"] === String.fromCharCode(64+(fullrow-row)) && seat["col"] === col+1);
         if(!seat){
-            
             return <img src={Ocp} alt="" />
         }
-        return seat["status"] ? <img src={selectedSeats.has(encoded(row,col)) ? choose : Chair} alt="" onClick={() => handleClick(row, col)}  /> : <img src={Ocp} alt="" />
+        return seat["status"] ? <img src={selectedSeats.has(encoded(row,col)) ? choose : Chair} alt="" onClick={() => handleClick(row, col,seat["seat_id"])}  /> : <img src={Ocp} alt="" />
     }
     
     const Seat_table = () => {
@@ -85,6 +91,7 @@ const SeatPage: React.FC = () => {
 
     const out = () => {
         console.log("Selected Seats:", [...selectedSeats])
+        console.log("Selected Seats ID:", [...outputSeat])
     }
 
     return(
