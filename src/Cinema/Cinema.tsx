@@ -57,7 +57,7 @@ const Region: React.FC = () => {
                             <p className="p-1 text-[#E7AB79] text-xl">{cinema["name"]}</p>
                             <p className="p-1 text-[#E7AB79]">{cinema["location"]}</p>
                         </div>
-                    </div>
+                    </div> 
                 ))}
         
         

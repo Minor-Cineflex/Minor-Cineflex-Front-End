@@ -1,4 +1,4 @@
-import React from "react";
+import React, { use } from "react";
 import Chair from "./chair.png"
 import Ocp from "./occupied.png"
 import choose from "./choose.png"
@@ -16,9 +16,18 @@ const SeatPage: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const showtime_id = "S001";
+    
+    const [showtime_id,setShowtimeId] = useState<string>("");
+    const [user_id, setUser_id] = useState<string>("");
 
     useEffect(() => {
+        setUser_id("Gxcw1A4e");
+        setShowtimeId("S001");
+    }, []);
+    
+
+    useEffect(() => {
+        if (!showtime_id) return;
         const fetchCinemas = async () => {
             try {
                 const response = await fetch(`http://localhost:8000/minorcineflex/seat/${showtime_id}`, {
@@ -42,9 +51,9 @@ const SeatPage: React.FC = () => {
                 setLoading(false);
             }
         };
-
+      
         fetchCinemas();
-    }, []);
+    }, [showtime_id]);
 
     const fullrow = 4
     const fullcol=8
@@ -88,10 +97,33 @@ const SeatPage: React.FC = () => {
             )}
         </div>
     }
-
-    const out = () => {
+     const [response, setResponse] = useState<string>("");
+    const out = async () => {
         console.log("Selected Seats:", [...selectedSeats])
         console.log("Selected Seats ID:", [...outputSeat])
+        console.log(JSON.stringify({ outputseat : [...outputSeat] , user_id, showtime_id}) )
+
+       
+
+        try {
+            const response = await fetch("http://localhost:8000/minorcineflex/reserve_seat", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ outputSeat : [...outputSeat],user_id,showtime_id}) 
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to send list");
+            }
+
+            const data = await response.json();
+            setResponse(JSON.stringify(data, null, 2));  // Store response
+        } catch (error) {
+            setResponse(`Error: ${error.message}`);
+        }
+    
     }
 
     return(
