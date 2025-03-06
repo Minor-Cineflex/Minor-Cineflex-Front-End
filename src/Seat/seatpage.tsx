@@ -4,6 +4,7 @@ import Ocp from "./occupied.png"
 import choose from "./choose.png"
 import { constants } from "buffer";
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom"
 
 import tmpdata from "./test.json"
 
@@ -11,6 +12,10 @@ import tmpdata from "./test.json"
 
 
 const SeatPage: React.FC = () => {
+
+    const location = useLocation();
+    const state = location.state || {};
+    console.log(state)
 
     const [SeatList, setSeatList] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -30,7 +35,7 @@ const SeatPage: React.FC = () => {
         if (!showtime_id) return;
         const fetchCinemas = async () => {
             try {
-                const response = await fetch(`http://localhost:8000/minorcineflex/seat/${showtime_id}`, {
+                const response = await fetch(`http://localhost:8000/minorcineflex/seat/${state.showtimeId}`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json"
