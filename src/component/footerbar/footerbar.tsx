@@ -7,7 +7,7 @@ export default function Footerbar() {
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const response = await fetch("http://0.0.0.0:8000/minorcineflex/movie");
+        const response = await fetch("http://localhost:8000/minorcineflex/movie");
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -26,13 +26,13 @@ export default function Footerbar() {
 
     const fetchCinema = async () => {
       try {
-        const response = await fetch("http://0.0.0.0:8000/minorcineflex/cinema");
+        const response = await fetch("http://localhost:8000/minorcineflex/cinema");
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const data = await response.json();
-        if (Array.isArray(data)) {
-          setAllCinema(data);
+        if (Array.isArray(data.Cinema_list)) {
+          setAllCinema(data.Cinema_list);
         } else {
           console.error("Unexpected cinema data format:", data);
         }
@@ -50,10 +50,10 @@ export default function Footerbar() {
   return (
     <footer>
       <div className="p-4"></div>
-      <div className="w-full p-4 xl:px-16 xl:text-xl text-bt-main font-black bg-bt-sec absolute bottom-0 flex xl:flex-row flex-col uppercase gap-3 z-50">
+      <div className="w-full p-4 md:px-16 md:text-xl text-bt-main font-black bg-bt-sec absolute bottom-0 flex md:flex-row flex-col uppercase gap-3 z-50">
         <span className="flex gap-4 items-center">
-          <p className="xl:block hidden w-full">Buy Ticket</p> <div className="xl:block hidden">|</div>
-          <select className="bg-bg-main border border-bt-main text-bt-main text-sm rounded-lg block py-1 px-2.5 w-full xl:min-w-48">
+          <p className="md:block hidden w-full">Buy Ticket</p> <div className="md:block hidden">|</div>
+          <select className="bg-bg-main border border-bt-main text-bt-main text-sm rounded-lg block py-1 px-2.5 w-full md:min-w-48">
             <option value="">Choose Movie</option>
             {filteredMovies.length > 0 ? (
               filteredMovies.map((movie) => (
@@ -66,7 +66,7 @@ export default function Footerbar() {
         </span>
         <span className="flex gap-4 items-center">
           at
-          <select className="bg-bg-main border border-bt-main text-bt-main text-sm rounded-lg block py-1 px-2.5 w-full xl:min-w-48">
+          <select className="bg-bg-main border border-bt-main text-bt-main text-sm rounded-lg block py-1 px-2.5 w-full md:min-w-48">
             <option value="">Theater</option>
             {allCinema.length > 0 ? (
               allCinema.map((cinema) => (

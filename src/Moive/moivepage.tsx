@@ -12,7 +12,7 @@ const MoviePage: React.FC = () => {
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const response = await fetch("http://0.0.0.0:8000/minorcineflex/movie");
+        const response = await fetch("http://localhost:8000/minorcineflex/movie");
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }

@@ -14,7 +14,7 @@ export default function Footerbar() {
     useEffect(() => {
         const fetchMovies = async () => {
             try {
-                const response = await fetch("http://0.0.0.0:8000/minorcineflex/movie");
+                const response = await fetch("http://localhost:8000/minorcineflex/movie");
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
@@ -47,7 +47,7 @@ export default function Footerbar() {
 
     return (
         <>
-            <nav className="w-full p-3 px-16 items-center text-3xl text-bt-main place-content-between font-semibold bg-bt-sec absolute spaceb flex xl:flex-row flex-col uppercase gap-3 z-50 content-center">
+            <nav className="w-full p-3 md:px-16 items-center text-3xl text-bt-main place-content-between font-semibold bg-bt-sec absolute spaceb flex md:flex-row flex-col uppercase gap-3 z-50 content-center">
                 <span className="flex uppercase gap-3 content-center items-center cursor-pointer" onClick={() => handleNavigate("/")}>
                     <img className="h-10" src={MinorCineflexLogo} alt="logo" />
                     Minor Cineflex
@@ -98,7 +98,7 @@ export default function Footerbar() {
 
             </nav >
 
-            <div className="xl:p-4 p-8 bg-rose-700 ">ssd</div>
+            <div className="md:p-4 bg-rose-700 pb-20">ssd</div>
 
 
         </>

@@ -1,7 +1,8 @@
 import React, { useRef , useState , useEffect} from 'react';
-
 import { FaCircleChevronLeft } from "react-icons/fa6";
 import { useNavigate, useLocation } from "react-router";
+import Footerbar from "../component/footerbar/footerbar.tsx";
+import Headerbar from "../component/header/headerbar.tsx";
 
 const HomePage: React.FC = () => {
   const [allMovie, setAllmovie] = useState({ movie_list: [] })
@@ -187,10 +188,9 @@ const HomePage: React.FC = () => {
   }
 
   return (
-    <div className='bg-[#4C3A51] w-screen max-w-screen h-screen flex flex-col overflow-y-auto pb-24'>
-      <nav className='w-full h-20 bg-[#D9D9D9] fixed text-center font-semibold	text-xl  z-50'>For nav bar</nav>
-      <div className={`pt-24 w-full flex mb-10 ${window.innerWidth<500?"pl-3":"pl-16"} gap-10 font-semibold text-[#E7AB79] underline text-lg`}>
-        <button onClick={() => handleNavigate("/")} className='hover:text-[#D4A373] hover:decoration-[#D4A373]'>หน้าหลัก</button>
+    <div className='bg-[#4C3A51] w-screen max-w-screen h-screen flex flex-col overflow-y-auto'>
+      <Headerbar/>
+      <div className={`pt-5 w-full flex mb-10 ${window.innerWidth<500?"pl-3":"pl-16"} gap-10 font-semibold text-[#E7AB79] underline text-lg`}>
         <button onClick={() => handleNavigate("/Movie")} className='hover:text-[#D4A373] hover:decoration-[#D4A373]'>ภาพยนตร์</button>
         <button onClick={() => handleNavigate("/Theater")} className='hover:text-[#D4A373] hover:decoration-[#D4A373]'>โรงภาพยนตร์</button>
       </div>
@@ -206,7 +206,7 @@ const HomePage: React.FC = () => {
         <h1 className='text-3xl text-[#E7AB79] font-semibold pl-10'>เร็วๆนี้</h1>
         {ShowMovies(allMovie, "comming soon")}
       </div>
-      <nav className='w-full min-h-20 max-h-20 fixed absolute bottom-0 bg-[#D9D9D9] text-center font-semibold	text-xl  z-50'>For bottom nav bar</nav>
+      <Footerbar/>
     </div>
   );
 }
