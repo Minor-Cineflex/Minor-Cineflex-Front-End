@@ -15,7 +15,7 @@ const SeatPage: React.FC = () => {
 
     const location = useLocation();
     const state = location.state || {};
-    console.log(state)
+
 
     const [SeatList, setSeatList] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -106,7 +106,7 @@ const SeatPage: React.FC = () => {
     const out = async () => {
         console.log("Selected Seats:", [...selectedSeats])
         console.log("Selected Seats ID:", [...outputSeat])
-        console.log(JSON.stringify({ outputseat : [...outputSeat] , user_id, showtime_id}) )
+        console.log(JSON.stringify({ outputseat : [...outputSeat] , user_id, showtime_id: state.showtimeId }) )
 
        
 
@@ -116,7 +116,7 @@ const SeatPage: React.FC = () => {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ outputSeat : [...outputSeat],user_id,showtime_id}) 
+                body: JSON.stringify({ outputSeat : [...outputSeat],user_id, showtime_id: state.showtimeId}) 
             });
 
             if (!response.ok) {
