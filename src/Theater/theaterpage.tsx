@@ -10,6 +10,7 @@ interface Movie {
 
 interface Theater {
     theater_id: string;
+    theater_name: string;
     audio_type: string;
     video_type: string;
 }
@@ -114,6 +115,7 @@ const TheaterPage: React.FC = () => {
         showtimeId: string,
         movieId: string,
         theaterId: string,
+        theaterName: string,
         movieName: string,
         startDateTime: {
             date: string,
@@ -125,6 +127,7 @@ const TheaterPage: React.FC = () => {
             showtimeId: showtime.showtimeId,
             movieId: showtime.movieId,
             theaterId: showtime.theaterId,
+            theaterName: showtime.theaterName,
             movieName: showtime.movieName,
             date: showtime.startDateTime.date,
             startTime: showtime.startDateTime.time
@@ -135,6 +138,7 @@ const TheaterPage: React.FC = () => {
                 showtimeId: showtime.showtimeId,
                 movieId: showtime.movieId,
                 theaterId: showtime.theaterId,
+                theaterName: showtime.theaterName,
                 movieName: showtime.movieName,
                 startDateTime: showtime.startDateTime
             }
@@ -234,9 +238,9 @@ const TheaterPage: React.FC = () => {
                             <div className="flex-grow">
                                 <p className="text-yellow-300 text-xl mb-2">{movie.name}</p>
                                 <p className="text-yellow-200 text-sm mb-4">
-                                    Theater ID: {theater ? theater.theater_id : 'Unknown'} |
-                                    Audio Type: {theater ? theater.audio_type : 'Unknown'} |
-                                    Video Type: {theater ? theater.video_type : 'Unknown'}
+                                    Theater: {theater && theater.theater_name ? theater.theater_name : 'Unknown'} |
+                                    Audio Type: {theater && theater.audio_type ? theater.audio_type : 'Unknown'} |
+                                    Video Type: {theater && theater.video_type ? theater.video_type : 'Unknown'}
                                 </p>
                                 <div className="flex flex-wrap justify-center gap-2">
                                     {times.map((timeInfo, i) => (
@@ -246,6 +250,7 @@ const TheaterPage: React.FC = () => {
                                                 showtimeId: timeInfo.showtimeId,
                                                 movieId: timeInfo.movieId,
                                                 theaterId: timeInfo.theaterId,
+                                                theaterName: theater && theater.theater_name ? theater.theater_name : 'Unknown',
                                                 movieName: movie.name,
                                                 startDateTime: formatFullDateTime(timeInfo.time)
                                             })}
