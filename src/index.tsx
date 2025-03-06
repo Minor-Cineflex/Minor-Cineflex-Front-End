@@ -8,6 +8,7 @@ import ProfilePage from './Profile/profilepage.tsx';
 import TheaterPage from './Theater/theaterpage.tsx';
 import SeatPage from './Seat/seatpage.tsx';
 import PaymentPage from './Payment/paymentpage.tsx';
+import MoivePage from './Moive/moivepage.tsx';
 import AdminPage from './Admin/adminpage.tsx';
 import Create from './Login/createaccount.tsx';
 
@@ -41,8 +42,8 @@ const router = createBrowserRouter([
     element: <AdminPage/>
   },
   {
-    path: "Create",
-    element: <Create/>
+    path: "Moive",
+    element: <MoivePage/>
   }
 ])
 
