@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router";
 import MinorCineflexLogo from "../MinorCineflexLogo.jpg";
 import { FaUserCircle } from "react-icons/fa";
 
@@ -32,10 +33,22 @@ export default function Footerbar() {
         fetchMovies();
     }, []);
 
+    const location = useLocation();
+    const currentUser = location.state;
+    const navigate = useNavigate();
+    const handleNavigate = (path) => {
+        if (currentUser !== null) {
+            const account_id = currentUser.account.account_id
+            navigate(path, { state: account_id })
+            return
+        }
+        navigate(path)
+    }
+
     return (
         <>
-            <nav className="w-full p-3 px-16 items-center text-3xl text-bt-main place-content-between font-semibold bg-bt-sec absolute spaceb flex uppercase gap-3 z-50 content-center">
-                <span className="flex uppercase gap-3 content-center items-center cursor-pointer">
+            <nav className="w-full p-3 px-16 items-center text-3xl text-bt-main place-content-between font-semibold bg-bt-sec absolute spaceb flex xl:flex-row flex-col uppercase gap-3 z-50 content-center">
+                <span className="flex uppercase gap-3 content-center items-center cursor-pointer" onClick={() => handleNavigate("/")}>
                     <img className="h-10" src={MinorCineflexLogo} alt="logo" />
                     Minor Cineflex
                 </span>
@@ -80,12 +93,12 @@ export default function Footerbar() {
                             }
                         </div>
                     </form>
-                    <FaUserCircle className="text-bt-main w-10 cursor-pointer" />
+                    <FaUserCircle className="text-bt-main w-10 cursor-pointer" onClick={() => handleNavigate("/")} />
                 </span>
 
             </nav >
 
-            <div className="p-4 bg-rose-700 ">ssd</div>
+            <div className="xl:p-4 p-8 bg-rose-700 ">ssd</div>
 
 
         </>
