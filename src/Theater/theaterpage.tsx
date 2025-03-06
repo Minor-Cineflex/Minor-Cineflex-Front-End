@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 interface Movie {
     movie_id: string;
@@ -43,6 +44,8 @@ const TheaterPage: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
 
     const navigate = useNavigate();
+    const location = useLocation();
+    const state = location.state || {};
 
     useEffect(() => {
         const handleScroll = () => {
@@ -58,13 +61,18 @@ const TheaterPage: React.FC = () => {
     useEffect(() => {
         const fetchShowtime = async () => {
             try {
-                const response = await fetch('http://localhost:8000/minorcineflex/cinema/101/showtime', {
+                const response = await fetch(`http://localhost:8000/minorcineflex/cinema/${state.cinema_id}/showtime`, {
                     method: "GET",
                     headers: { "Content-Type": "application/json" }
                 });
                 if (!response.ok) throw new Error("Failed to fetch showtime");
                 const data = await response.json();
-                setShowtimeList(data);
+                if (state.movie_id) {
+                    setShowtimeList(data.filter((showtime: Showtime) => showtime.movie_id === state.movie_id));
+                }
+                else {
+                    setShowtimeList(data);
+                }
             } catch (err) {
                 setError((err as Error).message);
             } finally {
