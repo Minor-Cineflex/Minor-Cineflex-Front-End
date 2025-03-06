@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom"
+import { useLocation } from "react-router-dom";
 
 interface Movie {
     movie_id: string;
@@ -68,7 +68,12 @@ const TheaterPage: React.FC = () => {
                 });
                 if (!response.ok) throw new Error("Failed to fetch showtime");
                 const data = await response.json();
-                setShowtimeList(data);
+                if (state.movie_id) {
+                    setShowtimeList(data.filter((showtime: Showtime) => showtime.movie_id === state.movie_id));
+                }
+                else {
+                    setShowtimeList(data);
+                }
             } catch (err) {
                 setError((err as Error).message);
             } finally {
