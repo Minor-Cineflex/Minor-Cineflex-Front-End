@@ -1,0 +1,48 @@
+{
+  "showtime_list": [
+      {
+          "showtime_id": "S001",
+          "start_date": "2025-3-3 10:00:00",
+          "cinema": "minor_1",
+          "theater": "theater_1",
+          "movie": "Avengers: Endgame",
+          "dub": true,
+          "sub": false,
+          "available_seat": [],
+          "reserved_seat": []
+      },
+      {
+          "showtime_id": "S002",
+          "start_date": "2025-3-4 13:00:00",
+          "cinema": "minor_1",
+          "theater": "theater_2",
+          "movie": "The Boy And The Heron",
+          "dub": true,
+          "sub": false,
+          "available_seat": [],
+          "reserved_seat": []
+      },
+      {
+          "showtime_id": "S003",
+          "start_date": "2025-3-4 16:00:00",
+          "cinema": "minor_1",
+          "theater": "theater_3",
+          "movie": "Blue Giant",
+          "dub": true,
+          "sub": false,
+          "available_seat": [],
+          "reserved_seat": []
+      },
+      {
+          "showtime_id": "S004",
+          "start_date": "2025-3-5 19:00:00",
+          "cinema": "minor_1",
+          "theater": "theater_4",
+          "movie": "The Hold Over",
+          "dub": true,
+          "sub": false,
+          "available_seat": [],
+          "reserved_seat": []
+      }
+  ]
+}
