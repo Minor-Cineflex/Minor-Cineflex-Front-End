@@ -1,10 +1,11 @@
 import React, { useRef , useState , useEffect} from 'react';
 
 import { FaCircleChevronLeft } from "react-icons/fa6";
-import { useLocation } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 
 const HomePage: React.FC = () => {
   const [allMovie, setAllmovie] = useState({ movie_list: [] })
+  const navigate = useNavigate()
 
   const ShowMovies = (allMovie: any, role: string) => {
     const [hoverIndex, setHoverIndex] = useState(null);
@@ -124,32 +125,34 @@ const HomePage: React.FC = () => {
     )
   }
 
-const { state }  = useLocation();
-useEffect(() => {
-  const searchUser = async () => {
-    try {
-      const response = await fetch(`http://localhost:8000/minorcineflex/person/email/${state.account.account_id}`, {
-          method: "GET",
-          headers: {
-              "Content-Type": "application/json"
-          }
-      });
+  const { state }  = useLocation();
+  const user_account_id = state
+  const [currentUser, setCurrentUser] = useState(null)
+  useEffect(() => {
+    const searchUser = async () => {
+      try {
+        const response = await fetch(`http://localhost:8000/minorcineflex/person/email/${user_account_id}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
 
-      if (!response.ok) {
-          console.log("Failed to fetch person_list");
-          return;
+        if (!response.ok) {
+            console.log("Failed to fetch person_list");
+            return;
+        }
+        const person = await response.json();
+        const foundUser = person;
+        setCurrentUser(foundUser)
+        console.log(foundUser.account.username)
+      } catch (error) {
+        console.log("Error to fetch user")
       }
-      const person = await response.json();
-      const foundUser = person;
-      console.log(foundUser.account.username)
-    } catch (error) {
-      console.log("Guest")
-    }
-  };
-  searchUser();
-}, [allMovie, state])
+    };
+    user_account_id ? searchUser() : console.log("Guest")
+  }, [allMovie, user_account_id])
  
-  
   useEffect(() => {
     const fetchMovies = async() => {
       try{
@@ -174,13 +177,22 @@ useEffect(() => {
     fetchMovies();
   }, [])
 
+  const handleNavigate = (path) => {
+    if(currentUser !== null){
+      const account_id = currentUser.account.account_id
+      navigate(path, {state: account_id})
+      return
+    }
+    navigate(path)
+  }
+
   return (
     <div className='bg-[#4C3A51] w-screen max-w-screen h-screen flex flex-col overflow-y-auto pb-24'>
       <nav className='w-full h-20 bg-[#D9D9D9] fixed text-center font-semibold	text-xl  z-50'>For nav bar</nav>
       <div className={`pt-24 w-full flex mb-10 ${window.innerWidth<500?"pl-3":"pl-16"} gap-10 font-semibold text-[#E7AB79] underline text-lg`}>
-        <button>หน้าหลัก</button>
-        <button>ภาพยนตร์</button>
-        <button>โรงภาพยนตร์</button>
+        <button onClick={() => handleNavigate("/")} className='hover:text-[#D4A373] hover:decoration-[#D4A373]'>หน้าหลัก</button>
+        <button onClick={() => handleNavigate("/Movie")} className='hover:text-[#D4A373] hover:decoration-[#D4A373]'>ภาพยนตร์</button>
+        <button onClick={() => handleNavigate("/Theater")} className='hover:text-[#D4A373] hover:decoration-[#D4A373]'>โรงภาพยนตร์</button>
       </div>
       <div className='w-full flex flex-col gap-4'>
         <h1 className='text-3xl text-[#E7AB79] font-semibold pl-10'>ภาพยนตร์แนะนำ</h1>

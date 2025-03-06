@@ -137,16 +137,17 @@ const ShowMovies = (allMovie) => {
     const navigate = useNavigate()
     const { state }  = useLocation();
     const [currentUser, setCurrentUser] = useState<any>(null)
+    const user_account_id = state
 
     useEffect(() => {
-        if (!state) {
+        if (!user_account_id) {
             navigate('/Login');
             return;
         }
 
         const searchUser = async () => {
             try {
-                const response = await fetch(`http://localhost:8000/minorcineflex/person/email/${state.account.account_id}`, {
+                const response = await fetch(`http://localhost:8000/minorcineflex/person/email/${user_account_id}`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json"
@@ -193,7 +194,7 @@ const ShowMovies = (allMovie) => {
 
     return(
         <div className="min-w-full min-h-screen bg-[#4C3A51] flex flex-col justify-evenly overflow-hidden">
-            <nav onClick={() => navigate("/", {state: currentUser})}><FaChevronLeft className="cursor-pointer text-[#E7AB79] mt-4 ml-5" size={30}/></nav>
+            <nav onClick={() => navigate("/", {state: currentUser.account.account_id})}><FaChevronLeft className="cursor-pointer text-[#E7AB79] mt-4 ml-5" size={30}/></nav>
             <div className="min-w-fit w-2/5 min-h-fit bg-[#D9D9D9] flex flex-col justify-items-center items-center self-center mt-4 gap-6 rounded-2xl">
                 <img src={Logo} alt="" className="size-28"/>
                 <div className="flex flex-col w-full self-start items-center gap-6 mb-12 pl-6 pr-6">
