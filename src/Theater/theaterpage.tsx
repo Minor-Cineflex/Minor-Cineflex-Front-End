@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import "./responsive.css";
 import movieData from "./test.json";
 import Calendar from "react-calendar";
+import { useLocation } from "react-router-dom"
+
+
 
 const TheaterPage: React.FC = () => {
     const [isNavbarVisible, setIsNavbarVisible] = useState(true);
@@ -11,6 +14,11 @@ const TheaterPage: React.FC = () => {
     const [selectedDay, setSelectedDay] = useState(new Date());
     const [isCalendarVisible, setIsCalendarVisible] = useState(false);
     const [selectedShowtime, setSelectedShowtime] = useState<string | null>(null);
+    
+    const location = useLocation();
+    const state = location.state || {};
+
+    console.log(state)
 
     useEffect(() => {
         const handleScroll = () => {

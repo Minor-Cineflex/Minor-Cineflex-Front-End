@@ -3,6 +3,8 @@ import "./responsive.css";
 import movieData from "./test.json"
 import tmpData from "./test2.json";
 import logo from "./MinorCineflexLogo.jpg"
+import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom"
 
 const region_list = ["กรุงเทพและปริมณฑล","ภาคกลาง","ภาคเหนือ","ภาคใต้","ภาคตะวันออกเฉียงเหนือ","ภาคตะวันออก","ภาคตะวันตก"];
 
@@ -10,6 +12,18 @@ const Region: React.FC = () => {
     const [cinemaList, setCinemaList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    const state = location.state || {};
+
+    console.log(state)
+    
+
+    const click_cinema = (cinema_id) => {
+        console.log(cinema_id)
+        navigate("/Theater", { state: { ...state, cinema_id } });
+    }
 
     useEffect(() => {
         const fetchCinemas = async () => {
@@ -46,22 +60,22 @@ const Region: React.FC = () => {
         
         return (
             <div id={name} key={name}>
-            <div id="regionName">
-                <p className="text-[#E7AB79] text-3xl p-4">{name}</p>
-            </div>
-            <div id="grid" className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-4 gap-4">
-                {filterdata.map((cinema,i) => (
-                    <div key={i} id="cinema" className="flex bg-pink-700 bg-opacity-70 border-2 border-[#E7AB79] p-4 rounded-2xl gap-2">
-                        <img src={logo} alt="" className="rounded-full w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16" />
-                        <div className= "flex flex-col">
-                            <p className="p-1 text-[#E7AB79] text-xl">{cinema["name"]}</p>
-                            <p className="p-1 text-[#E7AB79]">{cinema["location"]}</p>
-                        </div>
-                    </div> 
-                ))}
-        
-        
-            </div>
+                <div id="regionName">
+                    <p className="text-[#E7AB79] text-3xl p-4">{name}</p>
+                </div>
+                <div id="grid" className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-4 gap-4">
+                    {filterdata.map((cinema,i) => (
+                        <div key={i} id="cinema" onClick = {() => click_cinema(cinema["cinema_id"])}className="flex bg-pink-700 bg-opacity-70 border-2 border-[#E7AB79] p-4 rounded-2xl gap-2">
+                            <img src={logo} alt="" className="rounded-full w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16" />
+                            <div className= "flex flex-col">
+                                <p className="p-1 text-[#E7AB79] text-xl">{cinema["name"]}</p>
+                                <p className="p-1 text-[#E7AB79]">{cinema["location"]}</p>
+                            </div>
+                        </div> 
+                    ))}
+
+                    
+                </div>
             </div>
         )
     }
