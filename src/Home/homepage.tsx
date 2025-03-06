@@ -192,7 +192,7 @@ const HomePage: React.FC = () => {
       <Headerbar/>
       <div className={`pt-5 w-full flex mb-10 ${window.innerWidth<500?"pl-3":"pl-16"} gap-10 font-semibold text-[#E7AB79] underline text-lg`}>
         <button onClick={() => handleNavigate("/Movie")} className='hover:text-[#D4A373] hover:decoration-[#D4A373]'>ภาพยนตร์</button>
-        <button onClick={() => handleNavigate("/Theater")} className='hover:text-[#D4A373] hover:decoration-[#D4A373]'>โรงภาพยนตร์</button>
+        <button onClick={() => handleNavigate("/Cinema")} className='hover:text-[#D4A373] hover:decoration-[#D4A373]'>โรงภาพยนตร์</button>
       </div>
       <div className='w-full flex flex-col gap-4'>
         <h1 className='text-3xl text-[#E7AB79] font-semibold pl-10'>ภาพยนตร์แนะนำ</h1>

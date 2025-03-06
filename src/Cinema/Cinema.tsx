@@ -123,7 +123,7 @@ const CinemaPage: React.FC = () => {
                     {region_list.map((regionname) => (
                         <p 
                             onClick={() => { 
-                             document.getElementById(regionname)?.scrollIntoView({
+                             document.getElementById(regionname).scrollIntoView({
                                  behavior: "smooth", 
                                  block: "start" 
                                 })
