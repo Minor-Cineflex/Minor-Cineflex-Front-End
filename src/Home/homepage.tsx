@@ -100,7 +100,6 @@ const HomePage: React.FC = () => {
     useEffect(() => {
       setFilteredMovie(searchQuery !== '' ? allMovie.movie_list.filter(movie => movie.name.toLowerCase().includes(searchQuery.toLowerCase())) : 
                        allMovie.movie_list.filter(movie => movie.role === role))
-      searchQuery !== '' ? movieCategories = [] : movieCategories = ["recommend", "on showing", "comming soon"]
     }, [allMovie, role, searchQuery])
   
     return(
@@ -209,14 +208,16 @@ const HomePage: React.FC = () => {
         <button onClick={() => handleNavigate("/Cinema")} className='hover:text-[#D4A373] hover:decoration-[#D4A373]'>โรงภาพยนตร์</button>
       </div>
       <div>
-        {movieCategories.map((role) => (
-          <div key={role} className='w-full flex flex-col gap-4'>
+      {movieCategories.map((role) => (
+        <div key={role} className='w-full flex flex-col gap-4'>
+          {searchQuery === '' && (
             <h1 className='text-3xl text-[#E7AB79] font-semibold pl-10'>
               {role === 'recommend' ? 'ภาพยนตร์แนะนำ' : role === 'on showing' ? 'กำลังฉาย' : 'เร็วๆนี้'}
             </h1>
-            {ShowMovies(allMovie, role, searchQuery)}
-          </div>
-        ))}
+          )}
+          {ShowMovies(allMovie, role, searchQuery)}
+        </div>
+      ))}
       </div>
       <Footerbar/>
     </div>
