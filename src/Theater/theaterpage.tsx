@@ -102,7 +102,7 @@ const TheaterPage: React.FC = () => {
 
         const fetchTheater = async () => {
             try {
-                const response = await fetch('http://localhost:8000/minorcineflex/cinema/101/theater', {
+                const response = await fetch(`http://localhost:8000/minorcineflex/cinema/${state.cinema_id}/theater`, {
                     method: "GET",
                     headers: { "Content-Type": "application/json" }
                 });
