@@ -1,20 +1,71 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import myqr from "../component/myqr.jpg";
 
 const PaymentPage: React.FC = () => {
+  const [paymentDetails, setPaymentDetails] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [isPaid, setIsPaid] = useState<boolean>(false);
+
+  // Dummy user data (replace with actual values from previous steps)
+  const user_id = "Gxcw1A4e";
+  const movie_id = "M001";
+  const showtime_id = "S-101-01-001";
+  const payment_type = "Credit Card";
+
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .post(
+        `http://localhost:8000/minorcineflex/base_payment?user_id=${user_id}&movie_id=${movie_id}&showtime_id=${showtime_id}&payment_type=${payment_type}`
+      )
+      .then((response) => {
+        setPaymentDetails(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching payment details:", error);
+        setError("Failed to load payment details");
+        setLoading(false);
+      });
+  }, []);
+
+  const handlePayment = () => {
+    setLoading(true);
+    axios
+      .post(
+        `http://localhost:8000/minorcineflex/done_payment?user_id=${user_id}&movie_id=${movie_id}&showtime_id=${showtime_id}&payment_type=${payment_type}`
+      )
+      .then((response) => {
+        setIsPaid(true);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error processing payment:", error);
+        setError("Payment failed. Please try again.");
+        setLoading(false);
+      });
+  };
+
+  if (loading) return <p className="text-center text-xl">Loading...</p>;
+  if (error) return <p className="text-center text-red-500">{error}</p>;
+
   return (
     <div className="flex flex-col lg:flex-row p-4 gap-4 items-center h-screen w-full">
-      {/* Image Section */}
+      {/* Movie Poster */}
       <img
         src="https://m.media-amazon.com/images/I/81kz06oSUeL._AC_SL1500_.jpg"
-        alt=""
+        alt="Movie Poster"
         className="shadow-md w-full sm:w-2/4 md:w-1/3 lg:w-1/4 max-w-xs"
       />
 
       {/* Payment Details */}
-      <div className="relative flex flex-col items-center gap-4 w-full  h-auto  text-bt-main bg-bg-sec shadow-md rounded-xl p-4">
+      <div className="relative flex flex-col items-center gap-4 w-full h-auto text-bt-main bg-bg-sec shadow-md rounded-xl p-4">
+        <h2 className="text-lg font-semibold">Confirm Your Payment</h2>
+
         {/* Table */}
-        <div className="w-full ">
+        <div className="w-full">
           <table className="w-full text-left table-auto">
             <thead>
               <tr>
@@ -30,35 +81,42 @@ const PaymentPage: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td className="p-2 md:p-4">
-                  <p className="text-xs md:text-sm">Normal seat A1-A3</p>
-                </td>
-                <td className="p-2 md:p-4">
-                  <p className="text-xs md:text-sm">1</p>
-                </td>
-                <td className="p-2 md:p-4">
-                  <p className="text-xs md:text-sm">100</p>
-                </td>
-              </tr>
+              {paymentDetails.reserved_seats.map((seat: string, index: number) => (
+                <tr key={index}>
+                  <td className="p-2 md:p-4">
+                    <p className="text-xs md:text-sm">Seat {seat}</p>
+                  </td>
+                  <td className="p-2 md:p-4">
+                    <p className="text-xs md:text-sm">1</p>
+                  </td>
+                  <td className="p-2 md:p-4">
+                    <p className="text-xs md:text-sm">100</p>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
           <h1 className="px-4 w-full bg-bt-main text-bg-main text-lg md:text-xl py-2 uppercase block text-center">
-            Total 100
+            Total: {paymentDetails.total_price} ฿
           </h1>
         </div>
 
-        <img
-          src={myqr}
-          alt="QR Code"
-          className=" md:w-2/5 lg:w-1/4 object-contain"
-        />
+        {/* QR Code */}
+        <img src={myqr} alt="QR Code" className="md:w-2/5 lg:w-1/4 object-contain" />
 
-        <button className="bg-bt-main text-bg-main py-2 px-4 md:px-8 rounded-xl uppercase ">
-          paid
-        </button>
+        {/* Payment Button */}
+        {isPaid ? (
+          <p className="text-green-500 font-semibold text-lg">Payment Successful! 🎉</p>
+        ) : (
+          <button
+            onClick={handlePayment}
+            className="bg-bt-main text-bg-main py-2 px-4 md:px-8 rounded-xl uppercase"
+          >
+            Pay Now
+          </button>
+        )}
       </div>
-    </div >
+    </div>
   );
 };
 
