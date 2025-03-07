@@ -3,15 +3,20 @@ import { FaCircleChevronLeft } from "react-icons/fa6";
 import { useNavigate, useLocation } from "react-router";
 import Footerbar from "../component/footerbar/footerbar.tsx";
 import Headerbar from "../component/header/headerbar.tsx";
+import { useSearchParams } from "react-router-dom";
 
 const HomePage: React.FC = () => {
   const [allMovie, setAllmovie] = useState({ movie_list: [] })
   const navigate = useNavigate()
+  let movieCategories = ["recommend", "on showing", "comming soon"];
+  const [searchParams] = useSearchParams();
 
-  const ShowMovies = (allMovie: any, role: string) => {
+
+  const ShowMovies = (allMovie: any, role: string, searchQuery: String) => {
     const [hoverIndex, setHoverIndex] = useState(null);
     const [canScrollLeft, setCanScrollLeft] = useState(false);
     const [canScrollRight, setCanScrollRight] = useState(true);
+    const [filteredMovies, setFilteredMovie] = useState([]);
   
     const scrollContainerRef = useRef<HTMLDivElement>(null);
   
@@ -27,7 +32,7 @@ const HomePage: React.FC = () => {
       checkScroll();
       window.addEventListener('resize', checkScroll);
       return () => window.removeEventListener('resize', checkScroll);
-    }, [allMovie]);
+    }, [allMovie, filteredMovies]);
   
     const scroll = (direction: 'left' | 'right') => {
       if (scrollContainerRef.current) {
@@ -92,7 +97,11 @@ const HomePage: React.FC = () => {
       }
     }
 
-    const filteredMovies = allMovie.movie_list.filter(movie => movie.role === role);
+    useEffect(() => {
+      setFilteredMovie(searchQuery !== '' ? allMovie.movie_list.filter(movie => movie.name.toLowerCase().includes(searchQuery.toLowerCase())) : 
+                       allMovie.movie_list.filter(movie => movie.role === role))
+      searchQuery !== '' ? movieCategories = [] : movieCategories = ["recommend", "on showing", "comming soon"]
+    }, [allMovie, role, searchQuery])
   
     return(
       <div className='flex max-w-full pr-6 pl-6 gap-6'>
@@ -132,6 +141,7 @@ const HomePage: React.FC = () => {
 
   const { state }  = useLocation();
   const user_account_id = state?.account_id
+  const searchQuery = searchParams.get("search") || "";
   const [currentUser, setCurrentUser] = useState(null)
   useEffect(() => {
     const searchUser = async () => {
@@ -195,20 +205,18 @@ const HomePage: React.FC = () => {
     <div className='bg-[#4C3A51] w-screen max-w-screen h-screen flex flex-col overflow-y-auto'>
       <Headerbar userAccountId={currentUser?.account?.account_id}/>
       <div className={`pt-5 w-full flex mb-10 ${window.innerWidth<500?"pl-3":"pl-16"} gap-10 font-semibold text-[#E7AB79] underline text-lg`}>
-        <button onClick={() => handleNavigate("/Movie", {state: {account_id: currentUser.account.account_id}})} className='hover:text-[#D4A373] hover:decoration-[#D4A373]'>ภาพยนตร์</button>
-        <button onClick={() => handleNavigate("/Cinema", {state: {account_id: currentUser.account.account_id}})} className='hover:text-[#D4A373] hover:decoration-[#D4A373]'>โรงภาพยนตร์</button>
+        <button onClick={() => handleNavigate("/Movie")} className='hover:text-[#D4A373] hover:decoration-[#D4A373]'>ภาพยนตร์</button>
+        <button onClick={() => handleNavigate("/Cinema")} className='hover:text-[#D4A373] hover:decoration-[#D4A373]'>โรงภาพยนตร์</button>
       </div>
-      <div className='w-full flex flex-col gap-4'>
-        <h1 className='text-3xl text-[#E7AB79] font-semibold pl-10'>ภาพยนตร์แนะนำ</h1>
-        {ShowMovies(allMovie, "recommend")}
-      </div>
-      <div className='w-full flex flex-col gap-4'>
-        <h1 className='text-3xl text-[#E7AB79] font-semibold pl-10'>กำลังฉาย</h1>
-        {ShowMovies(allMovie, "on showing")}
-      </div>
-      <div className='w-full flex flex-col gap-4'>
-        <h1 className='text-3xl text-[#E7AB79] font-semibold pl-10'>เร็วๆนี้</h1>
-        {ShowMovies(allMovie, "comming soon")}
+      <div>
+        {movieCategories.map((role) => (
+          <div key={role} className='w-full flex flex-col gap-4'>
+            <h1 className='text-3xl text-[#E7AB79] font-semibold pl-10'>
+              {role === 'recommend' ? 'ภาพยนตร์แนะนำ' : role === 'on showing' ? 'กำลังฉาย' : 'เร็วๆนี้'}
+            </h1>
+            {ShowMovies(allMovie, role, searchQuery)}
+          </div>
+        ))}
       </div>
       <Footerbar/>
     </div>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import MinorCineflexLogo from "../MinorCineflexLogo.jpg";
 import { FaUserCircle } from "react-icons/fa";
-
+import { useSearchParams } from "react-router-dom";
 
 export default function Headerbar({userAccountId}) {
     const [search, setSearch] = useState('');
@@ -10,6 +10,7 @@ export default function Headerbar({userAccountId}) {
     const filteredMovie = allMovie.filter((moive) =>
         moive.name.toLowerCase().includes(search.toLowerCase())
     );
+    const [searchParams, setSearchParams] = useSearchParams();
 
     useEffect(() => {
         const fetchMovies = async () => {
@@ -22,7 +23,7 @@ export default function Headerbar({userAccountId}) {
 
                 // Ensure we correctly access the movie_list array
                 if (data.movie_list && Array.isArray(data.movie_list)) {
-                    setAllMovie(data.movie_list.filter(movie => movie.role === "on showing"));
+                    setAllMovie(data.movie_list);
                 } else {
                     console.error("Unexpected movie data format:", data);
                 }
@@ -97,6 +98,16 @@ export default function Headerbar({userAccountId}) {
         )
     }
 
+    const handleSearch = (value) => {
+        setSearch(value);
+        setSearchParams({ search: value });
+    }
+
+    const setSearchData = (movie) => {
+        setSearchParams({search: movie.name})
+        setSearch(movie.name)
+    }
+
     return (
         <>
             <nav className="w-full p-3 md:px-16 items-center text-3xl text-bt-main place-content-between font-semibold bg-bt-sec absolute spaceb flex sm:flex-row flex-col uppercase gap-3 z-50 content-center">
@@ -131,17 +142,20 @@ export default function Headerbar({userAccountId}) {
                                 id="default-search"
                                 className="block w-full p-2 px-4 ps-4 text-sm text-bt-main border border-bt-main rounded-lg bg-bg-main relative"
                                 placeholder="Search moive"
-                                onChange={e => setSearch(e.target.value)}
+                                value={search}
+                                onChange={(e) => handleSearch(e.target.value)}
                                 required
                             />
-                            {search !== "" && filteredMovie.length > 0 &&
-                                <div className="absolute flex flex-col gap-3 text-base p-4 rounded-md mt-1 border border-bt-main  text-bt-main font-normal bg-bg-main normal-case">
-                                    {search !== "" && filteredMovie.map((movie) => (
-                                        <>
-                                            <p className="">{movie.name}</p>
-                                        </>
-                                    ))}
-                                </div>
+                            {
+                                filteredMovie.some(movie => movie.name === search) ? <p></p> :
+                                search !== "" && filteredMovie.length > 0 &&
+                                    <div className="absolute flex flex-col gap-3 text-base p-4 rounded-md mt-1 border border-bt-main  text-bt-main font-normal bg-bg-main normal-case">
+                                        {search !== "" && filteredMovie.map((movie) => (
+                                            <>
+                                                <p className="cursor-pointer" onClick={() => setSearchData(movie)}>{movie.name}</p>
+                                            </>
+                                        ))}
+                                    </div>
                             }
                         </div>
                     </form>
