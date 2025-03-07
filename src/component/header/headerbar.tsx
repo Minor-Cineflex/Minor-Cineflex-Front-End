@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router";
+import { useNavigate } from "react-router";
 import MinorCineflexLogo from "../MinorCineflexLogo.jpg";
 import { FaUserCircle } from "react-icons/fa";
 
 
-export default function Footerbar() {
+export default function Headerbar({userAccountId}) {
     const [search, setSearch] = useState('');
     const [allMovie, setAllMovie] = useState([]);
     const filteredMovie = allMovie.filter((moive) =>
@@ -33,21 +33,73 @@ export default function Footerbar() {
         fetchMovies();
     }, []);
 
-    const location = useLocation();
-    const currentUser = location.state;
+    const [currentUser, setCurrentUser] = useState(null)
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const searchUser = async () => {
+            if (!userAccountId) {
+                console.log("Guest");
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://localhost:8000/minorcineflex/person/email/${userAccountId}`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                });
+
+                if (!response.ok) {
+                    console.log("Failed to fetch person_list");
+                    return;
+                }
+
+                const person = await response.json();
+                setCurrentUser(person);
+            } catch (error) {
+                console.log("Error fetching user");
+            }
+        };
+
+        searchUser();
+    }, [userAccountId]);
+
     const handleNavigate = (path) => {
         if (currentUser !== null) {
             const account_id = currentUser.account.account_id
-            navigate(path, { state: account_id })
+            navigate(path, { state: {
+                account_id:  account_id
+            }})
             return
         }
         navigate(path)
+        return
+    }
+
+    const handleProfile = () => {
+        if(currentUser !== null){
+            const account_id = currentUser.account.account_id
+            navigate(`/Profile/${currentUser.account.username}`, {state: {
+                account_id:  account_id
+            }})
+            return
+        }
+        navigate('/Login')
+        return
+    }
+
+    const showUsername = () => {
+        const show_username = currentUser ? currentUser.account.username : "guest" 
+        return (
+            <p className="text-bt-main text-base min-w-20 max-w-20 truncate self-center">{show_username}</p>
+        )
     }
 
     return (
         <>
-            <nav className="w-full p-3 md:px-16 items-center text-3xl text-bt-main place-content-between font-semibold bg-bt-sec absolute spaceb flex md:flex-row flex-col uppercase gap-3 z-50 content-center">
+            <nav className="w-full p-3 md:px-16 items-center text-3xl text-bt-main place-content-between font-semibold bg-bt-sec absolute spaceb flex sm:flex-row flex-col uppercase gap-3 z-50 content-center">
                 <span className="flex uppercase gap-3 content-center items-center cursor-pointer" onClick={() => handleNavigate("/")}>
                     <img className="h-10" src={MinorCineflexLogo} alt="logo" />
                     Minor Cineflex
@@ -93,12 +145,14 @@ export default function Footerbar() {
                             }
                         </div>
                     </form>
-                    <FaUserCircle className="text-bt-main w-10 cursor-pointer" onClick={() => handleNavigate("/")} />
+                    <div className="cursor-pointer flex flex-row gap-2" onClick={() => handleProfile()}>
+                        <FaUserCircle className="text-bt-main w-full"/>
+                        {showUsername()}
+                    </div> 
                 </span>
-
             </nav >
 
-            <div className="md:p-4 bg-rose-700 pb-20">ssd</div>
+            <div className="md:p-4 pb-20 sm:p-8">ssd</div>
 
 
         </>

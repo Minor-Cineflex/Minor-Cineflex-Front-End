@@ -151,7 +151,7 @@ const Create:React.FC = () => {
             const emailExists = await person_list_response.json()
             if(emailExists){
                 alert(`Welcome back, ${emailExists.name}!`);
-                navigate(`/Profile/${emailExists.account.username}`, {state: emailExists.account.account_id});
+                navigate(`/Profile/${emailExists.account.username}`, {state: {account_id: emailExists.account.account_id}});
                 return
             }
 
@@ -165,7 +165,7 @@ const Create:React.FC = () => {
             const data = await response.json();
             console.log(data.message)
             alert(`Welcome, ${userInfo.name}!`);
-            navigate(`/Profile/${userInfo.account.username}`, {state: userInfo.account.account_id});
+            navigate(`/Profile/${userInfo.account.username}`, {state: {account_id: userInfo.account.account_id}});
             return
         }catch(error) {
             console.error("Error signing up:", error);

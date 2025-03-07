@@ -46,6 +46,10 @@ const router = createBrowserRouter([
     element: <CinemaPage/>
   },
   {
+    path: "Cinema/:moviename",
+    element: <CinemaPage/>
+  },
+  {
     path: "Movie",
     element: <MoivePage/>
   }

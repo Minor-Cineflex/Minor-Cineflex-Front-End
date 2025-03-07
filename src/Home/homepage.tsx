@@ -102,6 +102,10 @@ const HomePage: React.FC = () => {
             {filteredMovies.map((movie, index) => (
                 <div  key={index} 
                     className="max-h-fit h-100 w-72 flex-shrink-0 rounded-2xl"
+                    onClick={() => navigate(`/Cinema/${movie.name}`, {state: {
+                      account_id: currentUser?.account.account_id,
+                      movie_id: movie.movie_id
+                    }})}
                 >
                   <div className='w-full h-4/5 overflow-hidden rounded-2xl hover:z-10 hover:border hover:border-black snap-start'
                     onMouseEnter={() => setHoverIndex(index)}
@@ -127,7 +131,7 @@ const HomePage: React.FC = () => {
   }
 
   const { state }  = useLocation();
-  const user_account_id = state
+  const user_account_id = state?.account_id
   const [currentUser, setCurrentUser] = useState(null)
   useEffect(() => {
     const searchUser = async () => {
@@ -181,7 +185,7 @@ const HomePage: React.FC = () => {
   const handleNavigate = (path) => {
     if(currentUser !== null){
       const account_id = currentUser.account.account_id
-      navigate(path, {state: account_id})
+      navigate(path, {state: {account_id: account_id}})
       return
     }
     navigate(path)
@@ -189,10 +193,10 @@ const HomePage: React.FC = () => {
 
   return (
     <div className='bg-[#4C3A51] w-screen max-w-screen h-screen flex flex-col overflow-y-auto'>
-      <Headerbar/>
+      <Headerbar userAccountId={currentUser?.account?.account_id}/>
       <div className={`pt-5 w-full flex mb-10 ${window.innerWidth<500?"pl-3":"pl-16"} gap-10 font-semibold text-[#E7AB79] underline text-lg`}>
-        <button onClick={() => handleNavigate("/Movie")} className='hover:text-[#D4A373] hover:decoration-[#D4A373]'>ภาพยนตร์</button>
-        <button onClick={() => handleNavigate("/Cinema")} className='hover:text-[#D4A373] hover:decoration-[#D4A373]'>โรงภาพยนตร์</button>
+        <button onClick={() => handleNavigate("/Movie", {state: {account_id: currentUser.account.account_id}})} className='hover:text-[#D4A373] hover:decoration-[#D4A373]'>ภาพยนตร์</button>
+        <button onClick={() => handleNavigate("/Cinema", {state: {account_id: currentUser.account.account_id}})} className='hover:text-[#D4A373] hover:decoration-[#D4A373]'>โรงภาพยนตร์</button>
       </div>
       <div className='w-full flex flex-col gap-4'>
         <h1 className='text-3xl text-[#E7AB79] font-semibold pl-10'>ภาพยนตร์แนะนำ</h1>

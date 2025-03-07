@@ -2,12 +2,15 @@ import React, { useRef, useState, useEffect } from "react";
 import { FaCircleChevronLeft } from "react-icons/fa6";
 import Footerbar from "../component/footerbar/footerbar.tsx";
 import Headerbar from "../component/header/headerbar.tsx";
+import { useLocation } from "react-router";
 
 
 
 const MoviePage: React.FC = () => {
   const [allMovie, setAllMovie] = useState({ movie_list: [] })
-
+  const [currentUser, setCurrentUser] = useState(null)
+  const { state } = useLocation()
+  const account_id = state?.account_id
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -33,6 +36,37 @@ const MoviePage: React.FC = () => {
     fetchMovies();
 
   }, []);
+
+  useEffect(() => {
+    const searchUser = async () => {
+        if (!account_id) {
+            console.log("Guest");
+            return;
+        }
+
+        try {
+            const response = await fetch(`http://localhost:8000/minorcineflex/person/email/${account_id}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+
+            if (!response.ok) {
+                console.log("Failed to fetch person_list");
+                return;
+            }
+
+            const person = await response.json();
+            setCurrentUser(person);
+            console.log(person.account.username);
+        } catch (error) {
+            console.log("Error fetching user");
+        }
+    };
+
+    searchUser();
+  }, [state, account_id]);
   const ShowMovies = (allMovie: any, role: string) => {
     const [hoverIndex, setHoverIndex] = useState(null);
     const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -155,7 +189,7 @@ const MoviePage: React.FC = () => {
 
   return (
     <div className="bg-[#4C3A51] w-screen max-w-screen h-screen flex flex-col gap-10 overflow-y-auto">
-      <Headerbar />
+      <Headerbar userAccountId={currentUser?.account.account_id} />
 
       <div className="w-full flex flex-col gap-4">
         <h1 className="text-2xl text-[#E7AB79] font-semibold pl-10">ภาพยนตร์แนะนำ</h1>
