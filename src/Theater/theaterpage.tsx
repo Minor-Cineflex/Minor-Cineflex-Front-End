@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import Footerbar from "../component/footerbar/footerbar.tsx";
+import Headerbar from "../component/header/headerbar.tsx";
 
 interface Movie {
     movie_id: string;
@@ -46,7 +48,7 @@ const TheaterPage: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const state = location.state || {};
-    
+
 
     useEffect(() => {
         const handleScroll = () => {
@@ -143,7 +145,8 @@ const TheaterPage: React.FC = () => {
         });
 
         navigate('/Seat', {
-            state: {...state,
+            state: {
+                ...state,
                 showtimeId: showtime.showtimeId,
                 movieId: showtime.movieId,
                 theaterId: showtime.theaterId,
@@ -154,7 +157,9 @@ const TheaterPage: React.FC = () => {
         });
     };
 
-    const handleDayClick = (date: Date) => setSelectedDay(date);
+    const handleDayClick = (date: Date) => {
+        setSelectedDay(date);
+    };
 
     const formatDate = (date: Date) => date.toLocaleDateString();
     const formatTime = (date: Date) => date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
@@ -211,17 +216,15 @@ const TheaterPage: React.FC = () => {
     }, {});
 
     return (
-        <div className="min-h-screen bg-[#4C3A51] flex flex-col items-center">
-            <header className={`bg-white text-black h-20 fixed top-0 w-full flex items-center justify-center shadow-md z-10 transition-transform duration-500 ${isNavbarVisible ? "translate-y-0" : "-translate-y-full"}`}>
-                <nav className="text-lg font-semibold">This is header Nav</nav>
-            </header>
-            <section className="pb-4 mt-24 px-4">
+        <div className="bg-[#4C3A51] w-screen max-w-screen h-screen flex flex-col items-center overflow-y-auto">
+            <Headerbar />
+            <section className="pb-4 mt-5 px-4">
                 <div className="p-4 border-2 border-orange-300 shadow-lg rounded-2xl bg-[#B25068] text-center flex flex-col md:flex-row items-center gap-2">
                     <div className="flex items-center gap-3">
                         <p className="text-yellow-400 text-2xl">You choose: {formatDate(selectedDay)}</p>
                         <button
                             onClick={() => setIsCalendarVisible(!isCalendarVisible)}
-                            className="bg-[#774360] text-white p-2 rounded-lg hover:bg-[#B25068]"
+                            className="bg-[#774360] text-white p-2 rounded-lg hover:bg-pink-900"
                         >
                             {isCalendarVisible ? "Hide Calendar" : "Show Calendar"}
                         </button>
@@ -251,7 +254,7 @@ const TheaterPage: React.FC = () => {
                                     Audio Type: {theater && theater.audio_type ? theater.audio_type : 'Unknown'} |
                                     Video Type: {theater && theater.video_type ? theater.video_type : 'Unknown'}
                                 </p>
-                                <div className="flex flex-wrap justify-center gap-2">
+                                <div className="flex flex-wrap justify-center gap-2 cursor-pointer;">
                                     {times.map((timeInfo, i) => (
                                         <button
                                             key={i}
@@ -276,12 +279,9 @@ const TheaterPage: React.FC = () => {
                     <p className="text-yellow-400 text-2xl text-center">No movies available for this day</p>
                 )}
             </section>
-            <footer className={`bg-[#B25068] text-white h-20 fixed bottom-0 w-full text-center transition-transform duration-500 ${isFooterVisible ? "translate-y-0" : "translate-y-full"}`}>
-                <div>BUY TICKET</div>
-            </footer>
-            <button onClick={() => setIsFooterVisible(!isFooterVisible)} className="bg-[#774360] text-white p-2 rounded-lg fixed right-5 bottom-5">
-                {isFooterVisible ? "Hide" : "Show"}
-            </button>
+            <div className="w-full">
+                <Footerbar/>
+            </div>
         </div>
     );
 };
