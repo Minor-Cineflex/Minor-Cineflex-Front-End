@@ -68,6 +68,10 @@ export default function Headerbar({userAccountId}) {
     }, [userAccountId]);
 
     const handleNavigate = (path) => {
+        if (path === "/") {
+            setSearch("");
+            setSearchParams({});
+        }    
         if (currentUser !== null) {
             const account_id = currentUser.account.account_id
             navigate(path, { state: {
