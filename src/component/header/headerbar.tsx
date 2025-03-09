@@ -182,10 +182,7 @@ export default function Headerbar({userAccountId}) {
                     </div> 
                 </span>
             </nav >
-
             <div className="md:p-4 pb-20 sm:p-8">ssd</div>
-
-
         </>
     );
 }
