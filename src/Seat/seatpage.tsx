@@ -114,14 +114,14 @@ const SeatPage: React.FC = () => {
         console.log("Selected Seats ID:", [...outputSeat])
         console.log(JSON.stringify({ outputseat : [...outputSeat] , user_id, showtime_id: state.showtimeId }) )
 
-       if(state.user_id){
+       if(state.account_id){
             try {
                 const response = await fetch("http://localhost:8000/minorcineflex/reserve_seat", {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify({ outputSeat : [...outputSeat],user_id, showtime_id: state.showtimeId}) 
+                    body: JSON.stringify({ outputSeat : [...outputSeat],user_id : state.account_id , showtime_id: state.showtimeId}) 
                 });
 
                 if (!response.ok) {

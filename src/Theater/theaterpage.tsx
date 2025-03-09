@@ -49,6 +49,8 @@ const TheaterPage: React.FC = () => {
     const location = useLocation();
     const state = location.state || {};
 
+    console.log(state);
+
 
     useEffect(() => {
         const handleScroll = () => {
@@ -215,7 +217,7 @@ const TheaterPage: React.FC = () => {
 
     return (
         <div className="bg-[#4C3A51] w-screen max-w-screen h-screen flex flex-col items-center overflow-y-auto">
-            <Headerbar />
+            <Headerbar userAccountId={state.account_id}/>
             <section className="pb-4 mt-5 px-4">
                 <div className="p-4 border-2 border-orange-300 shadow-lg rounded-2xl bg-[#B25068] text-center flex flex-col md:flex-row items-center gap-2">
                     <div className="flex items-center gap-3">

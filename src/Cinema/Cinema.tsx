@@ -10,6 +10,7 @@ import Headerbar from "../component/header/headerbar.tsx";
 
 const region_list = ["กรุงเทพและปริมณฑล","ภาคกลาง","ภาคเหนือ","ภาคใต้","ภาคตะวันออกเฉียงเหนือ","ภาคตะวันออก","ภาคตะวันตก"];
 
+let acc_id;
 const Region: React.FC = () => {
     const [cinemaList, setCinemaList] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -18,20 +19,11 @@ const Region: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const state = location.state || {};
-
+    acc_id = state.account_id
     console.log(state)
-    
-
-
-
-
     const click_cinema = (cinema_id) => {
         console.log(cinema_id)
-        const statedata = state && Object.keys(state).length > 0 ? 
-        { state: { user_id: state, cinema_id } } : 
-        { state: { cinema_id } };
-
-        navigate("/Theater", statedata);
+        navigate("/Theater",{ state: { ...state, cinema_id } });
     }
 
     useEffect(() => {
@@ -120,7 +112,7 @@ const CinemaPage: React.FC = () => {
     return (
         <div id="headerNav" className="min-h-screen bg-[#4C3A51] flex flex-col items-center">
             <header className={`bg-white text-black h-16 fixed top-0 w-full flex items-center justify-center shadow-md z-10 transition-transform duration-500 ${isNavbarVisible ? "translate-y-0" : "-translate-y-full"}`}>
-                <Headerbar/>
+                <Headerbar userAccountId = {acc_id} />
             </header>
             <div id = "body" className="flex flex-col w-full justify-center">
                 <div id="่easteregg" className="p-7 whitespace-nowrap justify-center text-[#4C3A51]">
