@@ -184,12 +184,10 @@ const TheaterPage: React.FC = () => {
     }
 
     const groupedMovies = filteredMovies.reduce((groups: Record<string, GroupedMovie>, showtime) => {
-        // Find the movie name and image by matching movie_id
         const matchedMovie = movieList.find(movie => movie.movie_id === showtime.movie_id);
         const movieName = matchedMovie ? matchedMovie.name : 'Unknown Movie';
         const movieImg = matchedMovie ? matchedMovie.img : 'https://via.placeholder.com/200x300?text=No+Image';
 
-        // Find the theater details
         const movieTheater = theaterList.find(theater => theater.theater_id === showtime.theater_id);
 
         const movieKey = `${movieName}_${formatDate(new Date(showtime.start_date))}_${showtime.theater_id}`;
