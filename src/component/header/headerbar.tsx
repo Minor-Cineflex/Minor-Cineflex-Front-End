@@ -1,16 +1,130 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
 import MinorCineflexLogo from "../MinorCineflexLogo.jpg";
 import { FaUserCircle } from "react-icons/fa";
 import { useSearchParams } from "react-router-dom";
 
-const testData = Data;
-
-export default function Footerbar() {
+export default function Headerbar({userAccountId}) {
     const [search, setSearch] = useState('');
     const [allMovie, setAllMovie] = useState([]);
     const filteredMovie = allMovie.filter((moive) =>
         moive.name.toLowerCase().includes(search.toLowerCase())
     );
+    const [searchParams, setSearchParams] = useSearchParams();
+    const searchQuery = searchParams.get("search") || "";
+
+    useEffect(() => {
+        const fetchMovies = async () => {
+            try {
+                const response = await fetch("http://localhost:8000/minorcineflex/movie");
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const data = await response.json();
+
+                // Ensure we correctly access the movie_list array
+                if (data.movie_list && Array.isArray(data.movie_list)) {
+                    setAllMovie(data.movie_list);
+                } else {
+                    console.error("Unexpected movie data format:", data);
+                }
+            } catch (error) {
+                console.error("Cannot fetch movie list:", error);
+            }
+        };
+        fetchMovies();
+    }, []);
+
+    const [currentUser, setCurrentUser] = useState(null)
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const searchUser = async () => {
+            if (!userAccountId) {
+                console.log("Guest");
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://localhost:8000/minorcineflex/person/email/${userAccountId}`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                });
+
+                if (!response.ok) {
+                    console.log("Failed to fetch person_list");
+                    return;
+                }
+
+                const person = await response.json();
+                setCurrentUser(person);
+            } catch (error) {
+                console.log("Error fetching user");
+            }
+        };
+
+        searchUser();
+    }, [userAccountId]);
+
+    useEffect(() => {
+        setSearch(searchQuery)
+    }, [searchQuery])
+
+    const handleNavigate = (path) => {
+        if (path === "/") {
+            setSearch("");
+            setSearchParams({});
+        }    
+        if (currentUser !== null) {
+            const account_id = currentUser.account.account_id
+            navigate(path, { state: {
+                account_id:  account_id
+            }})
+            return
+        }
+        navigate(path)
+        return
+    }
+
+    const handleProfile = () => {
+        if(currentUser !== null){
+            const account_id = currentUser.account.account_id
+            navigate(`/Profile/${currentUser.account.account_id}`, {state: {
+                account_id:  account_id
+            }})
+            return
+        }
+        navigate('/Login')
+        return
+    }
+
+    const showUsername = () => {
+        const show_username = currentUser ? currentUser.account.username : "guest" 
+        return (
+            <p className="text-bt-main text-base min-w-20 max-w-20 truncate self-center">{show_username}</p>
+        )
+    }
+
+    const handleSearch = (value) => {
+        setSearch(value);
+        setSearchParams(new URLSearchParams({
+            ...Object.fromEntries(searchParams.entries()),
+            search: value,
+            ...(currentUser?.account.account_id && { account_id: currentUser.account.account_id })
+        }));
+    };
+    
+    const setSearchData = (movie) => {
+        setSearch(movie.name);
+        setSearchParams(new URLSearchParams({
+            ...Object.fromEntries(searchParams.entries()),
+            search: movie.name,
+            ...(currentUser?.account.account_id && { account_id: currentUser.account.account_id })
+        }));
+    };
+
     return (
         <>
             <nav className="w-full p-3 md:px-16 items-center text-3xl text-bt-main place-content-between font-semibold bg-bt-sec absolute spaceb flex sm:flex-row flex-col uppercase gap-3 z-50 content-center">
@@ -51,7 +165,7 @@ export default function Footerbar() {
                             />
                             {
                                 filteredMovie.some(movie => movie.name === search) ? <p></p> :
-                                    search !== "" && filteredMovie.length > 0 &&
+                                search !== "" && filteredMovie.length > 0 &&
                                     <div className="absolute flex flex-col gap-3 text-base p-4 rounded-md mt-1 border border-bt-main  text-bt-main font-normal bg-bg-main normal-case">
                                         {search !== "" && filteredMovie.map((movie) => (
                                             <>
@@ -63,9 +177,9 @@ export default function Footerbar() {
                         </div>
                     </form>
                     <div className="cursor-pointer flex flex-row gap-2" onClick={() => handleProfile()}>
-                        <FaUserCircle className="text-bt-main w-full" />
+                        <FaUserCircle className="text-bt-main w-full"/>
                         {showUsername()}
-                    </div>
+                    </div> 
                 </span>
             </nav >
 
