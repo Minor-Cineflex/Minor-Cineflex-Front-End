@@ -11,6 +11,7 @@
     "axios": "^1.8.2",
     "cra-template": "1.2.0",
     "gapi-script": "^1.2.0",
+    "oauth": "^0.10.0",
     "react": "^19.0.0",
     "react-calendar": "^5.1.0",
     "react-dom": "^19.0.0",
