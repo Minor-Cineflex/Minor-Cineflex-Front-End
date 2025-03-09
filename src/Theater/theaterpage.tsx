@@ -49,8 +49,6 @@ const TheaterPage: React.FC = () => {
     const location = useLocation();
     const state = location.state || {};
 
-    console.log(state);
-
 
     useEffect(() => {
         const handleScroll = () => {
