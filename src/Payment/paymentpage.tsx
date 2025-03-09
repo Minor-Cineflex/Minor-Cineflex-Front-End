@@ -17,9 +17,12 @@ const PaymentPage: React.FC = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .post(
-        `http://localhost:8000/minorcineflex/base_payment?user_id=${user_id}&movie_id=${movie_id}&showtime_id=${showtime_id}&payment_type=${payment_type}`
-      )
+      .post("http://localhost:8000/minorcineflex/base_payment", {
+        user_id,
+        movie_id,
+        showtime_id,
+        payment_type,
+      })
       .then((response) => {
         setPaymentDetails(response.data);
         setLoading(false);
@@ -34,9 +37,12 @@ const PaymentPage: React.FC = () => {
   const handlePayment = () => {
     setLoading(true);
     axios
-      .post(
-        `http://localhost:8000/minorcineflex/done_payment?user_id=${user_id}&movie_id=${movie_id}&showtime_id=${showtime_id}&payment_type=${payment_type}`
-      )
+      .post("http://localhost:8000/minorcineflex/done_payment", {
+        user_id,
+        movie_id,
+        showtime_id,
+        payment_type,
+      })
       .then((response) => {
         setIsPaid(true);
         setLoading(false);
