@@ -22,7 +22,7 @@ const router = createBrowserRouter([
     element: <LoginPage/>
   },
   {
-    path: "Profile/:username",
+    path: "Profile/:account_id",
     element: <ProfilePage/>
   },
   {

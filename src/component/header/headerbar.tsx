@@ -11,6 +11,7 @@ export default function Headerbar({userAccountId}) {
         moive.name.toLowerCase().includes(search.toLowerCase())
     );
     const [searchParams, setSearchParams] = useSearchParams();
+    const searchQuery = searchParams.get("search") || "";
 
     useEffect(() => {
         const fetchMovies = async () => {
@@ -67,6 +68,10 @@ export default function Headerbar({userAccountId}) {
         searchUser();
     }, [userAccountId]);
 
+    useEffect(() => {
+        setSearch(searchQuery)
+    }, [searchQuery])
+
     const handleNavigate = (path) => {
         if (path === "/") {
             setSearch("");
@@ -86,7 +91,7 @@ export default function Headerbar({userAccountId}) {
     const handleProfile = () => {
         if(currentUser !== null){
             const account_id = currentUser.account.account_id
-            navigate(`/Profile/${currentUser.account.username}`, {state: {
+            navigate(`/Profile/${currentUser.account.account_id}`, {state: {
                 account_id:  account_id
             }})
             return
@@ -104,13 +109,21 @@ export default function Headerbar({userAccountId}) {
 
     const handleSearch = (value) => {
         setSearch(value);
-        setSearchParams({ search: value });
-    }
-
+        setSearchParams(new URLSearchParams({
+            ...Object.fromEntries(searchParams.entries()),
+            search: value,
+            ...(currentUser?.account.account_id && { account_id: currentUser.account.account_id })
+        }));
+    };
+    
     const setSearchData = (movie) => {
-        setSearchParams({search: movie.name})
-        setSearch(movie.name)
-    }
+        setSearch(movie.name);
+        setSearchParams(new URLSearchParams({
+            ...Object.fromEntries(searchParams.entries()),
+            search: movie.name,
+            ...(currentUser?.account.account_id && { account_id: currentUser.account.account_id })
+        }));
+    };
 
     return (
         <>
