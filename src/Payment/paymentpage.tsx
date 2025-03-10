@@ -55,9 +55,9 @@ const PaymentPage: React.FC = () => {
     const showtime_id = state.showtimeId;
     const payment_type = "credit_card";
     setLoading(true);
-    console.log(state);
+    
     axios
-      .post("http://localhost:8000/minorcineflex/base_payment", {
+      .post("http://localhost:8000/minorcineflex/done_payment", {
         user_id,
         movie_id,
         showtime_id,
