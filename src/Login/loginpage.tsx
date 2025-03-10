@@ -109,7 +109,7 @@ const LoginPage: React.FC = () => {
             console.log(data.message)
             alert(`Welcome, ${userInfo.name}!`);
             if(state){
-                state.account_if = userInfo.account.account_id
+                state.account_id = userInfo.account.account_id
                 navigate(`/Seat/${state.cinema_id}/${state.movieName}/${state.theaterId}`, { state })
                 return
             }
