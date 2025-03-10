@@ -6,10 +6,10 @@ import { useNavigate, useLocation } from "react-router";
 
 const ProfilePage: React.FC = () => {
 
-const [allMovie, setAllmovie] = useState({ movie_list: [] })
+const [allMovieAndSeat, setAllMovieAndSeat] = useState({ movie_list: [], seat_list: [] })
 const [history, setHistory] = useState(null)
 
-const ShowMovies = (allMovie) => {
+const ShowMovies = (allMovieAndSeat) => {
     const [hoverIndex, setHoverIndex] = useState(null);
     const [canScrollLeft, setCanScrollLeft] = useState(false);
     const [canScrollRight, setCanScrollRight] = useState(true);
@@ -28,7 +28,7 @@ const ShowMovies = (allMovie) => {
       checkScroll();
       window.addEventListener('resize', checkScroll);
       return () => window.removeEventListener('resize', checkScroll);
-    }, [allMovie]);
+    }, [allMovieAndSeat]);
   
     const scroll = (direction: 'left' | 'right') => {
       if (scrollContainerRef.current) {
@@ -44,12 +44,22 @@ const ShowMovies = (allMovie) => {
   
     const ShowInfo = () =>{
       if(hoverIndex !== null){
-        const movie = allMovie.movie_list[hoverIndex];
+        const movie = allMovieAndSeat.movie_list[hoverIndex];
+        const seat = allMovieAndSeat.seat_list[hoverIndex];
+        console.log(seat)
         return(
-          <div className='text-white absolute top-10 z-10 left-5 flex flex-col gap-6'>
-             <p>Name: {movie.name}</p>
-             <p>Type: {movie.type}</p>
-             <p>Duration: {movie.duration}</p>
+          <div className='text-white absolute top-10 z-10 left-5 flex flex-col gap-4'>
+            <p>Name: {movie.name}</p>
+            <p>Type: {movie.type}</p>
+            <p>Duration: {movie.duration}</p>
+            <div>
+              <p>Seats:</p>
+              <ul className="pl-6 max-h-24 overflow-y-hidden truncate">
+                {seat.map((s, index) => (
+                  <li key={index}>{s.seat_pos} {s.seat_type}</li>
+                ))}
+              </ul>
+            </div>
           </div>
         )
       }
@@ -96,7 +106,7 @@ const ShowMovies = (allMovie) => {
     const renderMovies = () => {
       try {
         return (
-          allMovie.movie_list.map((movie, index) => (
+          allMovieAndSeat.movie_list.map((movie, index) => (
             <div  key={index} 
                 className="h-96 w-64 flex-shrink-0 rounded-2xl"
             >
@@ -183,34 +193,66 @@ const ShowMovies = (allMovie) => {
         if (!history) return;
     
         try {
-          const movieDetails = await Promise.all(
+          const movieAndSeatData = await Promise.all(
             history.map(async (entry) => {
-              const showtimeResponse = await fetch(
-                `http://localhost:8000/minorcineflex/cinema/${entry.showtime.cinema_id}/showtime/${entry.showtime.showtime_id}`
-              );
+              try {
+                const showtimeResponse = await fetch(
+                  `http://localhost:8000/minorcineflex/cinema/${entry.showtime.cinema_id}/showtime/${entry.showtime.showtime_id}`
+                );
     
-              if (!showtimeResponse.ok) {
-                console.error("Failed to fetch showtime:", entry.showtime.showtime_id);
-                return null;
-              }
+                if (!showtimeResponse.ok) {
+                  console.error("Failed to fetch showtime:", entry.showtime.showtime_id);
+                  return null;
+                }
     
-              const showtimeData = await showtimeResponse.json();
-              const movie_id = showtimeData.movie_id;
+                const showtimeData = await showtimeResponse.json();
+                const movie_id = showtimeData.movie_id;
+    
+                const movieResponse = await fetch(
+                  `http://localhost:8000/minorcineflex/movie/${movie_id}`
+                );
+    
+                if (!movieResponse.ok) {
+                  console.error("Failed to fetch movie:", movie_id);
+                  return null;
+                }
+    
+                const movieData = await movieResponse.json();
 
-              const movieResponse = await fetch(
-                `http://localhost:8000/minorcineflex/movie/${movie_id}`
-              );
+                const uniqueSeatIds = [...new Set(entry.seat_list.map(seat => seat.seat_id))];
+                const seatPromises = uniqueSeatIds.map(async (seat_id) => {
+                  const seatResponse = await fetch(
+                    `http://localhost:8000/minorcineflex/SeatInfo/${entry.showtime.showtime_id}/${seat_id}`
+                  );
+                
+                  if (!seatResponse.ok) {
+                    console.error("Failed to fetch seat info:", seat_id);
+                    return null;
+                  }
+                
+                  const seatData = await seatResponse.json();
+                  
+                  return seatData;
+                });      
+                const seatData = await Promise.all(seatPromises);
     
-              if (!movieResponse.ok) {
-                console.error("Failed to fetch movie:", movie_id);
+                return {
+                  movie: movieData,
+                  seats: seatData
+                };
+              } catch (error) {
+                console.error("Error processing entry:", entry, error);
                 return null;
               }
-    
-              return await movieResponse.json();
             })
           );
-  
-          setAllmovie({ movie_list: movieDetails.filter(movie => movie !== null) });
+
+          const validData = movieAndSeatData.filter((data) => data !== null);
+    
+          setAllMovieAndSeat({
+            movie_list: validData.map((data) => data.movie),
+            seat_list: validData.map((data) => data.seats),
+          });
         } catch (error) {
           console.error("Error fetching history movies:", error);
         }
@@ -256,7 +298,7 @@ const ShowMovies = (allMovie) => {
                     History
                 </h1>
                 <div className="h-80 w-full mb-12">
-                   {ShowMovies(allMovie)}
+                   {ShowMovies(allMovieAndSeat)}
                 </div>
             </div>
         </div>
