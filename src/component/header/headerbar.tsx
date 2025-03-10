@@ -4,7 +4,7 @@ import MinorCineflexLogo from "../MinorCineflexLogo.jpg";
 import { FaUserCircle } from "react-icons/fa";
 import { useSearchParams } from "react-router-dom";
 
-export default function Headerbar({userAccountId}) {
+export default function Headerbar({ userAccountId }) {
     const [search, setSearch] = useState('');
     const [allMovie, setAllMovie] = useState([]);
     const filteredMovie = allMovie.filter((moive) =>
@@ -71,12 +71,14 @@ export default function Headerbar({userAccountId}) {
         if (path === "/") {
             setSearch("");
             setSearchParams({});
-        }    
+        }
         if (currentUser !== null) {
             const account_id = currentUser.account.account_id
-            navigate(path, { state: {
-                account_id:  account_id
-            }})
+            navigate(path, {
+                state: {
+                    account_id: account_id
+                }
+            })
             return
         }
         navigate(path)
@@ -84,11 +86,13 @@ export default function Headerbar({userAccountId}) {
     }
 
     const handleProfile = () => {
-        if(currentUser !== null){
+        if (currentUser !== null) {
             const account_id = currentUser.account.account_id
-            navigate(`/Profile/${currentUser.account.username}`, {state: {
-                account_id:  account_id
-            }})
+            navigate(`/Profile/${currentUser.account.account_id}`, {
+                state: {
+                    account_id: account_id
+                }
+            })
             return
         }
         navigate('/Login')
@@ -96,7 +100,7 @@ export default function Headerbar({userAccountId}) {
     }
 
     const showUsername = () => {
-        const show_username = currentUser ? currentUser.account.username : "guest" 
+        const show_username = currentUser ? currentUser.account.username : "guest"
         return (
             <p className="text-bt-main text-base min-w-20 max-w-20 truncate self-center">{show_username}</p>
         )
@@ -104,13 +108,21 @@ export default function Headerbar({userAccountId}) {
 
     const handleSearch = (value) => {
         setSearch(value);
-        setSearchParams({ search: value });
-    }
+        setSearchParams(new URLSearchParams({
+            ...Object.fromEntries(searchParams.entries()),
+            search: value,
+            ...(currentUser?.account.account_id && { account_id: currentUser.account.account_id })
+        }));
+    };
 
     const setSearchData = (movie) => {
-        setSearchParams({search: movie.name})
-        setSearch(movie.name)
-    }
+        setSearch(movie.name);
+        setSearchParams(new URLSearchParams({
+            ...Object.fromEntries(searchParams.entries()),
+            search: movie.name,
+            ...(currentUser?.account.account_id && { account_id: currentUser.account.account_id })
+        }));
+    };
 
     return (
         <>
@@ -145,14 +157,14 @@ export default function Headerbar({userAccountId}) {
                                 type="search"
                                 id="default-search"
                                 className="block w-full p-2 px-4 ps-4 text-sm text-bt-main border border-bt-main rounded-lg bg-bg-main relative"
-                                placeholder="Search moive"
+                                placeholder="Search movie"
                                 value={search}
                                 onChange={(e) => handleSearch(e.target.value)}
                                 required
                             />
                             {
                                 filteredMovie.some(movie => movie.name === search) ? <p></p> :
-                                search !== "" && filteredMovie.length > 0 &&
+                                    search !== "" && filteredMovie.length > 0 &&
                                     <div className="absolute flex flex-col gap-3 text-base p-4 rounded-md mt-1 border border-bt-main  text-bt-main font-normal bg-bg-main normal-case">
                                         {search !== "" && filteredMovie.map((movie) => (
                                             <>
@@ -164,9 +176,9 @@ export default function Headerbar({userAccountId}) {
                         </div>
                     </form>
                     <div className="cursor-pointer flex flex-row gap-2" onClick={() => handleProfile()}>
-                        <FaUserCircle className="text-bt-main w-full"/>
+                        <FaUserCircle className="text-bt-main w-full" />
                         {showUsername()}
-                    </div> 
+                    </div>
                 </span>
             </nav >
 
