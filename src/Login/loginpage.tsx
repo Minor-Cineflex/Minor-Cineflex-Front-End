@@ -57,8 +57,6 @@ const LoginPage: React.FC = () => {
         const credentialResponse = response.credential;
         const tokenParts = credentialResponse.split(".");
         const userData = base64UrlDecode(tokenParts[1]);
-
-        
     
         const userInfo = {
             name: userData.name || "",
@@ -92,7 +90,7 @@ const LoginPage: React.FC = () => {
             if(emailExists){
                 alert(`Welcome back, ${emailExists.name}!`);
                 if(state){
-                    state.accoount_id = emailExists.account.account_id
+                    state.account_id = emailExists.account.account_id
                     navigate(`/Seat/${state.cinema_id}/${state.movieName}/${state.theaterId}`, { state })
                     return
                 }
