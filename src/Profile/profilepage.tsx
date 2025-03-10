@@ -194,13 +194,19 @@ const ShowMovies = (allMovie) => {
             <nav onClick={() => navigate("/", {state: {account_id: currentUser.account.account_id}})}><FaChevronLeft className="cursor-pointer text-[#E7AB79] mt-4 ml-5" size={30}/></nav>
             <div className="min-w-fit w-2/5 min-h-fit bg-[#D9D9D9] flex flex-col justify-items-center items-center self-center mt-4 gap-6 rounded-2xl">
                 <img src={Logo} alt="" className="size-28"/>
-                <div className="flex flex-col w-full self-start items-center gap-6 mb-12 pl-6 pr-6">
+                <div className="flex flex-col w-full self-start items-center gap-6 mb-6 pl-6 pr-6">
                     <h1 className="text-xl w-full font-semibold flex gap-3">Username: 
                         <p className="truncate font-normal">{showUsername()}</p>
                     </h1>
                     <h1 className="text-xl w-full font-semibold truncate flex gap-3">Email: 
                         <p className="truncate font-normal">{showEmail()}</p>
                     </h1> 
+                    <button 
+                    className="self-end font-semibold text-lg hover:text-gray-600"
+                    onClick={() => navigate("/")}
+                    >
+                      Log out
+                    </button>
                 </div>
             </div>
             <div className="min-h-fit w-screen flex flex-col justify-center mt-12 gap-3">
