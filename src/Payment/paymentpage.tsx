@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 
 import axios from "axios";
 import myqr from "../component/myqr.jpg";
@@ -10,7 +10,7 @@ const PaymentPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [isPaid, setIsPaid] = useState<boolean>(false);
   const location = useLocation();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const state = location.state || {};
 
   useEffect(() => {
@@ -55,7 +55,7 @@ const PaymentPage: React.FC = () => {
     const showtime_id = state.showtimeId;
     const payment_type = "credit_card";
     setLoading(true);
-    
+
     axios
       .post("http://localhost:8000/minorcineflex/done_payment", {
         user_id,
@@ -65,6 +65,9 @@ const PaymentPage: React.FC = () => {
       })
       .then((response) => {
         setIsPaid(true);
+        state.movieId = null;
+        state.showtimeId = null;
+        navigate("/", { state });
         setLoading(false);
       })
       .catch((error) => {
@@ -101,11 +104,9 @@ const PaymentPage: React.FC = () => {
                 <th className="p-2 md:p-4 border-b border-bt-main">
                   <p className="text-sm md:text-md text-bt-main">Name</p>
                 </th>
+
                 <th className="p-2 md:p-4 border-b border-bt-main">
-                  <p className="text-sm md:text-md text-bt-main">Amount</p>
-                </th>
-                <th className="p-2 md:p-4 border-b border-bt-main">
-                  <p className="text-sm md:text-md text-bt-main">Sum Price</p>
+                  <p className="text-sm md:text-md text-bt-main"> Price</p>
                 </th>
               </tr>
             </thead>
@@ -113,13 +114,11 @@ const PaymentPage: React.FC = () => {
               {paymentDetails.reserved_seats.map((seat: string, index: number) => (
                 <tr key={index}>
                   <td className="p-2 md:p-4">
-                    <p className="text-xs md:text-sm">Seat {seat}</p>
+                    <p className="text-xs md:text-sm">Seat {seat.seat_id}</p>
                   </td>
+
                   <td className="p-2 md:p-4">
-                    <p className="text-xs md:text-sm">1</p>
-                  </td>
-                  <td className="p-2 md:p-4">
-                    <p className="text-xs md:text-sm">100</p>
+                    <p className="text-xs md:text-sm"> {seat.price}</p>
                   </td>
                 </tr>
               ))}
@@ -137,6 +136,7 @@ const PaymentPage: React.FC = () => {
 
         {/* Payment Button */}
         {isPaid ? (
+
           <p className="text-green-500 font-semibold text-lg">Payment Successful! 🎉</p>
         ) : (
           <button
@@ -147,7 +147,7 @@ const PaymentPage: React.FC = () => {
           </button>
         )}
       </div>
-    </div>
+    </div >
   );
 };
 
