@@ -1,7 +1,5 @@
 import React, { useState, useEffect,useRef } from "react";
 import "./responsive.css";
-import movieData from "./test.json"
-import tmpData from "./test2.json";
 import logo from "./MinorCineflexLogo.jpg"
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom"
@@ -23,7 +21,7 @@ const Region: React.FC = () => {
     console.log(state)
     const click_cinema = (cinema_id) => {
         console.log(cinema_id)
-        navigate("/Theater",{ state: { ...state, cinema_id } });
+        navigate(`/Theater/${cinema_id}/${state.movie_id}`,{ state: { ...state, cinema_id } });
     }
 
     useEffect(() => {

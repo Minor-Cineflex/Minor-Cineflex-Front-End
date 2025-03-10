@@ -49,8 +49,6 @@ const TheaterPage: React.FC = () => {
     const location = useLocation();
     const state = location.state || {};
 
-    console.log(state);
-
 
     useEffect(() => {
         const handleScroll = () => {
@@ -146,7 +144,7 @@ const TheaterPage: React.FC = () => {
             startTime: showtime.startDateTime.time
         });
 
-        navigate('/Seat', {
+        navigate(`/Seat/${state.cinema_id}/${showtime.movieName}/${showtime.theaterId}`, {
             state: {
                 ...state,
                 showtimeId: showtime.showtimeId,

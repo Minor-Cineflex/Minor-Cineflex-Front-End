@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import Logo from "../Logo/MinorCineflexLogo.jpg";
 import { RiKey2Fill } from "react-icons/ri";
 import { MdEmail } from "react-icons/md";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 
 const LoginPage: React.FC = () => {
     const navigate = useNavigate()
     const [email, setEmail] = useState(String)
     const [password, setPassword] = useState(String)
+    const { state } = useLocation()
+    console.log(state)
 
     const clientID = "118402147221-rhjtqa5gmmkjktbnqq1d170plm0tcspr.apps.googleusercontent.com"
 
@@ -32,6 +34,11 @@ const LoginPage: React.FC = () => {
             const user = await person_response.json()
             if (user) {
                 alert("Login successful")
+                if(state){
+                    state.account_id = user.account.account_id
+                    navigate(`/Seat/${state.cinema_id}/${state.movieName}/${state.theaterId}`, {state})
+                    return
+                }
                 navigate(`/Profile/${user.account.username}`, {state: {account_id: user.account.account_id}})
                 return
             }
@@ -84,6 +91,11 @@ const LoginPage: React.FC = () => {
             const emailExists = await person_list_response.json()
             if(emailExists){
                 alert(`Welcome back, ${emailExists.name}!`);
+                if(state){
+                    state.accoount_id = emailExists.account.account_id
+                    navigate(`/Seat/${state.cinema_id}/${state.movieName}/${state.theaterId}`, { state })
+                    return
+                }
                 navigate(`/Profile/${emailExists.account.username}`, {state: {account_id: emailExists.account.account_id}});
                 return
             }
@@ -98,6 +110,11 @@ const LoginPage: React.FC = () => {
             const data = await response.json();
             console.log(data.message)
             alert(`Welcome, ${userInfo.name}!`);
+            if(state){
+                state.account_if = userInfo.account.account_id
+                navigate(`/Seat/${state.cinema_id}/${state.movieName}/${state.theaterId}`, { state })
+                return
+            }
             navigate(`/Profile/${userInfo.account.username}`, {state: {account_id: userInfo.account.account_id}});
             return
         }catch(error) {
