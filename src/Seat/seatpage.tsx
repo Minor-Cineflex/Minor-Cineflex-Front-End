@@ -14,7 +14,6 @@ import tmpdata from "./test.json"
 const SeatPage: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const navigate = useNavigate();
     const state = location.state || {};
 
 
@@ -111,19 +110,19 @@ const SeatPage: React.FC = () => {
         console.log(JSON.stringify({ outputseat: [...outputSeat], user_id, showtime_id: state.showtimeId }))
 
 
-
-        try {
-            const response = await fetch("http://localhost:8000/minorcineflex/reserve_seat", {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ outputSeat: [...outputSeat], user_id, showtime_id: state.showtimeId })
-            });
-
-            if (!response.ok) {
-                throw new Error("Failed to send list");
-            }
+        if(state.account_id){
+            try {
+                const response = await fetch("http://localhost:8000/minorcineflex/reserve_seat", {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ outputSeat : [...outputSeat],user_id : state.account_id , showtime_id: state.showtimeId}) 
+                });
+        
+                 if (!response.ok) {
+                    throw new Error("Failed to send list");
+                }
 
                 const data = await response.json();
                 setResponse(JSON.stringify(data, null, 2));  // Store response

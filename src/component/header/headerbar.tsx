@@ -134,7 +134,7 @@ export default function Headerbar({ userAccountId }) {
         search: movie.name,
         ...(currentUser?.account.account_id && { account_id: currentUser.account.account_id })
     }));
-};
+
 
 return (
     <>
