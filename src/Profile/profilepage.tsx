@@ -54,7 +54,7 @@ const ShowMovies = (allMovieAndSeat) => {
             <p>Duration: {movie.duration}</p>
             <div>
               <p>Seats:</p>
-              <ul className="pl-6 max-h-24 overflow-y-hidden truncate">
+              <ul className="pl-6 max-h-24 overflow-y-auto">
                 {seat.map((s, index) => (
                   <li key={index}>{s.seat_pos} {s.seat_type}</li>
                 ))}
