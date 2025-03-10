@@ -11,6 +11,7 @@ import PaymentPage from './Payment/paymentpage.tsx';
 import AdminPage from './Admin/adminpage.tsx';
 import CinemaPage from './Cinema/Cinema.tsx';
 import MoivePage from './Moive/moivepage.tsx'
+import Create from './Login/createaccount.tsx';
 
 const router = createBrowserRouter([
   {
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
   {
     path: "Movie",
     element: <MoivePage/>
+  },
+  {
+    path: "Create",
+    element: <Create/>
   }
 ])
 

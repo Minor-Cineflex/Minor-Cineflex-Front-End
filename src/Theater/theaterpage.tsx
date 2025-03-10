@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Calendar from "react-calendar";
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+import './calendar_style.css';
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import Footerbar from "../component/footerbar/footerbar.tsx";
@@ -215,10 +217,10 @@ const TheaterPage: React.FC = () => {
 
     return (
         <div className="bg-[#4C3A51] w-screen max-w-screen h-screen flex flex-col items-center overflow-y-auto">
-            <Headerbar userAccountId={state.account_id}/>
+            <Headerbar userAccountId={state.account_id} />
             <section className="pb-4 mt-5 px-4">
-                <div className="p-4 border-2 border-orange-300 shadow-lg rounded-2xl bg-[#B25068] text-center flex flex-col md:flex-row items-center gap-2">
-                    <div className="flex items-center gap-3">
+                <div className="p-4 border-2 border-orange-300 shadow-lg rounded-2xl bg-[#B25068] text-center flex flex-col items-center gap-2">
+                    <div className="flex items-center gap-3 w-full justify-center">
                         <p className="text-yellow-400 text-2xl">You choose: {formatDate(selectedDay)}</p>
                         <button
                             onClick={() => setIsCalendarVisible(!isCalendarVisible)}
@@ -228,8 +230,12 @@ const TheaterPage: React.FC = () => {
                         </button>
                     </div>
                     {isCalendarVisible && (
-                        <div className="ml-auto">
-                            <Calendar onChange={handleDayClick} value={selectedDay} />
+                        <div className="ml-auto bg-[#4C3A51] p-2 rounded-xl border-2 border-orange-300 shadow-lg">
+                            <Calendar
+                                onChange={handleDayClick}
+                                value={selectedDay}
+                                calendarType="gregory"
+                            />
                         </div>
                     )}
                 </div>
@@ -278,7 +284,7 @@ const TheaterPage: React.FC = () => {
                 )}
             </section>
             <div className="w-full">
-                <Footerbar/>
+                <Footerbar />
             </div>
         </div>
     );
