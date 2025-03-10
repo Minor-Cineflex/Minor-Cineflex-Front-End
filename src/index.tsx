@@ -11,6 +11,7 @@ import PaymentPage from './Payment/paymentpage.tsx';
 import AdminPage from './Admin/adminpage.tsx';
 import CinemaPage from './Cinema/Cinema.tsx';
 import MoivePage from './Moive/moivepage.tsx'
+import Create from './Login/createaccount.tsx';
 
 const router = createBrowserRouter([
   {
@@ -22,7 +23,7 @@ const router = createBrowserRouter([
     element: <LoginPage/>
   },
   {
-    path: "Profile/:username",
+    path: "Profile/:account_id",
     element: <ProfilePage/>
   },
   {
@@ -30,7 +31,15 @@ const router = createBrowserRouter([
     element: <TheaterPage/>
   },
   {
+    path: "Theater/:cinema_id/:movie_id",
+    element: <TheaterPage/>
+  },
+  {
     path: "Seat",
+    element: <SeatPage/>
+  },
+  {
+    path: "Seat/:cinema_id/:moviename/:theater_id",
     element: <SeatPage/>
   },
   {
@@ -52,6 +61,10 @@ const router = createBrowserRouter([
   {
     path: "Movie",
     element: <MoivePage/>
+  },
+  {
+    path: "Create",
+    element: <Create/>
   }
 ])
 

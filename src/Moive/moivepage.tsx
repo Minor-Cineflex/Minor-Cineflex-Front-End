@@ -47,7 +47,7 @@ const ShowMovies: React.FC<{ allMovie: any; role: string; searchQuery: string; n
   }, [allMovie, role, searchQuery]);
 
   return (
-    <div className="flex max-w-full pr-6 pl-6 gap-6">
+    <div className={`flex max-w-full pr-6 pl-6 gap-6 ${searchQuery !== '' ? "mt-12" : "mt-0"}`}>
       <div
         className={`max-w-full max-h-full flex ${window.innerWidth < 1000 ? "overflow-x-auto" : "overflow-x-hidden"} gap-4 custom-scrollbar pr-6 snap-x snap-mandatory`}
         ref={scrollContainerRef}
@@ -107,19 +107,19 @@ const ShowMovies: React.FC<{ allMovie: any; role: string; searchQuery: string; n
   );
 };
 
-const MoviePage: React.FC = () => {
+const HomePage: React.FC = () => {
   const [allMovie, setAllMovie] = useState({ movie_list: [] });
   const navigate = useNavigate();
   const { state } = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
-  let user_account_id = searchParams.get("account_id");
+  let user_account_id = searchParams.get("account_id") || "";
   const searchQuery = searchParams.get("search") || "";
   const [currentUser, setCurrentUser] = useState<any>(null);
 
   //use params for prevent state data gone
   useEffect(() => {
     if (user_account_id) {
-      setSearchParams({ account_id: user_account_id });
+      setSearchParams(prev => ({ ...Object.fromEntries(prev), account_id: user_account_id }));
     }
   }, [user_account_id, setSearchParams]);
 
@@ -173,23 +173,13 @@ const MoviePage: React.FC = () => {
     fetchMovies();
   }, []);
 
-  const handleNavigate = (path) => {
-    if (currentUser !== null) {
-      const account_id = currentUser.account.account_id
-      navigate(path, { state: { account_id: account_id } })
-      return
-    }
-    navigate(path)
-  }
-
   return (
-    <div className="bg-[#4C3A51] w-screen max-w-screen h-screen flex flex-col gap-10 overflow-y-auto">
-      <Headerbar userAccountId={currentUser?.account.account_id} />
-
-      {searchQuery === "" ? ["recommend", "on showing", "coming soon"].map((role) => (
-        <div key={role} className="w-full flex flex-col gap-4">
+    <div className="bg-[#4C3A51] w-screen max-w-screen h-screen flex flex-col overflow-y-auto">
+      <Headerbar userAccountId={currentUser?.account?.account_id} />
+      {searchQuery === "" ? ["recommend", "on showing"].map((role) => (
+        <div key={role} className="w-full flex flex-col gap-4 pt-8">
           <h2 className="text-3xl text-[#E7AB79] font-semibold pl-10">
-            {role === "recommend" ? "ภาพยนตร์แนะนำ" : role === "on showing" ? "กำลังฉาย" : "เร็วๆนี้"}
+            {role === "recommend" ? "ภาพยนตร์แนะนำ" : "กำลังฉาย"}
           </h2>
           <ShowMovies allMovie={allMovie} role={role} searchQuery={searchQuery} navigate={navigate} currentUser={currentUser} />
         </div>
@@ -201,4 +191,4 @@ const MoviePage: React.FC = () => {
   );
 };
 
-export default MoviePage;
+export default HomePage;

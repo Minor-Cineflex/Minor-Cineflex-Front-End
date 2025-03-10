@@ -4,7 +4,7 @@ import { MdEmail } from "react-icons/md";
 import { BsPersonCircle } from "react-icons/bs";
 import { RiKey2Fill } from "react-icons/ri";
 import { FaChevronLeft } from "react-icons/fa";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 
 const Create:React.FC = () => {
@@ -14,6 +14,7 @@ const Create:React.FC = () => {
     const [username, setUsername] = useState(String)
     const [password, setPassword] = useState(String)
     const [confirmPassword, setConfirmPassword] = useState(String)
+    const { state } = useLocation()
 
     const clientID = "118402147221-rhjtqa5gmmkjktbnqq1d170plm0tcspr.apps.googleusercontent.com"
 
@@ -94,7 +95,7 @@ const Create:React.FC = () => {
                     });
                     const update_data = await update_password_response.json();
                     alert(update_data.message);
-                    navigate('/Login')
+                    navigate('/Login', {state: state})
                     return
                 }else{
                     return alert("This email has already been taken")
@@ -109,7 +110,7 @@ const Create:React.FC = () => {
             });
             const data = await response.json();
             alert(data.message);
-            navigate("/Login");
+            navigate("/Login", {state: state});
         }catch(error) {
             console.error("Error signing up:", error);
             alert("Failed to create account. Please try again.");
@@ -117,8 +118,14 @@ const Create:React.FC = () => {
     }
 
     const handleGoogleLoginSuccess = async(response: any) => {
+        function base64UrlDecode(str) {
+            str = str.replace(/-/g, '+').replace(/_/g, '/'); // Convert Base64Url to Base64
+            return JSON.parse(decodeURIComponent(escape(window.atob(str))));
+        }
+
         const credentialResponse = response.credential;
-        const userData = JSON.parse(atob(credentialResponse.split(".")[1]));
+        const tokenParts = credentialResponse.split(".");
+        const userData = base64UrlDecode(tokenParts[1]);
     
         const userInfo = {
             name: userData.name || "",
@@ -151,6 +158,11 @@ const Create:React.FC = () => {
             const emailExists = await person_list_response.json()
             if(emailExists){
                 alert(`Welcome back, ${emailExists.name}!`);
+                if(state){
+                    state.account_id = emailExists.account.account_id
+                    navigate(`/Seat/${state.cinema_id}/${state.movieName}/${state.theaterId}`, { state })
+                    return
+                }
                 navigate(`/Profile/${emailExists.account.username}`, {state: {account_id: emailExists.account.account_id}});
                 return
             }
@@ -165,6 +177,11 @@ const Create:React.FC = () => {
             const data = await response.json();
             console.log(data.message)
             alert(`Welcome, ${userInfo.name}!`);
+            if(state){
+                state.account_id = emailExists.account.account_id
+                navigate(`/Seat/${state.cinema_id}/${state.movieName}/${state.theaterId}`, { state })
+                return
+            }
             navigate(`/Profile/${userInfo.account.username}`, {state: {account_id: userInfo.account.account_id}});
             return
         }catch(error) {

@@ -14,6 +14,7 @@ import tmpdata from "./test.json"
 const SeatPage: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const navigate = useNavigate();
     const state = location.state || {};
 
 
@@ -26,7 +27,8 @@ const SeatPage: React.FC = () => {
     const [user_id, setUser_id] = useState<string>("");
 
     useEffect(() => {
-        setUser_id("Gxcw1A4e");
+        console.log(state)
+        setUser_id(state.user_id);
         setShowtimeId("S001");
     }, []);
 
@@ -108,32 +110,26 @@ const SeatPage: React.FC = () => {
         console.log("Selected Seats ID:", [...outputSeat])
         console.log(JSON.stringify({ outputseat: [...outputSeat], user_id, showtime_id: state.showtimeId }))
 
-        if (state.account_id) {
-            try {
-                const response = await fetch("http://localhost:8000/minorcineflex/reserve_seat", {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ outputSeat: [...outputSeat], user_id: state.account_id, showtime_id: state.showtimeId })
-                });
 
-                if (!response.ok) {
-                    throw new Error("Failed to send list");
-                }
 
-                const data = await response.json();
-                setResponse(JSON.stringify(data, null, 2));  // Store response
-            } catch (error) {
-                setResponse(`Error: ${error.message}`);
+        try {
+            const response = await fetch("http://localhost:8000/minorcineflex/reserve_seat", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ outputSeat: [...outputSeat], user_id, showtime_id: state.showtimeId })
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to send list");
             }
-            navigate("/Payment", { state });
-        }
-        else {
-            navigate("/Login", { state });
-        }
 
-
+            const data = await response.json();
+            setResponse(JSON.stringify(data, null, 2));  // Store response
+        } catch (error) {
+            setResponse(`Error: ${error.message}`);
+        }
 
     }
 

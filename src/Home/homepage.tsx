@@ -112,14 +112,14 @@ const HomePage: React.FC = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
-  let user_account_id = searchParams.get("account_id");
+  let user_account_id = searchParams.get("account_id") || "";
   const searchQuery = searchParams.get("search") || "";
   const [currentUser, setCurrentUser] = useState<any>(null);
 
   //use params for prevent state data gone
   useEffect(() => {
     if (user_account_id) {
-        setSearchParams({ account_id: user_account_id });
+      setSearchParams(prev => ({ ...Object.fromEntries(prev), account_id: user_account_id }));
     }
 }, [user_account_id, setSearchParams]);
 
