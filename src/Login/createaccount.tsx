@@ -117,8 +117,14 @@ const Create:React.FC = () => {
     }
 
     const handleGoogleLoginSuccess = async(response: any) => {
+        function base64UrlDecode(str) {
+            str = str.replace(/-/g, '+').replace(/_/g, '/'); // Convert Base64Url to Base64
+            return JSON.parse(decodeURIComponent(escape(window.atob(str))));
+        }
+
         const credentialResponse = response.credential;
-        const userData = JSON.parse(atob(credentialResponse.split(".")[1]));
+        const tokenParts = credentialResponse.split(".");
+        const userData = base64UrlDecode(tokenParts[1]);
     
         const userInfo = {
             name: userData.name || "",
