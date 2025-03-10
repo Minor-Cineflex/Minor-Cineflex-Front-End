@@ -133,6 +133,7 @@ const SeatPage: React.FC = () => {
             } catch (error) {
                 setResponse(`Error: ${error.message}`);
             }
+            navigate("/Payment", {state})
         }
         else{
             navigate("/Login", {state});
