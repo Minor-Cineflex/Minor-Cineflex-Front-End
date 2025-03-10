@@ -64,7 +64,7 @@ const Region: React.FC = () => {
                 </div>
                 <div id="grid" className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-4 gap-4">
                     {filterdata.map((cinema,i) => (
-                        <div key={i} id="cinema" onClick = {() => click_cinema(cinema["cinema_id"])}className="flex bg-pink-700 bg-opacity-70 border-2 border-[#E7AB79] p-4 rounded-2xl gap-2">
+                        <div key={i} id="cinema" onClick = {() => click_cinema(cinema["cinema_id"])}className="flex bg-pink-700 bg-opacity-70 border-2 border-[#E7AB79] p-4 rounded-2xl gap- hover:bg-pink-800 hover:bg-opacity-90 cursor-pointer transition-all duration-200" >
                             <img src={logo} alt="" className="rounded-full w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16" />
                             <div className= "flex flex-col">
                                 <p className="p-1 text-[#E7AB79] text-xl">{cinema["name"]}</p>

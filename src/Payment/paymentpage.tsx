@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom"
+import { useLocation } from "react-router-dom"
 
 import axios from "axios";
 import myqr from "../component/myqr.jpg";
@@ -55,10 +55,14 @@ const PaymentPage: React.FC = () => {
     const showtime_id = state.showtimeId;
     const payment_type = "credit_card";
     setLoading(true);
+    console.log(state);
     axios
-      .post(
-        `http://localhost:8000/minorcineflex/done_payment?user_id=${user_id}&movie_id=${movie_id}&showtime_id=${showtime_id}&payment_type=${payment_type}`
-      )
+      .post("http://localhost:8000/minorcineflex/base_payment", {
+        user_id,
+        movie_id,
+        showtime_id,
+        payment_type,
+      })
       .then((response) => {
         setIsPaid(true);
         setLoading(false);
@@ -87,93 +91,64 @@ const PaymentPage: React.FC = () => {
       <div className="relative flex flex-col items-center gap-4 w-full h-auto text-bt-main bg-bg-sec shadow-md rounded-xl p-4">
         <h2 className="text-lg font-semibold">Confirm Your Payment</h2>
 
-        <div className="relative flex flex-col items-center gap-4 w-full h-auto text-bt-main bg-bg-sec shadow-md rounded-xl p-4">
-          <h2 className="text-lg font-semibold">Confirm Your Payment</h2>
 
-          {/* Table */}
-          <div className="w-full">
-            <div className="w-full">
-              <table className="w-full text-left table-auto">
-                <thead>
-                  <tr>
-                    <th className="p-2 md:p-4 border-b border-bt-main">
-                      <p className="text-sm md:text-md text-bt-main">Name</p>
-                    </th>
-                    <th className="p-2 md:p-4 border-b border-bt-main">
-                      <p className="text-sm md:text-md text-bt-main">Amount</p>
-                    </th>
-                    <th className="p-2 md:p-4 border-b border-bt-main">
-                      <p className="text-sm md:text-md text-bt-main">Sum Price</p>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {paymentDetails.reserved_seats.map((seat: string, index: number) => (
-                    <tr key={index}>
-                      <td className="p-2 md:p-4">
-                        <p className="text-xs md:text-sm">Seat {seat}</p>
-                      </td>
-                      <td className="p-2 md:p-4">
-                        <p className="text-xs md:text-sm">1</p>
-                      </td>
-                      <td className="p-2 md:p-4">
-                        <p className="text-xs md:text-sm">100</p>
-                      </td>
-                    </tr>
-                  ))}
-                  {paymentDetails.reserved_seats.map((seat: string, index: number) => (
-                    <tr key={index}>
-                      <td className="p-2 md:p-4">
-                        <p className="text-xs md:text-sm">Seat {seat}</p>
-                      </td>
-                      <td className="p-2 md:p-4">
-                        <p className="text-xs md:text-sm">1</p>
-                      </td>
-                      <td className="p-2 md:p-4">
-                        <p className="text-xs md:text-sm">100</p>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              <h1 className="px-4 w-full bg-bt-main text-bg-main text-lg md:text-xl py-2 uppercase block text-center">
-                Total: {paymentDetails.total_price} ฿
-                Total: {paymentDetails.total_price} ฿
-              </h1>
-            </div>
 
-            {/* QR Code */}
-            <img src={myqr} alt="QR Code" className="md:w-2/5 lg:w-1/4 object-contain" />
+        {/* Table */}
+        <div className="w-full">
+          <table className="w-full text-left table-auto">
+            <thead>
+              <tr>
+                <th className="p-2 md:p-4 border-b border-bt-main">
+                  <p className="text-sm md:text-md text-bt-main">Name</p>
+                </th>
+                <th className="p-2 md:p-4 border-b border-bt-main">
+                  <p className="text-sm md:text-md text-bt-main">Amount</p>
+                </th>
+                <th className="p-2 md:p-4 border-b border-bt-main">
+                  <p className="text-sm md:text-md text-bt-main">Sum Price</p>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {paymentDetails.reserved_seats.map((seat: string, index: number) => (
+                <tr key={index}>
+                  <td className="p-2 md:p-4">
+                    <p className="text-xs md:text-sm">Seat {seat}</p>
+                  </td>
+                  <td className="p-2 md:p-4">
+                    <p className="text-xs md:text-sm">1</p>
+                  </td>
+                  <td className="p-2 md:p-4">
+                    <p className="text-xs md:text-sm">100</p>
+                  </td>
+                </tr>
+              ))}
 
-            {/* Payment Button */}
-            {isPaid ? (
-              <p className="text-green-500 font-semibold text-lg">Payment Successful! 🎉</p>
-            ) : (
-              <button
-                onClick={handlePayment}
-                className="bg-bt-main text-bg-main py-2 px-4 md:px-8 rounded-xl uppercase"
-              >
-                Pay Now
-              </button>
-            )}
-            {/* QR Code */}
-            <img src={myqr} alt="QR Code" className="md:w-2/5 lg:w-1/4 object-contain" />
-
-            {/* Payment Button */}
-            {isPaid ? (
-              <p className="text-green-500 font-semibold text-lg">Payment Successful! 🎉</p>
-            ) : (
-              <button
-                onClick={handlePayment}
-                className="bg-bt-main text-bg-main py-2 px-4 md:px-8 rounded-xl uppercase"
-              >
-                Pay Now
-              </button>
-            )}
-          </div>
+            </tbody>
+          </table>
+          <h1 className="px-4 w-full bg-bt-main text-bg-main text-lg md:text-xl py-2 uppercase block text-center">
+            Total: {paymentDetails.total_price} ฿
+          </h1>
         </div>
+
+
+        {/* QR Code */}
+        <img src={myqr} alt="QR Code" className="md:w-2/5 lg:w-1/4 object-contain" />
+
+        {/* Payment Button */}
+        {isPaid ? (
+          <p className="text-green-500 font-semibold text-lg">Payment Successful! 🎉</p>
+        ) : (
+          <button
+            onClick={handlePayment}
+            className="bg-bt-main text-bg-main py-2 px-4 md:px-8 rounded-xl uppercase"
+          >
+            Pay Now
+          </button>
+        )}
       </div>
-      );
+    </div>
+  );
 };
 
-      export default PaymentPage;
+export default PaymentPage;
