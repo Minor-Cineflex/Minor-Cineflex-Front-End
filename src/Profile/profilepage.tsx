@@ -7,6 +7,7 @@ import { useNavigate, useLocation } from "react-router";
 const ProfilePage: React.FC = () => {
 
 const [allMovie, setAllmovie] = useState({ movie_list: [] })
+const [history, setHistory] = useState(null)
 
 const ShowMovies = (allMovie) => {
     const [hoverIndex, setHoverIndex] = useState(null);
@@ -97,7 +98,7 @@ const ShowMovies = (allMovie) => {
         return (
           allMovie.movie_list.map((movie, index) => (
             <div  key={index} 
-                className="h-100 w-72 flex-shrink-0 rounded-2xl"
+                className="h-96 w-64 flex-shrink-0 rounded-2xl"
             >
               <div className='w-full h-4/5 overflow-hidden rounded-2xl hover:z-10 hover:border hover:border-black snap-start'
                 onMouseEnter={() => setHoverIndex(index)}
@@ -173,10 +174,51 @@ const ShowMovies = (allMovie) => {
 
     useEffect(() => {
         if (currentUser) {
-            setAllmovie(currentUser.account.history);
+            setHistory(currentUser.account.history);
         }
     }, [currentUser]);
 
+    useEffect(() => {
+      const fetchHistoryMovies = async () => {
+        if (!history) return;
+    
+        try {
+          const movieDetails = await Promise.all(
+            history.map(async (entry) => {
+              const showtimeResponse = await fetch(
+                `http://localhost:8000/minorcineflex/cinema/${entry.showtime.cinema_id}/showtime/${entry.showtime.showtime_id}`
+              );
+    
+              if (!showtimeResponse.ok) {
+                console.error("Failed to fetch showtime:", entry.showtime.showtime_id);
+                return null;
+              }
+    
+              const showtimeData = await showtimeResponse.json();
+              const movie_id = showtimeData.movie_id;
+
+              const movieResponse = await fetch(
+                `http://localhost:8000/minorcineflex/movie/${movie_id}`
+              );
+    
+              if (!movieResponse.ok) {
+                console.error("Failed to fetch movie:", movie_id);
+                return null;
+              }
+    
+              return await movieResponse.json();
+            })
+          );
+  
+          setAllmovie({ movie_list: movieDetails.filter(movie => movie !== null) });
+        } catch (error) {
+          console.error("Error fetching history movies:", error);
+        }
+      };
+    
+      fetchHistoryMovies();
+    }, [history]);
+    
     const showUsername = () => {
         if(currentUser){
             return currentUser.account.username
@@ -191,10 +233,10 @@ const ShowMovies = (allMovie) => {
 
     return(
         <div className="min-w-full min-h-screen bg-[#4C3A51] flex flex-col justify-evenly overflow-hidden">
-            <nav onClick={() => navigate("/", {state: {account_id: currentUser.account.account_id}})}><FaChevronLeft className="cursor-pointer text-[#E7AB79] mt-4 ml-5" size={30}/></nav>
-            <div className="min-w-fit w-2/5 min-h-fit bg-[#D9D9D9] flex flex-col justify-items-center items-center self-center mt-4 gap-6 rounded-2xl">
+            <nav onClick={() => navigate("/", {state: {account_id: currentUser.account.account_id}})}><FaChevronLeft className="cursor-pointer text-[#E7AB79] mt-4 ml-5" size={25}/></nav>
+            <div className="min-w-fit w-2/5 min-h-fit bg-[#D9D9D9] flex flex-col justify-items-center items-center self-center mt-4 gap-4 rounded-2xl">
                 <img src={Logo} alt="" className="size-28"/>
-                <div className="flex flex-col w-full self-start items-center gap-6 mb-6 pl-6 pr-6">
+                <div className="flex flex-col w-full self-start items-center gap-4 mb-4 pl-6 pr-6">
                     <h1 className="text-xl w-full font-semibold flex gap-3">Username: 
                         <p className="truncate font-normal">{showUsername()}</p>
                     </h1>
@@ -209,11 +251,11 @@ const ShowMovies = (allMovie) => {
                     </button>
                 </div>
             </div>
-            <div className="min-h-fit w-screen flex flex-col justify-center mt-12 gap-3">
+            <div className="min-h-fit w-screen flex flex-col justify-center mt-6 gap-3">
                 <h1 className="text-3xl font-semibold text-[#E7AB79] pl-12">
                     History
                 </h1>
-                <div className="h-86 w-full mb-3">
+                <div className="h-80 w-full mb-12">
                    {ShowMovies(allMovie)}
                 </div>
             </div>
