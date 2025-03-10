@@ -10,7 +10,6 @@ const LoginPage: React.FC = () => {
     const [email, setEmail] = useState(String)
     const [password, setPassword] = useState(String)
     const { state } = useLocation()
-    console.log(state)
 
     const clientID = "118402147221-rhjtqa5gmmkjktbnqq1d170plm0tcspr.apps.googleusercontent.com"
 
@@ -121,6 +120,15 @@ const LoginPage: React.FC = () => {
         }
     };
 
+    const handleCreate = () => {
+        if(state){
+            navigate("/Create", {state: state})
+            return
+        }
+        navigate("/Create")
+        return
+    }
+
     return(
         <div className="min-h-screen bg-[#4C3A51] flex items-center justify-center">
             <div className="min-w-80 min-h-80 w-3/12 h-4/12 bg-[#D9D9D9] flex flex-col items-center justify-center rounded-2xl gap-3">
@@ -168,7 +176,7 @@ const LoginPage: React.FC = () => {
                         </GoogleOAuthProvider>
                     </div>
                     <div className="flex flex-row w-full justify-center mb-3 gap-12">
-                        <nav className="text-md underline hover:text-gray-600 cursor-pointer" onClick={() => navigate("/Create")}>
+                        <nav className="text-md underline hover:text-gray-600 cursor-pointer" onClick={() => handleCreate()}>
                             Create Account
                         </nav>
                     </div>
