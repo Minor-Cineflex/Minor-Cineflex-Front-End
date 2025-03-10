@@ -176,4 +176,4 @@ const PaymentPage: React.FC = () => {
       );
 };
 
-      export default PaymentPage;
+export default PaymentPage;
