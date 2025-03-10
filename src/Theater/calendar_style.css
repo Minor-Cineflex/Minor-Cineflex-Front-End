@@ -1,0 +1,64 @@
+/* Custom Calendar Styles */
+.react-calendar {
+    background-color: #4C3A51;
+    border: 2px solid #B25068;
+    border-radius: 12px;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    width: 350px;
+  }
+  
+  /* Calendar navigation */
+  .react-calendar__navigation {
+    background-color: #774360;
+    border-radius: 10px 10px 0 0;
+  }
+  
+  .react-calendar__navigation button {
+    color: #fff;
+    font-weight: bold;
+  }
+  
+  .react-calendar__navigation button:enabled:hover,
+  .react-calendar__navigation button:enabled:focus {
+    background-color: #B25068;
+  }
+  
+  /* Calendar header (weekdays) */
+  .react-calendar__month-view__weekdays {
+    color: #ffb74d; /* Matches your yellow text */
+    font-weight: bold;
+  }
+  
+  /* Calendar tiles (days) */
+  .react-calendar__tile {
+    color: #fff;
+    background-color: #4C3A51;
+    padding: 10px;
+  }
+  
+  .react-calendar__tile:enabled:hover,
+  .react-calendar__tile:enabled:focus {
+    background-color: #774360;
+    border-radius: 8px;
+  }
+  
+  /* Selected day */
+  .react-calendar__tile--active {
+    background-color: #B25068 !important;
+    border-radius: 8px;
+  }
+  
+  /* Today's date */
+  .react-calendar__tile--now {
+    background-color: #774360;
+    border: 2px solid #ffb74d;
+    border-radius: 8px;
+  }
+  
+  /* Selected month/year in year view */
+  .react-calendar__year-view .react-calendar__tile--active,
+  .react-calendar__decade-view .react-calendar__tile--active,
+  .react-calendar__century-view .react-calendar__tile--active {
+    background-color: #B25068;
+  }
