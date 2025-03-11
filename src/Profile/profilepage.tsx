@@ -46,20 +46,21 @@ const ShowMovies = (allMovieAndSeat) => {
       if(hoverIndex !== null){
         const movie = allMovieAndSeat.movie_list[hoverIndex];
         const seat = allMovieAndSeat.seat_list[hoverIndex];
-        console.log(seat)
+        const totalSeatPrice = allMovieAndSeat.seat_list[hoverIndex].reduce((sum, seat) => sum + seat.price, 0);
         return(
-          <div className='text-white absolute top-10 z-10 left-5 flex flex-col gap-4'>
+          <div className='text-white absolute top-6 z-10 left-5 flex flex-col gap-2'>
             <p>Name: {movie.name}</p>
             <p>Type: {movie.type}</p>
             <p>Duration: {movie.duration}</p>
             <div>
               <p>Seats:</p>
-              <ul className="pl-6 max-h-24 overflow-y-auto">
+              <ul className="pl-6 max-h-24 overflow-y-auto custom-profile-scrollbar pr-6">
                 {seat.map((s, index) => (
-                  <li key={index}>{s.seat_pos} {s.seat_type}</li>
+                  <li key={index}>{s.seat_pos} {s.seat_type} {s.price} baht</li>
                 ))}
               </ul>
             </div>
+            <p>Total: {totalSeatPrice} baht</p>
           </div>
         )
       }

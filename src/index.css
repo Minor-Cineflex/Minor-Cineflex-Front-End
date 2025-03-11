@@ -99,3 +99,11 @@ code {
   scrollbar-width: thin; 
   scrollbar-color: #774360 #4C3A51;
 }
+
+/*Profile scroll bar*/
+@layer utilities {
+  .custom-profile-scrollbar {
+    scrollbar-width: thin; 
+    scrollbar-color: #9CA3AF #4B5563;
+  }
+}
