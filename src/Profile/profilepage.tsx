@@ -6,8 +6,19 @@ import { useNavigate, useLocation } from "react-router";
 
 const ProfilePage: React.FC = () => {
 
-const [allMovieAndSeat, setAllMovieAndSeat] = useState({ movie_list: [], seat_list: [] })
+const [allMovieAndSeat, setAllMovieAndSeat] = useState({ movie_list: [], seat_list: [], showtime_list: []})
 const [history, setHistory] = useState(null)
+
+const formatDateTime = (isoString: string) => {
+  const date = new Date(isoString);
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+
+  return `${day}/${month}/${year} ${hours}:${minutes}`;
+};
 
 const ShowMovies = (allMovieAndSeat) => {
     const [hoverIndex, setHoverIndex] = useState(null);
@@ -46,9 +57,11 @@ const ShowMovies = (allMovieAndSeat) => {
       if(hoverIndex !== null){
         const movie = allMovieAndSeat.movie_list[hoverIndex];
         const seat = allMovieAndSeat.seat_list[hoverIndex];
+        const showtime = allMovieAndSeat.showtime_list[hoverIndex]
         const totalSeatPrice = allMovieAndSeat.seat_list[hoverIndex].reduce((sum, seat) => sum + seat.price, 0);
         return(
-          <div className='text-white absolute top-6 z-10 left-5 flex flex-col gap-2'>
+          <div className='text-white absolute top-5 z-10 left-5 flex flex-col gap-1'>
+            <p>Date: {formatDateTime(showtime.start_date)}</p>
             <p>Name: {movie.name}</p>
             <p>Type: {movie.type}</p>
             <p>Duration: {movie.duration}</p>
@@ -239,7 +252,8 @@ const ShowMovies = (allMovieAndSeat) => {
     
                 return {
                   movie: movieData,
-                  seats: seatData
+                  seats: seatData,
+                  showtime: showtimeData
                 };
               } catch (error) {
                 console.error("Error processing entry:", entry, error);
@@ -253,6 +267,7 @@ const ShowMovies = (allMovieAndSeat) => {
           setAllMovieAndSeat({
             movie_list: validData.map((data) => data.movie),
             seat_list: validData.map((data) => data.seats),
+            showtime_list: validData.map((data) => data.showtime)
           });
         } catch (error) {
           console.error("Error fetching history movies:", error);
