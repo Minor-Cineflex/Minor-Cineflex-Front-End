@@ -16,7 +16,6 @@ const SeatPage: React.FC = () => {
     const location = useLocation();
     const state = location.state || {};
 
-
     const [SeatList, setSeatList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);

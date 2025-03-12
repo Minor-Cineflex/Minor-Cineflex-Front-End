@@ -81,7 +81,7 @@ const PaymentPage: React.FC = () => {
   if (error) return <p className="text-center text-red-500">{error}</p>;
 
   return (
-    <div className="flex flex-col lg:flex-row p-4 gap-4 items-center h-screen w-full">
+    <div className="flex flex-col lg:flex-row p-4 gap-4 items-center h-5/6 w-full">
       {/* Movie Poster */}
       {/* Movie Poster */}
       <img
@@ -97,8 +97,8 @@ const PaymentPage: React.FC = () => {
 
 
         {/* Table */}
-        <div className="w-full">
-          <table className="w-full text-left table-auto">
+        <div className="w-full max-h-96 overflow-auto">
+          <table className="w-full text-left table-auto overflow-auto">
             <thead>
               <tr>
                 <th className="p-2 md:p-4 border-b border-bt-main">
